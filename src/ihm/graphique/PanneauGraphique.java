@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testvuejov;
+package ihm.graphique;
 
+import ihm.graphique.PanneauCode;
+import util.Utilitaire;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;

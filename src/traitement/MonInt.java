@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testvuejov;
+package traitement;
 
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
