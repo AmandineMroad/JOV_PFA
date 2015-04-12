@@ -6,6 +6,7 @@
 package testvuejov;
 
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -64,14 +65,15 @@ public class Utilitaire
     public void execution() throws FileNotFoundException, IOException
     {
         String tmp;
-
-        int tmp2;
-        int tmp3;
-        int res;
-        String droite;
-        String gauche;
+        String s[];
         String vrb;
         String operation;
+        
+        int tmp2;
+        int tmp3;
+        int tmp4;
+        int res;
+        
         if((tmp = br.readLine()) != null)
         {
             res = parser.correspondRegex(tmp);
@@ -79,46 +81,29 @@ public class Utilitaire
                 switch(res)
                 {
                     case 0: // INSTANCIATION
-                        mesInt.add(new MonInt(0, parser.extraireVariable(tmp), new Ellipse2D.Double(200,200,20,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
-                        break;   
+                        mesInt.add(new MonInt(0, parser.extraireVariable(tmp))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
+                        break;
                     case 1: // INITIALISATION_ENTIER_SIMPLE
-                        mesInt.add(new MonInt(parser.extraireValeur(tmp), parser.extraireVariable(tmp), new Ellipse2D.Double(250,250,20,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
+                        mesInt.add(new MonInt(parser.extraireValeur(tmp), parser.extraireVariable(tmp))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
                         break;
                     case 2: // INITIALISATION_VARIABLE_SIMPLE
-                        gauche = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
-                        droite = parser.extraireVariable(tmp.substring(tmp.indexOf("=")));
-                        if((tmp2 = rechercheObjet(droite))!=-1)
-                            mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), gauche, new Ellipse2D.Double(300,300,20,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
+                        vrb = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
+                        operation = parser.extraireVariable(tmp.substring(tmp.indexOf("=")));
+                        if((tmp2 = rechercheObjet(operation))!=-1)
+                                mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), vrb)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
                         break;
                     case 3: // AFFECTATION_ENTIER_SIMPLE
                         if((tmp2 = rechercheObjet(parser.extraireVariable(tmp)))!=-1)
                                 mesInt.get(tmp2).setMonInt(parser.extraireValeur(tmp));
-                        else
-                            System.out.println("ERREUR");
                         break;
                     case 4: // AFFECTATION_VARIABLE_SIMPLE
-                        droite = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
-                        gauche = parser.extraireVariable(tmp.substring(tmp.indexOf("=")));
-                        if((tmp2 = rechercheObjet(droite))!=-1)
-                            if((tmp3 = rechercheObjet(gauche))!=-1)
+                        vrb = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
+                        operation = parser.extraireVariable(tmp.substring(tmp.indexOf("=")));
+                        if((tmp2 = rechercheObjet(vrb))!=-1)
+                            if((tmp3 = rechercheObjet(operation))!=-1)
                                mesInt.get(tmp2).setMonInt( mesInt.get(tmp3).getMonInt());
                         break;
-                    case 5: // AFFECTATION_ENTIER_VARIABLE_DOUBLE
-                        System.out.println("AFFECTATION_ENTIER_VARIABLE_DOUBLE");
-                        vrb = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
-                        System.out.println("vrb: "+vrb);
-                        if((tmp2 =rechercheObjet(parser.extraireVariable(vrb)))!=-1)
-                        {
-                            operation = tmp.substring(tmp.indexOf("=")+1);
-                            System.out.println("operation : "+operation);
-
-                                if(parser.extraireOperation(tmp).equals("+"))
-                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(operation, 0));
-                        }
-                        
-                        
-                        break;
-                    /*case 5: // AFFECTATION_ENTIER_DOUBLE
+                    case 5: // AFFECTATION_ENTIER_DOUBLE
                             if((tmp2 =rechercheObjet(parser.extraireVariable(tmp)))!=-1)
                             {
                                 if(parser.extraireOperation(tmp).equals("+"))
@@ -133,7 +118,19 @@ public class Utilitaire
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 4));                                     
                             }   
                         break;
-                    */
+                    case 6: // AFFECTATION_VARIABLE_DOUBLE
+                        vrb = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
+                        if((tmp2 =rechercheObjet(vrb))!=-1)
+                        {
+                            operation = tmp.substring(tmp.indexOf("=")+1).replace(";", "").replaceAll("\\s", "");;
+                                if(parser.extraireOperation(tmp).equals("+"))
+                                {
+                                    s = operation.split("\\+");
+                                    if((tmp3=rechercheObjet(parser.extraireVariable(s[0]))) != -1 && (tmp4=rechercheObjet(parser.extraireVariable(s[1])))!=-1)
+                                        mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt()+mesInt.get(tmp4).getMonInt());
+                                }  
+                        }
+                        break;
                 }           
         }
     }

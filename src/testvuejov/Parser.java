@@ -15,13 +15,17 @@ import java.util.regex.Pattern;
  */
 public class Parser 
 {
-    private final String INSTANCIATION = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; /* [ESP]int[ESP]variable1[ESP]; */
-    private final String INITIALISATION_ENTIER_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[0-9]*\\s*;$"; /* [ESP]int[ESP]variable1[ESP]=[ESP]chiffre; */
-    private final String INITIALISATION_VARIABLE_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; /* [ESP]int[ESP]variable1[ESP]=[ESP]variable; */
-    private final String AFFECTATION_ENTIER_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[0-9]*\\s*;$"; // [ESP]variable1[ESP]=[ESP]chiffre[ESP];
-    private final String AFFECTATION_VARIABLE_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable1[ESP]=[ESP]variable[ESP];
-    //private final String AFFECTATION_ENTIER_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[0-9]*\\s*[+-/\\*%][0-9]*\\s*;$"; // [ESP]variable1[ESP]=[ESP]chiffre+-*/%chiffre[ESP];
-    private final String AFFECTATION_ENTIER_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*\\w*\\s*[+-/\\*%]\\w*\\s*;$"; // [ESP]variable1[ESP]=[ESP]chiffreOUvariable+-*/%variableOUvariable[ESP];
+    private final String INSTANCIATION = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]; */
+    private final String INITIALISATION_ENTIER_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]=[ESP]chiffre[ESP]; */
+    private final String INITIALISATION_VARIABLE_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]=[ESP]variable[ESP]; */
+    private final String INITIALISATION_ENTIER_DOUBLE = "";
+    private final String INITIALISATION_VARIABLE_DOUBLE = "";
+    private final String AFFECTATION_ENTIER_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]chiffre[ESP];
+    private final String AFFECTATION_VARIABLE_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]variable[ESP];
+    private final String AFFECTATION_ENTIER_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[0-9]*\\s*[+-/\\*%][0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]chiffre[ESP]+-*/%[ESP]chiffre[ESP];
+    private final String AFFECTATION_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%][a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable1[ESP]=[ESP]variable[ESP]+-*/%[ESP]variable[ESP];
+    private final String AFFECTATION_VARIABLE_ENTIER_DOUBLE = "";
+    private final String AFFECTATION_ENTIER_VARIABLE_DOUBLE = "";
     
     private ArrayList<String>regex;
     private Pattern pattern;
@@ -38,8 +42,8 @@ public class Parser
         regex.add(INITIALISATION_VARIABLE_SIMPLE);
         regex.add(AFFECTATION_ENTIER_SIMPLE);
         regex.add(AFFECTATION_VARIABLE_SIMPLE);
-        regex.add(AFFECTATION_ENTIER_VARIABLE_DOUBLE);
-        //regex.add(AFFECTATION_ENTIER_DOUBLE);
+        regex.add(AFFECTATION_ENTIER_DOUBLE);
+        regex.add(AFFECTATION_VARIABLE_DOUBLE);
         
     }
     
@@ -96,28 +100,7 @@ public class Parser
                 replaceAll("\\s", "");
     }
     
-    public int extraireOperationADeuxOp(String ligne, int type)
-    {
-        ligne = ligne.replace(";", "").replaceAll("\\s", "");        
-        
-        if(type == 0)   // ADDITION
-        {
-            String s[] = ligne.split("\\+");
-            System.out.println(s[0]+"\n"+s[1]);
-            
-            if(!(((int) s[1].charAt(0))>=48 && ((int) s[1].charAt(0))<=57)) // Si PAS un chiffre en 1er caractere : variable
-            {
-                System.out.println("lettre");
-            }
-                
-            
-            
-        }   
-        return 0;
-    }
     
-    
-    /*
     public int extraireOperationADeuxOp(String ligne, int type)
     {
         ligne = ligne.substring(ligne.indexOf("=")+1);
@@ -151,7 +134,6 @@ public class Parser
         else
             return -1;
     }
-    */
     
 
     public ArrayList<String> getRegex() {

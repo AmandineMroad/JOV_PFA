@@ -6,6 +6,7 @@
 package testvuejov;
 
 import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 
 /**
  *
@@ -31,11 +32,11 @@ public class MonInt implements Comparable<MonInt>
         
     }
     
-    public MonInt(int monInt, String correspondance, Shape forme)
+    public MonInt(int monInt, String correspondance)
     {
         this.monInt = monInt;
         this.correspondance = correspondance;
-        this.forme = forme;
+        this.forme = new Rectangle2D.Double(200,200,String.valueOf(monInt).length()*10/*10*(Math.log10(monInt)+1)*/,20);
     }
     
     
@@ -63,7 +64,7 @@ public class MonInt implements Comparable<MonInt>
         
     }
     
-    public void division(int i)
+    public void diviser(int i)
     {
         
     }    

@@ -49,9 +49,9 @@ public class PanneauGraphique extends JPanel {
         for(int i=0; i<utilitaire.getMesInt().size(); i++)
         {
            g2.draw(utilitaire.getMesInt().get(i).getForme());
-           g2.drawString(String.valueOf(utilitaire.getMesInt().get(i).getMonInt()), (int) (utilitaire.getMesInt().get(i).getForme().getBounds().getX()+7), (int) (utilitaire.getMesInt().get(i).getForme().getBounds().getY()+15));//208, 215);
+           g2.drawString(String.valueOf(utilitaire.getMesInt().get(i).getMonInt()), (int) (utilitaire.getMesInt().get(i).getForme().getBounds().getX()+2), (int) (utilitaire.getMesInt().get(i).getForme().getBounds().getY()+15));
            g2.drawString(utilitaire.getMesInt().get(i).getCorrespondance(), (int) (utilitaire.getMesInt().get(i).getForme().getBounds().getX()-5), (int) (utilitaire.getMesInt().get(i).getForme().getBounds().getY()-5));
-           }         
+        }         
     }
     
     

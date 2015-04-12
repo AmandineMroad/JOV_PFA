@@ -33,7 +33,7 @@ public class TestVueJOV {
         f.setBounds(0, 0, 850, 400);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLocationRelativeTo(null);
-        f.setVisible(true);  
+        
         
         f.setLayout(new BorderLayout(2, 2));
         //f.setExtendedState(Frame.MAXIMIZED_BOTH); 
@@ -47,14 +47,7 @@ public class TestVueJOV {
         
         pg.affichage();
         pg.repaint();
-        
-        /*
-        String s = "toto";
-        char c = s.charAt(0);
-        int i = (int) c;
-        System.out.println(i);
-        */
-        
+        f.setVisible(true);  
     }
     
     
