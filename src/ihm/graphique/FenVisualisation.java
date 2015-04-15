@@ -8,7 +8,6 @@ package ihm.graphique;
 import ihm.listeners.ExitJOV;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFrame;
@@ -68,8 +67,7 @@ public class FenVisualisation extends JFrame
         pg = new PanneauGraphique(pc, f);        
         
         this.add(pc, BorderLayout.WEST);
-        this.add(pg, BorderLayout.CENTER);
-        
+        this.add(pg);
         this.setVisible(false);    
     }
 
