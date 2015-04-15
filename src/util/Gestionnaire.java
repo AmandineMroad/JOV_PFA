@@ -27,7 +27,7 @@ public final class Gestionnaire {
     private Gestionnaire() throws IOException{ 
         ready = false;
         fchoix = new ChoixDiag();
-        fvisualisation = new FenVisualisation();
+       // fvisualisation = new FenVisualisation();
         fchoix.setVisible(true);
     }
     
@@ -50,6 +50,7 @@ public final class Gestionnaire {
         if (ready){
              System.out.println("Gestionnaire.execute()");
             fchoix.dispose();
+            fvisualisation = new FenVisualisation(f);
             fvisualisation.setVisible(true);
             fvisualisation.getPg().affichage();
         } else {

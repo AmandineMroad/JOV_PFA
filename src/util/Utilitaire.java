@@ -11,6 +11,7 @@ import traitement.MonInt;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -42,6 +43,7 @@ public class Utilitaire
     
     //
     private final String nomF = "CODE.java";    
+    private File fichier;
     
     // Contiens le nombre de lignes du fichier source
     private int nbLignes;
@@ -60,10 +62,23 @@ public class Utilitaire
         parser = new Parser();
         mesInt = new ArrayList<>();   
         fr = new FileReader(nomF);
+       // fr = new FileReader(fichier);
         br = new BufferedReader(fr);
         this.d = d;
         NombreLignes();
     }
+
+    public Utilitaire(Dimension d, File f) throws FileNotFoundException, IOException {
+        parser = new Parser();
+        mesInt = new ArrayList<>();
+        fichier = f;
+        fr = new FileReader(fichier);
+        br = new BufferedReader(fr);
+        this.d = d;
+        NombreLignes();
+    }
+    
+  
     
     /**
      * Permet de compter le nombre de lignes du fichier
@@ -77,7 +92,8 @@ public class Utilitaire
         br.close();
         fr.close();
         
-        fr = new FileReader(nomF);
+        //fr = new FileReader(nomF);
+        fr = new FileReader(fichier);
         br = new BufferedReader(fr);        
     }
    

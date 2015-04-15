@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.TextArea;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class PanneauCode extends JPanel
     private BufferedReader br;
     
     private final String nomF = "CODE.java";    
-    
+    private File fichier;
     // Permet l'affichage du CS 
     private TextArea zoneCode;
     
@@ -67,6 +68,29 @@ public class PanneauCode extends JPanel
        
         enregistrement();
     }
+    
+    public PanneauCode(Dimension d, File f) throws FileNotFoundException, IOException
+    {
+        this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        zoneCode = new TextArea();
+        zoneCode.setEditable(false);
+        zoneCode.setBackground(Color.WHITE);
+        lignes = new ArrayList<>();
+        this.add(zoneCode);
+        
+        
+        this.d = d;
+        this.d.width=this.d.width/3;
+        
+        this.fichier = f;
+        
+        fr = new FileReader(fichier);
+        br = new BufferedReader(fr);
+        zoneCode.setPreferredSize(d);
+       
+        enregistrement();
+    }
+    
     
     /**
      * Permet de lire les lignes dans le fichier source et de les ajouter à la suite dans l'AL<>

@@ -10,8 +10,6 @@ public class TestVueJOV
 
 
 
-
-=======
 	int a;
 	int c =3;
 	a=c+c;

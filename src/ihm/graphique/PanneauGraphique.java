@@ -47,6 +47,16 @@ public class PanneauGraphique extends JPanel {
         utilitaire = new Utilitaire(pc.getD());
     }
     
+     public PanneauGraphique(PanneauCode pc, File f) throws IOException 
+    {
+        this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        
+        this.pc = pc;
+        utilitaire = new Utilitaire(pc.getD(),f);
+    }
+    
+    
+    
     /**
      * Redefinition de la fonction paintComponent
      * @param g 
