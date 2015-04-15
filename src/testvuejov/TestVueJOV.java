@@ -29,8 +29,8 @@ public class TestVueJOV {
     public static void main(String[] args) throws IOException {
         
         
-        /*Gestionnaire g = Gestionnaire.getInstance();
-        g.choixF();
+        Gestionnaire g = Gestionnaire.getInstance();
+       /* g.choixF();
         
         while(g.isReady()==false) {}
         
@@ -38,11 +38,11 @@ public class TestVueJOV {
         g.visualisationF();
         g.getFVisualisation().getPg().affichage();
         g.getFVisualisation().getPg().repaint();*/
-        
+        /*
         FenVisualisation fv = new FenVisualisation();
         fv.getPg().affichage();
         fv.getPg().repaint();
-        
+        */
     }
     
     
