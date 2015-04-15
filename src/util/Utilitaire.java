@@ -5,6 +5,7 @@
  */
 package util;
 
+import java.awt.Dimension;
 import traitement.Parser;
 import traitement.MonInt;
 import java.awt.geom.Ellipse2D;
@@ -26,31 +27,48 @@ public class Utilitaire
         ATTRIBUTS
     */
     
-    private Parser parser;
-    ArrayList<MonInt> mesInt;
-    FileReader fr;
-    BufferedReader br;   
-    final String nomF = "CODE.java";    
-    int nbLignes;
-    /*
-        CONSTRUCTEUR
-    */
     
-    public Utilitaire() throws FileNotFoundException, IOException
+    // Objet contenant l'ensemble des regex
+    private Parser parser;
+    
+    // Contiendra l'ensemble des objet MonInt crée durant la lecture du fichier source
+    private ArrayList<MonInt> mesInt;
+    
+    // Permet d'ouvrir un fichier en lecture
+    private FileReader fr;
+    
+    // Permet de lire dans un fichier ouvert
+    private BufferedReader br;   
+    
+    //
+    private final String nomF = "CODE.java";    
+    
+    // Contiens le nombre de lignes du fichier source
+    private int nbLignes;
+    
+    // 
+    private Dimension d;
+    
+    /**
+     * Constructeur
+     * @param d
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    public Utilitaire(Dimension d) throws FileNotFoundException, IOException
     {
         parser = new Parser();
-        mesInt = new ArrayList<>();        
-        //fr = null;
-        //br = null;
+        mesInt = new ArrayList<>();   
         fr = new FileReader(nomF);
         br = new BufferedReader(fr);
+        this.d = d;
         NombreLignes();
     }
     
-    /*
-        FONCTIONS
-    */
-    
+    /**
+     * Permet de compter le nombre de lignes du fichier
+     * @throws IOException 
+     */
     public void NombreLignes() throws IOException
     {
         while(br.readLine() != null)
@@ -63,13 +81,23 @@ public class Utilitaire
         br = new BufferedReader(fr);        
     }
    
-    
+    /**
+     * Fonction centrale du programme. A chaque appelle elle lit la ligne suivante, l'envoie au parser qui lui indique quel 
+     * type de ligne c'est (initialisation, instanciation ..). La ligne peut ne pas être reconnus si ce n'est pas une opération
+     * sur les entiers
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public void execution() throws FileNotFoundException, IOException
     {
         String tmp;
         String s[];
         String vrb;
         String operation;
+        
+        Rectangle2D.Double r = null;
+        
+        MonInt mi;
         
         int tmp2;
         int tmp3;
@@ -78,21 +106,24 @@ public class Utilitaire
         
         if((tmp = br.readLine()) != null)
         {
+            // res recupere le type de regex de la ligne
             res = parser.correspondRegex(tmp);
+            
+            // -1 correspond à aucune regex
             if(res!=-1)
                 switch(res)
                 {
                     case 0: // INSTANCIATION
-                        mesInt.add(new MonInt(0, parser.extraireVariable(tmp))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
+                        mesInt.add(new MonInt(0, parser.extraireVariable(tmp), new Rectangle2D.Double(100,100,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
                         break;
-                    case 1: // INITIALISATION_ENTIER_SIMPLE
-                        mesInt.add(new MonInt(parser.extraireValeur(tmp), parser.extraireVariable(tmp))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
+                    case 1: // INITIALISATION_ENTIER_SIMPLE7
+                        mesInt.add(new MonInt(parser.extraireValeur(tmp), parser.extraireVariable(tmp), new Rectangle2D.Double(200,200,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
                         break;
                     case 2: // INITIALISATION_VARIABLE_SIMPLE
                         vrb = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
                         operation = parser.extraireVariable(tmp.substring(tmp.indexOf("=")));
                         if((tmp2 = rechercheObjet(operation))!=-1)
-                                mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), vrb)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
+                                mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), vrb, new Rectangle2D.Double(300,300,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
                         break;
                     case 3: // AFFECTATION_ENTIER_SIMPLE
                         if((tmp2 = rechercheObjet(parser.extraireVariable(tmp)))!=-1)
@@ -137,6 +168,11 @@ public class Utilitaire
         }
     }
     
+    /**
+     * Permet de determiner si le string passé en parametre correspond à un objet MonInt déjà crée
+     * @param vb
+     * @return 
+     */
     public int rechercheObjet(String vb)
     {
         for(int i=0; i<mesInt.size(); i++)

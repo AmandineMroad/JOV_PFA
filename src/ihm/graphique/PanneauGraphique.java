@@ -27,21 +27,30 @@ import javax.swing.border.Border;
  * @author Simon
  */
 public class PanneauGraphique extends JPanel {
+
+    // Contient un Utilitaire pour le traitement du fichier source
+    private Utilitaire utilitaire;
     
-    Utilitaire utilitaire;
-    PanneauCode pc;
-    //int ligne = 0;
+    // Posséde un PanneauCode pour gérer à partir du PanneauGraphique l'affiche des lignes du fichier source
+    private PanneauCode pc;
     
+    /**
+     * Constructeur recevant simplement un PanneauCode en parametre
+     * @param pc
+     * @throws IOException 
+     */
     public PanneauGraphique(PanneauCode pc) throws IOException 
     {
         this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         
-        utilitaire = new Utilitaire();
         this.pc = pc;
-        
+        utilitaire = new Utilitaire(pc.getD());
     }
     
-    
+    /**
+     * Redefinition de la fonction paintComponent
+     * @param g 
+     */
     @Override
     public void paintComponent(Graphics g) 
     { 
@@ -57,13 +66,18 @@ public class PanneauGraphique extends JPanel {
     }
     
     
+    /**
+     * Permet de realiser l'affichage du CS sur le panneauCode et l'affichage des objet monInt en parralele sur 
+     * le panneauGraphique
+     * @throws IOException 
+     */
     public void affichage() throws IOException
     {
         for(int i=0; i<utilitaire.getNbLignes(); i++)
         {
             utilitaire.execution();
             pc.getZoneCode().setText(pc.getZoneCode().getText()+"\n"+pc.getLignes().get(i));
-            repaint();
+            this.repaint();
             /*
             try {
                 Thread.sleep(1000);
@@ -73,6 +87,4 @@ public class PanneauGraphique extends JPanel {
             */         
         }        
     }
-   
-    
 }

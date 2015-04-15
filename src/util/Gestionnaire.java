@@ -5,7 +5,11 @@
  */
 package util;
 
+import frametest.FenChoixFic;
+import ihm.graphique.FenVisualisation;
+import java.awt.HeadlessException;
 import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -15,8 +19,14 @@ public final class Gestionnaire {
     private File f;
     private boolean ready;
     private static Gestionnaire i = null;
+    private FenChoixFic fchoix;
+    private FenVisualisation fvisualisation;
     
-    private Gestionnaire(){ ready = false; }
+    private Gestionnaire() 
+    { 
+        ready = false; 
+        
+    }
     
     public File getFile(){
         return f;
@@ -27,7 +37,7 @@ public final class Gestionnaire {
         ready = true;
     }
     
-    public static Gestionnaire getInstance(){
+    public static Gestionnaire getInstance() throws HeadlessException, IOException{
         if (i == null){
             i = new Gestionnaire();
         }
@@ -35,8 +45,29 @@ public final class Gestionnaire {
         return i;
     }
     
+    public void choixF() throws HeadlessException, IOException
+    {
+        fchoix = new FenChoixFic();
+    }
+    
+    public void visualisationF() throws IOException
+    {
+        fchoix.setVisible(false);
+        
+        fvisualisation = new FenVisualisation();
+    }
+    
     public boolean isReady(){
         return ready;
     }
     
+    public FenVisualisation getFVisualisation()
+    {
+        return fvisualisation;
+    }
+    
+    public FenChoixFic getFchoix()
+    {
+        return fchoix;
+    }
 }

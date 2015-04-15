@@ -21,14 +21,33 @@ import javax.swing.JPanel;
  */
 public class PanneauCode extends JPanel
 {
-
-    FileReader fr;
-    BufferedReader br;
-    final String nomF = "CODE.java";    
-    TextArea zoneCode;
-    ArrayList<String> lignes;
-    //JTextPane zc;
+    /*
+        ATTRIBUT
+    */
     
+    // Permet d'ouvrir un fichier en lecture
+    private FileReader fr;
+    
+    // Permet de lire dans un fichier
+    private BufferedReader br;
+    
+    private final String nomF = "CODE.java";    
+    
+    // Permet l'affichage du CS 
+    private TextArea zoneCode;
+    
+    // Contient l'ensemble des lignes du code source
+    private ArrayList<String> lignes;
+    
+    
+    private Dimension d;
+    
+    /**
+     * Constucteur
+     * @param d
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public PanneauCode(Dimension d) throws FileNotFoundException, IOException
     {
         this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -38,20 +57,21 @@ public class PanneauCode extends JPanel
         lignes = new ArrayList<>();
         this.add(zoneCode);
         
-        /*zc = new JTextPane();
-         zc.setPreferredSize(new Dimension(400, 350));
-        this.add(zc);
-        */
         
+        this.d = d;
+        this.d.width=this.d.width/3;
         
         fr = new FileReader(nomF);
         br = new BufferedReader(fr);
-        //zoneCode.setPreferredSize(new Dimension(d.width/3, d.height));
-        zoneCode.setPreferredSize(new Dimension(400, 350));
+        zoneCode.setPreferredSize(d);
        
         enregistrement();
     }
     
+    /**
+     * Permet de lire les lignes dans le fichier source et de les ajouter à la suite dans l'AL<>
+     * @throws IOException 
+     */
     private void enregistrement() throws IOException
     {
         String tmp;
@@ -63,6 +83,10 @@ public class PanneauCode extends JPanel
         }        
     }
 
+    
+    /*
+        GET - SET
+    */
     public FileReader getFr() {
         return fr;
     }
@@ -94,8 +118,12 @@ public class PanneauCode extends JPanel
     public void setLignes(ArrayList<String> lignes) {
         this.lignes = lignes;
     }
-    
-    
-    
-    
+
+    public Dimension getD() {
+        return d;
+    }
+
+    public void setD(Dimension d) {
+        this.d = d;
+    }
 }

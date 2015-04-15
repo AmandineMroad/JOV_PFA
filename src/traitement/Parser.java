@@ -15,6 +15,11 @@ import java.util.regex.Pattern;
  */
 public class Parser 
 {
+    /*
+        ATTRIBUTS
+    */
+    
+    // Ensemble des regex
     private final String INSTANCIATION = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]; */
     private final String INITIALISATION_ENTIER_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]=[ESP]chiffre[ESP]; */
     private final String INITIALISATION_VARIABLE_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]=[ESP]variable[ESP]; */
@@ -27,16 +32,26 @@ public class Parser
     private final String AFFECTATION_VARIABLE_ENTIER_DOUBLE = "";
     private final String AFFECTATION_ENTIER_VARIABLE_DOUBLE = "";
     
+    // AL<> qui va contenir les regex
     private ArrayList<String>regex;
+    
+    // Permet de transformer la string en regex
     private Pattern pattern;
+    
+    // Permet de tester si une regex match avec une ligne
     private Matcher matcher;
     
+    
+    /**
+     * CONSTRUCTEUR
+     */
     public Parser()
     {
         pattern = null;
         matcher = null;
         regex = new ArrayList<>();
         
+        // Ajout des regex à l'AL<>
         regex.add(INSTANCIATION);
         regex.add(INITIALISATION_ENTIER_SIMPLE);
         regex.add(INITIALISATION_VARIABLE_SIMPLE);
@@ -44,9 +59,14 @@ public class Parser
         regex.add(AFFECTATION_VARIABLE_SIMPLE);
         regex.add(AFFECTATION_ENTIER_DOUBLE);
         regex.add(AFFECTATION_VARIABLE_DOUBLE);
-        
     }
+ 
     
+    /**
+     * Permet de determiner si la ligne reçus en parametre match avec une regex.
+     * @param ligne du fichier
+     * @return l'indice si oui, -1 sinon
+     */
     public int correspondRegex(String ligne)
     {
         for(int i=0; i<regex.size(); i++)
@@ -61,46 +81,61 @@ public class Parser
         return -1;
     }
     
-    /*
-    Reçoit une ligne reconnus par un regex et en extrait uniquement la variable
-    */
+    
+    /**
+     * Reçoit une ligne reconnus par un regex et en extrait uniquement la variable
+     * @param ligne du fichier
+     * @return la variable de la ligne
+     */
     public String extraireVariable(String ligne)
     {
-        return ligne.replace(";", "").  // Enleve le ";"
-            replaceFirst("^\\s*int\\s*", "").    // Enleve le 1er "int" au cas ou "int" soit contenus dans le nom de la variable
-            replace("=", "").   // Enleve le "="
-            replace("+", "").   // Enleve le "+"
-            replace("-", "").   // Enleve le "-"
-            replace("*", "").   // Enleve le "*"
-            replace("/", "").   // Enleve le "/"
-            replace("%", "").   // Enleve le "%"
-            replaceAll("\\d", "").  // Enleve tous les chiffres 
+        return ligne.replace(";", " ").  // Enleve le ";"
+            replaceFirst("^\\s*int\\s*", " ").    // Enleve le 1er "int" au cas ou "int" soit contenus dans le nom de la variable
+            replace("=", " ").   // Enleve le "="
+            replace("+", " ").   // Enleve le "+"
+            replace("-", " ").   // Enleve le "-"
+            replace("*", " ").   // Enleve le "*"
+            replace("/", " ").   // Enleve le "/"
+            replace("%", " ").   // Enleve le "%"
+            replaceAll("\\d", " ").  // Enleve tous les chiffres 
             replaceAll("\\s", "");  // Enleve tous les espaces     
     }
     
-    /*
-    Reçoit une ligne reconnus par un regex et en extrait uniquement le chiffre
-    */
+    /**
+     * Reçoit une ligne reconnus par un regex et en extrait uniquement le chiffre
+     * @param ligne du fichier
+     * @return la valeur de la ligne
+     */
     public int extraireValeur(String ligne)
     {
         return Integer.parseInt(
-                ligne.replace(";", "").
-                replaceFirst("int", "").
-                replace("=", "").
-                replaceAll("[a-zA-Z]{1}[a-zA-Z_0-9]*", "").
+                ligne.replace(";", " ").
+                replaceFirst("int", " ").
+                replace("=", " ").
+                replaceAll("[a-zA-Z]{1}[a-zA-Z_0-9]*", " ").
                 replaceAll("\\s", "")
-        );
+        );        
     }
     
+    /**
+     * Reçoit une ligne et en extrait l'operation
+     * @param ligne du fichier
+     * @return l'operation de la ligne
+     */
     public String extraireOperation(String ligne)
     {
-        return ligne.replace(";", "").
-                replaceAll("\\w", "").
-                replace("=", "").
+        return ligne.replace(";", " ").
+                replaceAll("\\w", " ").
+                replace("=", " ").
                 replaceAll("\\s", "");
     }
     
-    
+    /**
+     * Reçoit une ligne et en extrait le resultat de l'operation à deux opérandes 
+     * @param ligne du fichier
+     * @param type d'operation
+     * @return le resultat de l'operation
+     */
     public int extraireOperationADeuxOp(String ligne, int type)
     {
         ligne = ligne.substring(ligne.indexOf("=")+1);
@@ -135,6 +170,9 @@ public class Parser
             return -1;
     }
     
+    /*
+        GET-SET
+    */
 
     public ArrayList<String> getRegex() {
         return regex;
@@ -143,8 +181,6 @@ public class Parser
     public void setRegex(ArrayList<String> regex) {
         this.regex = regex;
     }
-
-
 
     public Pattern getPattern() {
         return pattern;
