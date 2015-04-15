@@ -5,6 +5,8 @@
  */
 package testvuejov;
 
+import frametest.FenChoixFic;
+import ihm.graphique.FenVisualisation;
 import ihm.graphique.PanneauGraphique;
 import ihm.graphique.PanneauCode;
 import java.awt.BorderLayout;
@@ -13,6 +15,7 @@ import java.awt.Frame;
 import java.awt.Toolkit;
 import java.io.IOException;
 import javax.swing.JFrame;
+import util.Gestionnaire;
 
 /**
  *
@@ -25,31 +28,21 @@ public class TestVueJOV {
      */
     public static void main(String[] args) throws IOException {
         
-        JFrame f = new JFrame();
         
-
+        /*Gestionnaire g = Gestionnaire.getInstance();
+        g.choixF();
         
-        //Toolkit tk = Toolkit.getDefaultToolkit();
-	//Dimension d = tk.getScreenSize();        
-        //f.setSize(d);
-        f.setBounds(0, 0, 850, 400);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setLocationRelativeTo(null);
+        while(g.isReady()==false) {}
         
+        System.out.println("Fin boucle");
+        g.visualisationF();
+        g.getFVisualisation().getPg().affichage();
+        g.getFVisualisation().getPg().repaint();*/
         
-        f.setLayout(new BorderLayout(2, 2));
-        //f.setExtendedState(Frame.MAXIMIZED_BOTH); 
-      
-        //PanneauCode pc = new PanneauCode(d);
-        PanneauCode pc = new PanneauCode(new Dimension(400, 350));
-        PanneauGraphique pg = new PanneauGraphique(pc);        
+        FenVisualisation fv = new FenVisualisation();
+        fv.getPg().affichage();
+        fv.getPg().repaint();
         
-        f.add(pc, BorderLayout.WEST);
-        f.add(pg, BorderLayout.CENTER);
-        
-        pg.affichage();
-        pg.repaint();
-        f.setVisible(true);  
     }
     
     

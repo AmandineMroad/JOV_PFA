@@ -7,10 +7,13 @@ public class TestVueJOV
 
     public static void main(String[] args) 
     {
-	int a = 1000000000;
-	int b = 3;
 
 
 
-    }
+
+=======
+	int a;
+	int c =3;
+	a=c+c;
+  }
 }

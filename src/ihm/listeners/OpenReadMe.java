@@ -21,7 +21,7 @@ public class OpenReadMe implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (Desktop.isDesktopSupported()){
             try {
-                Desktop.getDesktop().open(new File(".\\src\\doc\\ReadMe.txt"));
+                Desktop.getDesktop().open(new File(".\\src\\doc\\JOV_ReadMe.txt"));
                 //Desktop.getDesktop().open(new File(".\\JOV_ReadMe.txt"));
             } catch (IOException ex) {
                 System.out.println("Erreur open ReadMe");

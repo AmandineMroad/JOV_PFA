@@ -5,6 +5,7 @@
  */
 package traitement;
 
+import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
@@ -19,60 +20,93 @@ public class MonInt implements Comparable<MonInt>
         ATTRIBUTS
     */
     
+    // Contiens la valeur de l'entier primitif du CS
     private int monInt;
+    
+    // Contiens le nom de la variable associé à l'objet MonInt
     private String correspondance;
+    
+    // Permet la représentation graphique de l'objet
     private Shape forme;
     
-    /*
-        CONSTRUCTEUR
-    */
-    
+    /**
+     * Constructeur par défaut
+     */
+        
     public MonInt()
     {
         
     }
     
-    public MonInt(int monInt, String correspondance)
+    /**
+     * Constucteur initialisant tous les attributs de classe
+     * @param monInt
+     * @param correspondance
+     * @param forme 
+     */
+    public MonInt(int monInt, String correspondance, Shape forme)
     {
         this.monInt = monInt;
         this.correspondance = correspondance;
-        this.forme = new Rectangle2D.Double(200,200,String.valueOf(monInt).length()*10/*10*(Math.log10(monInt)+1)*/,20);
+        this.forme = forme;
     }
     
     
-    /*
-        FONCTIONS
-    */
-    
+    /**
+     * Redefinition de la fonction compareTo() de l'interface Comparable
+     * @param o
+     * @return 
+     */
     @Override
     public int compareTo(MonInt o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }    
     
+    /**
+     * Permet d'aditionner deux objet MonInt
+     * @param i 
+     */
     public void additionner(int i)
     {
         this.monInt = this.monInt + i;
     }
     
+    /**
+     * 
+     * @param i 
+     */
     public void soustraire(int i)
     {
         
     }
     
+    /**
+     * 
+     * @param i 
+     */
     public void multiplier(int i)
     {
         
     }
     
+    /**
+     * 
+     * @param i 
+     */
     public void diviser(int i)
     {
         
     }    
     
+    /**
+     * 
+     * @param i 
+     */
     public void modulo(int i)
     {
         
     }
+    
     /* 
         GET-SET
     */
@@ -84,8 +118,6 @@ public class MonInt implements Comparable<MonInt>
     public void setMonInt(int monInt) {
         this.monInt = monInt;
     }       
-
-
 
     public String getCorrespondance() {
         return correspondance;
