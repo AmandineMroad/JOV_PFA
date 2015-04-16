@@ -5,7 +5,8 @@
  */
 package ihm.graphique;
 
-import ihm.listeners.ExitJOV;
+import ihm.listeners.Lis_Execute;
+import ihm.listeners.Lis_ExitJOV;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -23,7 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import util.Gestionnaire;
-import util.OpenReadMe;
+import util.Lis_OpenReadMe;
 
 /**
  *
@@ -64,12 +65,11 @@ public class ChoixDiag extends JDialog {
         });
 
         boutonReadMe = new JButton("Consulter le ReadMe");
-        boutonReadMe.addActionListener(new OpenReadMe());
+        boutonReadMe.addActionListener(new Lis_OpenReadMe());
 
         exec = new JButton("Démarrer la visualisation");
-        exec.addActionListener(new ActionListener() {
+       /* exec.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("bouton exec\naction performed : ok = " + ok);
                 if (ok) {
                     Gestionnaire g;
                     try {
@@ -85,8 +85,11 @@ public class ChoixDiag extends JDialog {
                 }
 
             }
-        });
-
+        });*/
+        
+        exec.addActionListener(new Lis_Execute(pathField));
+//exec.addActionListener(new Lis_Execute(new File(pathField.getText())));
+        
         JLabel lab = new JLabel("Veuillez séléctionner un fichier");
         JLabel consigne = new JLabel("Consignes: Fichier *.java; votre fichier doit être formaté comme décrit dans le readMe.txt.");
 
@@ -101,7 +104,7 @@ public class ChoixDiag extends JDialog {
         pan.add(exec);
 
         this.add(pan);
-        this.addWindowListener(new ExitJOV());
+        this.addWindowListener(new Lis_ExitJOV());
         this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
     }
 

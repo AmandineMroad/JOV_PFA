@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Amandine
  */
-public class ExitJOV extends WindowAdapter implements ActionListener{
+public class Lis_ExitJOV extends WindowAdapter implements ActionListener{
 
     public void windowClosing(WindowEvent e) {
         int conf = JOptionPane.showConfirmDialog(e.getComponent(), "Vous allez quitter le programme.\nEtes-vous sûr?", "Arrêt du programme", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);

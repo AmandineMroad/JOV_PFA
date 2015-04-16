@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Amandine
  */
-public class OpenReadMe implements ActionListener{
+public class Lis_OpenReadMe implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (Desktop.isDesktopSupported()){
             try {
@@ -25,7 +25,7 @@ public class OpenReadMe implements ActionListener{
                 //Desktop.getDesktop().open(new File(".\\JOV_ReadMe.txt"));
             } catch (IOException ex) {
                 System.out.println("Erreur open ReadMe");
-                Logger.getLogger(OpenReadMe.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Lis_OpenReadMe.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }

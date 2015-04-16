@@ -5,11 +5,12 @@
  */
 package ihm;
 
-import ihm.listeners.ExitJOV;
+import ihm.listeners.Lis_Execute;
+import ihm.listeners.Lis_ExitJOV;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import util.OpenReadMe;
+import util.Lis_OpenReadMe;
 
 
 /**
@@ -32,9 +33,9 @@ public class Menu extends JMenuBar {
 //            jpm_quit = new JPopupMenu("Quitter");
     public Menu() {
         //item_1_1.addActionListener(new NouveauFichier());
-        //item_1_2.addActionListener (new Replay());
-        item_2.addActionListener(new OpenReadMe());
-        item_3.addActionListener(new ExitJOV());
+        item_1_2.addActionListener (new Lis_Execute());
+        item_2.addActionListener(new Lis_OpenReadMe());
+        item_3.addActionListener(new Lis_ExitJOV());
         item_1.add(item_1_1);
         item_1.add(item_1_2);
         menu.add(item_1);

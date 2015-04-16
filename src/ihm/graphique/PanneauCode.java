@@ -78,9 +78,9 @@ public class PanneauCode extends JPanel
         lignes = new ArrayList<>();
         this.add(zoneCode);
         
-        
         this.d = d;
         this.d.width=this.d.width/3;
+        
         
         this.fichier = f;
         

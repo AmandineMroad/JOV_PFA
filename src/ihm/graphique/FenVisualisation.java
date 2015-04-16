@@ -6,7 +6,7 @@
 package ihm.graphique;
 
 import ihm.Menu;
-import ihm.listeners.ExitJOV;
+import ihm.listeners.Lis_ExitJOV;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
@@ -41,7 +41,7 @@ public class FenVisualisation extends JFrame
         d = new Dimension(850, 400);
         this.setSize(d);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.addWindowListener(new ExitJOV());
+        this.addWindowListener(new Lis_ExitJOV());
         this.setLocationRelativeTo(null);      
         
         this.setLayout(new BorderLayout(2, 2));
@@ -60,7 +60,7 @@ public class FenVisualisation extends JFrame
         d = new Dimension(850, 400);
         this.setSize(d);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.addWindowListener(new ExitJOV());
+        this.addWindowListener(new Lis_ExitJOV());
         this.setLocationRelativeTo(null);      
         
         this.setLayout(new BorderLayout(2, 2));
@@ -70,8 +70,10 @@ public class FenVisualisation extends JFrame
         
         
         this.add(pc, BorderLayout.WEST);
-      //    this.add(pc);
+       //   this.add(pc);
         this.add(pg);
+        
+ 
         this.setJMenuBar(new Menu());
         this.setVisible(false);    
     }
