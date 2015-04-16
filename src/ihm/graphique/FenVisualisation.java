@@ -5,12 +5,14 @@
  */
 package ihm.graphique;
 
+import ihm.Menu;
 import ihm.listeners.ExitJOV;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 
 /**
  *
@@ -66,8 +68,11 @@ public class FenVisualisation extends JFrame
         pc = new PanneauCode(d, f);
         pg = new PanneauGraphique(pc, f);        
         
+        
         this.add(pc, BorderLayout.WEST);
+      //    this.add(pc);
         this.add(pg);
+        this.setJMenuBar(new Menu());
         this.setVisible(false);    
     }
 
