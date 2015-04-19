@@ -5,9 +5,7 @@
  */
 package traitement;
 
-import java.awt.Dimension;
 import java.awt.Shape;
-import java.awt.geom.Rectangle2D;
 
 /**
  *

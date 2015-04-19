@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import util.Gestionnaire;
-import util.OpenReadMe;
+import util.Lis_OpenReadMe;
 
 /**
  *
@@ -82,7 +82,7 @@ public class FenChoixFic extends JFrame {
         });
         
         boutonReadMe = new JButton("Consulter le ReadMe");
-        boutonReadMe.addActionListener(new OpenReadMe());
+        boutonReadMe.addActionListener(new Lis_OpenReadMe());
         
         exec = new JButton("Démarrer la visualisation");
         exec.addActionListener(new ActionListener() {

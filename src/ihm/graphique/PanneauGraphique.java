@@ -6,10 +6,12 @@
 package ihm.graphique;
 
 import ihm.graphique.PanneauCode;
+import java.awt.Color;
 import util.Utilitaire;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,61 +32,80 @@ public class PanneauGraphique extends JPanel {
 
     // Contient un Utilitaire pour le traitement du fichier source
     private Utilitaire utilitaire;
-    
+
     // Posséde un PanneauCode pour gérer à partir du PanneauGraphique l'affiche des lignes du fichier source
     private PanneauCode pc;
-    
+
     /**
      * Constructeur recevant simplement un PanneauCode en parametre
+     *
      * @param pc
-     * @throws IOException 
+     * @throws IOException
      */
-    public PanneauGraphique(PanneauCode pc) throws IOException 
-    {
+    public PanneauGraphique(PanneauCode pc) throws IOException {
         this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        
+
         this.pc = pc;
         utilitaire = new Utilitaire(pc.getD());
     }
-    
+
+    public PanneauGraphique(PanneauCode pc, File f) throws IOException {
+        this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        this.pc = pc;
+        utilitaire = new Utilitaire(pc.getD(), f);
+    }
+
     /**
      * Redefinition de la fonction paintComponent
-     * @param g 
+     *
+     * @param g
      */
     @Override
-    public void paintComponent(Graphics g) 
-    { 
-        super.paintComponent(g); 
-	Graphics2D  g2  =  (Graphics2D)  g;   
-        
-        for(int i=0; i<utilitaire.getMesInt().size(); i++)
-        {
-           g2.draw(utilitaire.getMesInt().get(i).getForme());
-           g2.drawString(String.valueOf(utilitaire.getMesInt().get(i).getMonInt()), (int) (utilitaire.getMesInt().get(i).getForme().getBounds().getX()+2), (int) (utilitaire.getMesInt().get(i).getForme().getBounds().getY()+15));
-           g2.drawString(utilitaire.getMesInt().get(i).getCorrespondance(), (int) (utilitaire.getMesInt().get(i).getForme().getBounds().getX()-5), (int) (utilitaire.getMesInt().get(i).getForme().getBounds().getY()-5));
-        }         
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        PanneauVariable pan;
+        int size = utilitaire.getMesInt().size();
+        this.removeAll();
+
+        int marge = 5;
+        Point position = new Point(5, 5);
+        int newX, newY;
+
+        for (int i = 0; i < size; i++) {
+            pan = new PanneauVariable(utilitaire.getMesInt().get(i));
+            pan.setBounds(position.x, position.y, pan.getWidth(), pan.getHeight());
+
+            newX = position.x + pan.getWidth();
+            newY = position.y;
+
+            if (newX + pan.getWidth() > this.getWidth()) {
+                newY = position.y + pan.getHeight() + marge;
+                newX = 0;
+            }
+            position.setLocation(newX + marge, newY);
+            this.add(pan);
+        }
+
     }
-    
-    
+
     /**
-     * Permet de realiser l'affichage du CS sur le panneauCode et l'affichage des objet monInt en parralele sur 
-     * le panneauGraphique
-     * @throws IOException 
+     * Permet de realiser l'affichage du CS sur le panneauCode et l'affichage
+     * des objet monInt en parralele sur le panneauGraphique
+     *
+     * @throws IOException
      */
-    public void affichage() throws IOException
-    {
-        for(int i=0; i<utilitaire.getNbLignes(); i++)
-        {
+    public void affichage() throws IOException {
+        for (int i = 0; i < utilitaire.getNbLignes(); i++) {
             utilitaire.execution();
-            pc.getZoneCode().setText(pc.getZoneCode().getText()+"\n"+pc.getLignes().get(i));
+            pc.getZoneCode().setText(pc.getZoneCode().getText() + "\n" + pc.getLignes().get(i));
             this.repaint();
             /*
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
-            }   
-            */         
-        }        
+             try {
+             Thread.sleep(1000);
+             } catch (InterruptedException ex) {
+             Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
+             }   
+             */
+        }
     }
 }

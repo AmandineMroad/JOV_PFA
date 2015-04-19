@@ -5,16 +5,7 @@
  */
 package testvuejov;
 
-import frametest.FenChoixFic;
-import ihm.graphique.FenVisualisation;
-import ihm.graphique.PanneauGraphique;
-import ihm.graphique.PanneauCode;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Toolkit;
 import java.io.IOException;
-import javax.swing.JFrame;
 import util.Gestionnaire;
 
 /**
@@ -29,8 +20,8 @@ public class TestVueJOV {
     public static void main(String[] args) throws IOException {
         
         
-        /*Gestionnaire g = Gestionnaire.getInstance();
-        g.choixF();
+        Gestionnaire g = Gestionnaire.getInstance();
+       /* g.choixF();
         
         while(g.isReady()==false) {}
         
@@ -38,11 +29,19 @@ public class TestVueJOV {
         g.visualisationF();
         g.getFVisualisation().getPg().affichage();
         g.getFVisualisation().getPg().repaint();*/
+<<<<<<< HEAD
         
         
         FenVisualisation fv = new FenVisualisation();
         fv.getPg().affichage();
         fv.getPg().repaint();        
+=======
+        /*
+        FenVisualisation fv = new FenVisualisation();
+        fv.getPg().affichage();
+        fv.getPg().repaint();
+        */
+>>>>>>> origin/master
     }
     
     
