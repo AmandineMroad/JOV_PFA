@@ -39,10 +39,10 @@ public class TestVueJOV {
         g.getFVisualisation().getPg().affichage();
         g.getFVisualisation().getPg().repaint();*/
         
+        
         FenVisualisation fv = new FenVisualisation();
         fv.getPg().affichage();
-        fv.getPg().repaint();
-        
+        fv.getPg().repaint();        
     }
     
     

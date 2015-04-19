@@ -21,14 +21,14 @@ public class Parser
     
     // Ensemble des regex
     private final String INSTANCIATION = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]; */
-    private final String INITIALISATION_ENTIER_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]=[ESP]chiffre[ESP]; */
-    private final String INITIALISATION_VARIABLE_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]=[ESP]variable[ESP]; */
+    private final String INITIALISATION_ENTIER_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]=[ESP]chiffre[ESP]; */
+    private final String INITIALISATION_VARIABLE_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]=[ESP]variable[ESP]; */
     private final String INITIALISATION_ENTIER_DOUBLE = "";
     private final String INITIALISATION_VARIABLE_DOUBLE = "";
-    private final String AFFECTATION_ENTIER_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]chiffre[ESP];
-    private final String AFFECTATION_VARIABLE_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]variable[ESP];
+    private final String AFFECTATION_ENTIER_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]chiffre[ESP];
+    private final String AFFECTATION_VARIABLE_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]variable[ESP];
     private final String AFFECTATION_ENTIER_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[0-9]*\\s*[+-/\\*%][0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]chiffre[ESP]+-*/%[ESP]chiffre[ESP];
-    private final String AFFECTATION_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%][a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable1[ESP]=[ESP]variable[ESP]+-*/%[ESP]variable[ESP];
+    private final String AFFECTATION_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%][a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable1[ESP]=[ESP]variable[ESP]+-*/%[ESP]variable[ESP];
     private final String AFFECTATION_VARIABLE_ENTIER_DOUBLE = "";
     private final String AFFECTATION_ENTIER_VARIABLE_DOUBLE = "";
     
@@ -93,7 +93,7 @@ public class Parser
             replaceFirst("^\\s*int\\s*", " ").    // Enleve le 1er "int" au cas ou "int" soit contenus dans le nom de la variable
             replace("=", " ").   // Enleve le "="
             replace("+", " ").   // Enleve le "+"
-            replace("-", " ").   // Enleve le "-"
+            //replace("-", " ").   // Enleve le "-"
             replace("*", " ").   // Enleve le "*"
             replace("/", " ").   // Enleve le "/"
             replace("%", " ").   // Enleve le "%"
