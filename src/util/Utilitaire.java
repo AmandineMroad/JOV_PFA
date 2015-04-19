@@ -132,19 +132,13 @@ public class Utilitaire
                        // mesInt.add(new MonInt(0, parser.extraireVariable(tmp), new Rectangle2D.Double(100,100,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
                          mesInt.add(new MonInt(0, parser.extraireVariable(tmp), new Rectangle2D.Double(5,15,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
                         break;
-<<<<<<< HEAD
                     case 1: // INITIALISATION_ENTIER_SIMPLE
-                        mesInt.add(new MonInt(parser.extraireValeur(tmp), parser.extraireVariable(tmp).replace("-", ""), new Rectangle2D.Double(200,200,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
-=======
-                    case 1: // INITIALISATION_ENTIER_SIMPLE7
                         //mesInt.add(new MonInt(parser.extraireValeur(tmp), parser.extraireVariable(tmp), new Rectangle2D.Double(200,200,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
-                        mesInt.add(new MonInt(parser.extraireValeur(tmp), parser.extraireVariable(tmp), new Rectangle2D.Double(5,15,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
->>>>>>> origin/master
+                        mesInt.add(new MonInt(parser.extraireValeur(tmp), parser.extraireVariable(tmp).replace("-", ""), new Rectangle2D.Double(5,15,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
                         break;
                     case 2: // INITIALISATION_VARIABLE_SIMPLE
                         vrb = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
                         operation = parser.extraireVariable(tmp.substring(tmp.indexOf("=")));
-<<<<<<< HEAD
 
                         // Gestion des negatifs
                         if(operation.indexOf("-")!=-1)
@@ -156,11 +150,9 @@ public class Utilitaire
                         else
                             if((tmp2 = rechercheObjet(operation))!=-1)
                                 mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), vrb, new Rectangle2D.Double(300,300,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
-=======
                         if((tmp2 = rechercheObjet(operation))!=-1)
                             mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), vrb, new Rectangle2D.Double(5,15,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>    
                             //mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), vrb, new Rectangle2D.Double(300,300,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
->>>>>>> origin/master
                         break;
                     case 3: // AFFECTATION_ENTIER_SIMPLE
                         if((tmp2 = rechercheObjet(parser.extraireVariable(tmp).replace("-", "")))!=-1)

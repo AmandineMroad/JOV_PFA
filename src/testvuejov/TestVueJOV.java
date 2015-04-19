@@ -29,19 +29,17 @@ public class TestVueJOV {
         g.visualisationF();
         g.getFVisualisation().getPg().affichage();
         g.getFVisualisation().getPg().repaint();*/
-<<<<<<< HEAD
+
         
-        
-        FenVisualisation fv = new FenVisualisation();
+/*        FenVisualisation fv = new FenVisualisation();
         fv.getPg().affichage();
-        fv.getPg().repaint();        
-=======
+        fv.getPg().repaint();    */
         /*
         FenVisualisation fv = new FenVisualisation();
         fv.getPg().affichage();
         fv.getPg().repaint();
         */
->>>>>>> origin/master
+
     }
     
     
