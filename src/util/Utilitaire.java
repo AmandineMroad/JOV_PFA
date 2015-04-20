@@ -142,17 +142,14 @@ public class Utilitaire
 
                         // Gestion des negatifs
                         if(operation.indexOf("-")!=-1)
-                        {
+                        {                            
                             operation=operation.replace("-", "");
                             if((tmp2 = rechercheObjet(operation))!=-1)
-                                mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), vrb, new Rectangle2D.Double(300,300,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
+                                mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), vrb, new Rectangle2D.Double(5,15,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
                         }
                         else
                             if((tmp2 = rechercheObjet(operation))!=-1)
-                                mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), vrb, new Rectangle2D.Double(300,300,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
-                        if((tmp2 = rechercheObjet(operation))!=-1)
-                            mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), vrb, new Rectangle2D.Double(5,15,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>    
-                            //mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), vrb, new Rectangle2D.Double(300,300,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
+                                mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), vrb, new Rectangle2D.Double(5,15,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
                         break;
                     case 3: // AFFECTATION_ENTIER_SIMPLE
                         if((tmp2 = rechercheObjet(parser.extraireVariable(tmp).replace("-", "")))!=-1)
@@ -173,20 +170,22 @@ public class Utilitaire
                         else
                           if((tmp2 = rechercheObjet(vrb))!=-1)
                             if((tmp3 = rechercheObjet(operation))!=-1)
-                               mesInt.get(tmp2).setMonInt( mesInt.get(tmp3).getMonInt());
+                               mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt());
                         break;
                     case 5: // AFFECTATION_ENTIER_DOUBLE
-                            if((tmp2 =rechercheObjet(parser.extraireVariable(tmp)))!=-1)
+                        if((tmp2 =rechercheObjet(parser.extraireVariable(tmp).replace("-", "")))!=-1)
                             {
-                                if(parser.extraireOperation(tmp).equals("+"))
+
+                                //if(parser.extraireOperation(tmp).equals("+"))
+                                if((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("+"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 0));
-                                else if(parser.extraireOperation(tmp).equals("-"))
+                                else if((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("-"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 1));
-                                else if(parser.extraireOperation(tmp).equals("*"))
+                                else if((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("*"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 2));
-                                else if(parser.extraireOperation(tmp).equals("/"))
+                                else if((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("/"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 3));                                
-                                else if(parser.extraireOperation(tmp).equals("%"))
+                                else if((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("%"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 4));                                     
                             }   
                         break;
