@@ -9,7 +9,6 @@ import ihm.graphique.ChoixDiag;
 import ihm.graphique.FenVisualisation;
 import ihm.graphique.PanneauCode;
 import ihm.graphique.PanneauGraphique;
-import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
@@ -29,7 +28,6 @@ public final class Gestionnaire {
     private Gestionnaire() throws IOException {
         ready = false;
         fchoix = new ChoixDiag();
-        // fvisualisation = new FenVisualisation();
         fchoix.setVisible(true);
     }
 
@@ -48,20 +46,24 @@ public final class Gestionnaire {
         this.execute();
     }
 
+    /**
+     * Masque la fenetre de choix de fichier, initialise la fenetre de
+     * visualisation et lance l'exécution
+     *
+     * @throws IOException
+     */
     public void execute() throws IOException {
         if (ready) {
             System.out.println("Gestionnaire.execute()");
             fchoix.dispose();
-            if (fvisualisation == null) {
-                fvisualisation = new FenVisualisation(f);
-            }
-            else{
+            if (fvisualisation != null) {
                 FenVisualisation fen_tmp = fvisualisation;
-                fvisualisation = new FenVisualisation(f);
                 fen_tmp.dispose();
+                fen_tmp = null;
+                System.gc(); //garbage collector
             }
-            /*else {fvisualisation.getPc().removeAll();
-            fvisualisation.getPg().removeAll();}*/
+
+            fvisualisation = new FenVisualisation(f);
             fvisualisation.setVisible(true);
             fvisualisation.getPg().affichage();
 
@@ -83,45 +85,24 @@ public final class Gestionnaire {
         return ready;
     }
 
-    /*    public void choixF() throws HeadlessException, IOException
-     {
-     fchoix = new FenChoixFic();
-     }
-     */
-    public void visualisationF() throws IOException {
-        fchoix.setVisible(false);
-
-        fvisualisation = new FenVisualisation();
-    }
-
     public FenVisualisation getFVisualisation() {
         return fvisualisation;
     }
-    
-    public void reset(){
+
+    public void reset() {
         f = null;
         ready = false;
     }
-    /*    
-     public FenChoixFic getFchoix()
-     {
-     return fchoix;
-     }
-     */
-    
-    public FenVisualisation getFenetre(){
-        return fvisualisation;
-    }
-    
-    public PanneauCode getPanCode(){
+
+    public PanneauCode getPanCode() {
         return fvisualisation.getPc();
     }
-    
-    public PanneauGraphique getPanGraph(){
+
+    public PanneauGraphique getPanGraph() {
         return fvisualisation.getPg();
     }
-    
-    public ChoixDiag getChoixDiag(){
+
+    public ChoixDiag getChoixDiag() {
         return fchoix;
     }
 }

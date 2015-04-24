@@ -22,7 +22,6 @@ public class Lis_NouveauFichier implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            //TODO
             Gestionnaire gest = Gestionnaire.getInstance();
             FenVisualisation fenetre = gest.getFVisualisation();
             fenetre.getPc().removeAll();

@@ -27,7 +27,6 @@ public class Lis_Stop implements ActionListener{
             gest.getPanGraph().affichageBoucle();
         } catch (IOException ex) {
             System.out.println("ERREUR");//TODO
-            // JOptionPane.showMessageDialog(root, "ERREUR FATALE", "ERREUR", JOptionPane.WARNING_MESSAGE);
             Logger.getLogger(Lis_Next.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

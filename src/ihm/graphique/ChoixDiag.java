@@ -11,23 +11,17 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import util.Gestionnaire;
-import util.Lis_OpenReadMe;
+import ihm.listeners.Lis_OpenReadMe;
 
 /**
- *
+ *  Fenêtre de choix de fichier
  * @author Amandine
  */
 public class ChoixDiag extends JDialog {
@@ -38,6 +32,9 @@ public class ChoixDiag extends JDialog {
     JTextField pathField;
     boolean ok;
 
+    /**
+     * Constructeur
+     */
     public ChoixDiag() {
         this.setTitle("Java Object Viewer - Choix du fichier");
 
@@ -67,33 +64,12 @@ public class ChoixDiag extends JDialog {
         boutonReadMe = new JButton("Consulter le ReadMe");
         boutonReadMe.addActionListener(new Lis_OpenReadMe());
 
-        exec = new JButton("Démarrer la visualisation");
-       /* exec.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (ok) {
-                    Gestionnaire g;
-                    try {
-                        g = Gestionnaire.getInstance();
-                        g.setFileAndExecute(new File(pathField.getText()));
-                    } catch (IOException ex) {
-                        System.out.println("ERREUR GESTIONNAIRE");
-                        Logger.getLogger(ChoixDiag.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(rootPane, "Vous devez séléctionner un fichier.", "Java Object Viewer - ERREUR", JOptionPane.WARNING_MESSAGE);
-                }
-
-            }
-        });*/
-        
+        exec = new JButton("Démarrer la visualisation");   
         exec.addActionListener(new Lis_Execute(pathField));
-//exec.addActionListener(new Lis_Execute(new File(pathField.getText())));
         
         JLabel lab = new JLabel("Veuillez séléctionner un fichier");
         JLabel consigne = new JLabel("Consignes: Fichier *.java; votre fichier doit être formaté comme décrit dans le readMe.txt.");
 
-        //  Container c = this.getContentPane();
         JPanel pan = new JPanel();
 
         pan.add(lab);

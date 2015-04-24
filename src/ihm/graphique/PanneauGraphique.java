@@ -5,25 +5,14 @@
  */
 package ihm.graphique;
 
-import ihm.Menu;
-import ihm.graphique.PanneauCode;
-import java.awt.Color;
 import util.Utilitaire;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import util.Gestionnaire;
 
 /**
@@ -50,7 +39,12 @@ public class PanneauGraphique extends JPanel {
         this.pc = pc;
         utilitaire = new Utilitaire(pc.getD());
     }
-
+    /**
+     * Constructeur du panneau graphique
+     * @param pc : le panneau code auquel il est attaché
+     * @param f : le fichier source à visualiser
+     * @throws IOException 
+     */
     public PanneauGraphique(PanneauCode pc, File f) throws IOException {
         this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         this.pc = pc;
@@ -90,56 +84,38 @@ public class PanneauGraphique extends JPanel {
 
     }
 
-    /**
-     * Permet de realiser l'affichage du CS sur le panneauCode et l'affichage
-     * des objet monInt en parralele sur le panneauGraphique
-     *
-     * @throws IOException
-     */
-    /*  public void affichage() throws IOException {
-     for (int i = 0; i < utilitaire.getNbLignes(); i++) {
-     utilitaire.execution();
-     pc.getZoneCode().setText(pc.getZoneCode().getText() + "\n" + pc.getLignes().get(i));
-     this.repaint();
-            
-     try {
-     Thread.sleep(1000);
-     } catch (InterruptedException ex) {
-     Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
-     }   
-             
-     }
-        
-     }
-     }*/
     int ligneCourante = 0;
 
+    /**
+     * Traite et affiche l'ensemble des instructions restantes
+     * @throws IOException 
+     */
     public void affichageBoucle() throws IOException {
         for (int i = ligneCourante; i < utilitaire.getNbLignes(); i++) {
             utilitaire.execution();
             pc.getZoneCode().setText(pc.getZoneCode().getText() + "\n" + pc.getLignes().get(i));
             this.repaint();
         }
-    
+
     }
-    
-    
-
-    
-
+    /**
+     * Traite et affiche la ligne courante
+     */
     public void affichage() {
+        System.out.println("PG_ Affichage() ligne courante = " + ligneCourante + "/" + utilitaire.getNbLignes());
         if (ligneCourante < utilitaire.getNbLignes()) {
-            System.out.println("PG_ Affichage()");
+            System.out.println("PG_ Affichage() dans le if");
             try {
                 utilitaire.execution();
             } catch (IOException ex) {
                 System.out.println("ERREUR Affichage()");
                 Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
             }
-            pc.getZoneCode().setText(pc.getZoneCode().getText() + "\n" + pc.getLignes().get(ligneCourante));
-            ligneCourante++;
-            this.repaint();
-        } else {
+
+            this.afficheLigne();
+        }
+
+        if (ligneCourante == utilitaire.getNbLignes()){
             try {
                 //disable nextButton
                 Gestionnaire gest = Gestionnaire.getInstance();
@@ -147,7 +123,19 @@ public class PanneauGraphique extends JPanel {
             } catch (IOException ex) {
                 Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        System.out.println("Fin affichage: ligne courante = " + ligneCourante);
+    }
 
+    /**
+     * Affiche la ligne courante sur le panneau code
+     */
+    public void afficheLigne() {
+        if (ligneCourante < utilitaire.getNbLignes()) {
+            pc.getZoneCode().setText(pc.getZoneCode().getText() + "\n" + pc.getLignes().get(ligneCourante));
+            ligneCourante++;
+            this.repaint();
         }
     }
+
 }

@@ -12,7 +12,6 @@ import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 
 /**
  *
@@ -35,7 +34,7 @@ public class FenVisualisation extends JFrame
     private Menu menuBar;
     
     /**
-     * 
+     * A SUPPRIMER
      * @throws IOException 
      */
     public FenVisualisation() throws IOException
@@ -57,6 +56,11 @@ public class FenVisualisation extends JFrame
         this.setVisible(true);    
     }
 
+    /**
+     * Constructeur
+     * @param f : le fichier à visualiser
+     * @throws IOException 
+     */
     public FenVisualisation(File f) throws IOException
     {
         d = new Dimension(850, 400);
@@ -70,9 +74,9 @@ public class FenVisualisation extends JFrame
         pc = new PanneauCode(d, f);
         pg = new PanneauGraphique(pc, f);        
         
-        
-      //  this.add(pc, BorderLayout.WEST);
-          this.add(pc);
+
+        this.add(pc, BorderLayout.WEST);
+       //   this.add(pc);
         this.add(pg);
         
         menuBar = new Menu();
@@ -80,6 +84,7 @@ public class FenVisualisation extends JFrame
         this.setVisible(false);    
     }
 
+    /* Accesseurs */
     
     public PanneauCode getPc() {
         return pc;

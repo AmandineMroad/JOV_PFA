@@ -68,7 +68,13 @@ public class PanneauCode extends JPanel
        
         enregistrement();
     }
-    
+    /**
+     * Constructeur
+     * @param d : dimension 
+     * @param f : fichier à visualiser
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public PanneauCode(Dimension d, File f) throws FileNotFoundException, IOException
     {
         this.setBorder(javax.swing.BorderFactory.createEtchedBorder());

@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import util.Gestionnaire;
 
 /**
@@ -27,7 +26,6 @@ public class Lis_Next implements ActionListener {
             gest.getPanGraph().affichage();
         } catch (IOException ex) {
             System.out.println("ERREUR");//TODO
-            // JOptionPane.showMessageDialog(root, "ERREUR FATALE", "ERREUR", JOptionPane.WARNING_MESSAGE);
             Logger.getLogger(Lis_Next.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -16,29 +16,12 @@ public class TestVueJOV {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
         
         Gestionnaire g = Gestionnaire.getInstance();
-       /* g.choixF();
-        
-        while(g.isReady()==false) {}
-        
-        System.out.println("Fin boucle");
-        g.visualisationF();
-        g.getFVisualisation().getPg().affichage();
-        g.getFVisualisation().getPg().repaint();*/
-
-        
-/*        FenVisualisation fv = new FenVisualisation();
-        fv.getPg().affichage();
-        fv.getPg().repaint();    */
-        /*
-        FenVisualisation fv = new FenVisualisation();
-        fv.getPg().affichage();
-        fv.getPg().repaint();
-        */
-
+       
     }
     
     

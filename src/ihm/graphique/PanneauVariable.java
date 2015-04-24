@@ -20,7 +20,10 @@ public class PanneauVariable extends JPanel {
 
     MonInt mi;
     
-
+    /**
+     * Constructeur 
+     * @param monInt: l'objet MonInt à modéliser 
+     */
     public PanneauVariable(MonInt monInt) {
         mi = monInt;
         this.setSize(new Dimension(110, 40));

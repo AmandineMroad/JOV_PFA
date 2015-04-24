@@ -27,7 +27,7 @@ public class MonInt implements Comparable<MonInt>
     // Permet la représentation graphique de l'objet
     private Shape forme;
     
-    //Permet de détecter si l'élément est modifié
+    // Permet de détecter si l'élément est modifié
     public boolean modif;
     
     /**

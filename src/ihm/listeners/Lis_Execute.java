@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import util.Gestionnaire;
 
 /**
- *
+ * Listener d'exécution
  * @author Amandine
  */
 public class Lis_Execute implements ActionListener {
@@ -24,11 +24,17 @@ public class Lis_Execute implements ActionListener {
     private JTextField textField;
     private boolean replay;
 
+    /**
+     * Constructeur 
+     * @param jtf : le JTextField de la fenêtre de choix de fichier
+     */
     public Lis_Execute(JTextField jtf) {
         textField = jtf;
         replay = false;
     }
-
+    /**
+     * Constructeur
+     */
     public Lis_Execute() {
         replay = true;
     }

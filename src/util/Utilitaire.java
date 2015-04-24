@@ -67,6 +67,13 @@ public class Utilitaire {
         NombreLignes();
     }
 
+    /**
+     * Constructeur
+     * @param d
+     * @param f
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public Utilitaire(Dimension d, File f) throws FileNotFoundException, IOException {
         parser = new Parser();
         mesInt = new ArrayList<>();
@@ -90,7 +97,6 @@ public class Utilitaire {
         br.close();
         fr.close();
 
-        //fr = new FileReader(nomF);
         fr = new FileReader(fichier);
         br = new BufferedReader(fr);
     }
