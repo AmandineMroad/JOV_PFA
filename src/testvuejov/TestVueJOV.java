@@ -19,7 +19,6 @@ public class TestVueJOV {
      */
     public static void main(String[] args) throws IOException {
         
-        
         Gestionnaire g = Gestionnaire.getInstance();
        /* g.choixF();
         

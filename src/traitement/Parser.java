@@ -27,7 +27,7 @@ public class Parser
     private final String INITIALISATION_VARIABLE_DOUBLE = "";
     private final String AFFECTATION_ENTIER_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]chiffre[ESP];
     private final String AFFECTATION_VARIABLE_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]variable[ESP];
-    private final String AFFECTATION_ENTIER_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*[+-/\\*%][0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]chiffre[ESP]+-*/%[ESP]chiffre[ESP];
+    private final String AFFECTATION_ENTIER_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*[+-/\\*%]\\s*-?\\s*[0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]chiffre[ESP]+-*/%[ESP]chiffre[ESP];
     private final String AFFECTATION_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%][a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable1[ESP]=[ESP]variable[ESP]+-*/%[ESP]variable[ESP];
     private final String AFFECTATION_VARIABLE_ENTIER_DOUBLE = "";
     private final String AFFECTATION_ENTIER_VARIABLE_DOUBLE = "";
@@ -124,10 +124,56 @@ public class Parser
      */
     public String extraireOperation(String ligne)
     {
-        return ligne.replace(";", " ").
+        ligne = ligne.substring(ligne.indexOf("=")+1);    // Garde que ce qui est à droite de "="
+        ligne = ligne.replaceAll(";", "");  // Vire les ";"
+        ligne = ligne.replaceAll("\\s", "");  // Vire les espaces
+        
+        System.out.println("extraireOperation:"+ligne);
+        
+        if(Pattern.compile("^[0-9]*[+-/\\*%][0-9]*$").matcher(ligne).find())    // Si nb OP nb
+        {
+            System.out.println("nb OP nb");
+            ligne = ligne.replaceAll("\\w", " ").replaceAll("\\s", "");
+            return ligne;
+        }
+        else if(Pattern.compile("^-[0-9]*[+-/\\*%][0-9]*$").matcher(ligne).find())   // Si - nb OP nb
+        {
+            System.out.println("- nb OP nb");
+            ligne = ligne.replaceFirst("-", " ").replaceAll("\\w", " ").replaceAll("\\s", "");
+            System.out.println(ligne);
+            if("-".equals(ligne))
+                return ligne+"1";
+            else
+                return ligne;
+        }
+        else if(Pattern.compile("^[0-9]*[+-/\\*%]*-[0-9]*$").matcher(ligne).find())   // Si nb OP - nb
+        {
+            System.out.println("nb OP - nb");
+            ligne  = ligne.replaceAll("\\w", " ").replaceAll("\\s", "");
+            ligne = String.valueOf(ligne.charAt(0));
+            System.out.println(ligne);
+            if("-".equals(ligne))
+                return ligne+"2";
+            else
+                return ligne;
+        }
+        else if((Pattern.compile("^-[0-9]*[+-/\\*%]*-[0-9]*$").matcher(ligne).find()))  // Si - nb OP - nb
+        {
+            System.out.println("- nb OP - nb");
+            ligne  = ligne.replaceAll("\\w", " ").replaceAll("\\s", ""); 
+            ligne.replaceFirst("-", " ").replaceAll("\\s", ""); 
+            ligne = String.valueOf(ligne.charAt(0));
+            System.out.println(ligne);
+            return ligne;            
+        }        
+        else
+        {System.out.println("NULL");
+            return null;
+        }
+        /*return ligne.replace(";", " ").
                 replaceAll("\\w", " ").
                 replace("=", " ").
-                replaceAll("\\s", "");
+                replaceAll("\\s", "");*/
     }
     
     /**
@@ -138,21 +184,39 @@ public class Parser
      */
     public int extraireOperationADeuxOp(String ligne, int type)
     {
+        //System.out.println("ligne1: "+ligne);
+        
         ligne = ligne.substring(ligne.indexOf("=")+1);
         
-        System.out.println(ligne);
+        //System.out.println(ligne);
         
         ligne = ligne.replace(";", "").replaceAll("\\s", "");
+        
+        //System.out.println("ligne2: "+ligne);
         
         if(type == 0)   // ADDITION
         {
             String s[] = ligne.split("\\+");
             return (Integer.parseInt(s[0])+Integer.parseInt(s[1]));
         }
-        else if(type == 1)  // SOUSTRACTION
+        else if(type == 1)  // SOUSTRACTION nb OP nb
         {
             String s[] = ligne.split("-");
+            //System.out.println(s[0]+" "+s[1]);
             return (Integer.parseInt(s[0])-Integer.parseInt(s[1]));
+        }
+        else if(type == 11) // SOUSTRACTON - nb OP nb
+        {
+            ligne = ligne.replaceFirst("-", "");
+            String s[] = ligne.split("-");
+            //System.out.println(s[0]+" "+s[1]);
+            return (-Integer.parseInt(s[0])-Integer.parseInt(s[1]));            
+        }
+        else if(type == 12) // SOUSTRACTON nb OP - nb "2 - - 1"
+        {
+            String d = ligne.substring(0, ligne.indexOf("-"));
+            String f = ligne.substring(ligne.indexOf("-")+1);
+            return (Integer.parseInt(d) - (Integer.parseInt(f)));             
         }
         else if(type == 2)  // MUTIPLICATION
         {
@@ -172,6 +236,18 @@ public class Parser
         else
             return -1;
     }
+    
+    int nbMoins(String s)
+    {
+        int cpt=0;
+        for(int i=0; i<s.length(); i++)
+            if(s.charAt(i)=='-')
+                cpt++;
+        
+        System.out.println("nbMoins: "+cpt);
+        return cpt;
+    }
+    
     
     /*
         GET-SET

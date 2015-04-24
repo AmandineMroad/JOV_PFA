@@ -123,7 +123,6 @@ public class Utilitaire
         {
             // res recupere le type de regex de la ligne
             res = parser.correspondRegex(tmp);
-            
             // -1 correspond à aucune regex
             if(res!=-1)
                 switch(res)
@@ -173,19 +172,24 @@ public class Utilitaire
                                mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt());
                         break;
                     case 5: // AFFECTATION_ENTIER_DOUBLE
+                        System.out.println("CAS 5 : "+tmp);
                         if((tmp2 =rechercheObjet(parser.extraireVariable(tmp).replace("-", "")))!=-1)
                             {
-
-                                //if(parser.extraireOperation(tmp).equals("+"))
-                                if((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("+"))
+                                if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("+"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 0));
-                                else if((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("-"))
-                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 1));
-                                else if((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("*"))
+                                if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-"))
+                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 1));                                
+                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-1"))
+                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 11));
+                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-2"))
+                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 12)); 
+//                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-3"))
+//                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 13));                                     
+                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("*"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 2));
-                                else if((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("/"))
+                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("/"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 3));                                
-                                else if((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("%"))
+                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("%"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 4));                                     
                             }   
                         break;
