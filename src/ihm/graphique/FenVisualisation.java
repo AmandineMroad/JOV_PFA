@@ -32,6 +32,8 @@ public class FenVisualisation extends JFrame
     // 
     private Dimension d;
     
+    private Menu menuBar;
+    
     /**
      * 
      * @throws IOException 
@@ -73,8 +75,8 @@ public class FenVisualisation extends JFrame
        //   this.add(pc);
         this.add(pg);
         
- 
-        this.setJMenuBar(new Menu());
+        menuBar = new Menu();
+        this.setJMenuBar(menuBar);
         this.setVisible(false);    
     }
 
@@ -95,5 +97,7 @@ public class FenVisualisation extends JFrame
         this.pg = pg;
     }
     
-    
+    public Menu getMenu(){
+        return menuBar;
+    }
 }

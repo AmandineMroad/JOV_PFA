@@ -27,6 +27,9 @@ public class MonInt implements Comparable<MonInt>
     // Permet la représentation graphique de l'objet
     private Shape forme;
     
+    //Permet de détecter si l'élément est modifié
+    public boolean modif;
+    
     /**
      * Constructeur par défaut
      */
@@ -47,6 +50,7 @@ public class MonInt implements Comparable<MonInt>
         this.monInt = monInt;
         this.correspondance = correspondance;
         this.forme = forme;
+        this.modif = true;
     }
     
     
@@ -67,6 +71,7 @@ public class MonInt implements Comparable<MonInt>
     public void additionner(int i)
     {
         this.monInt = this.monInt + i;
+        this.modif = true;
     }
     
     /**
@@ -115,6 +120,7 @@ public class MonInt implements Comparable<MonInt>
 
     public void setMonInt(int monInt) {
         this.monInt = monInt;
+        modif = true;
     }       
 
     public String getCorrespondance() {

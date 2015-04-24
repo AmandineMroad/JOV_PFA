@@ -105,6 +105,7 @@ public class Utilitaire
      */
     public void execution() throws FileNotFoundException, IOException
     {
+        System.out.println("Utilitaire.execution()");
         String tmp;
         String s[];
         String vrb;
