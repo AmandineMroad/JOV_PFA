@@ -5,33 +5,32 @@
  */
 package ihm.listeners;
 
-import ihm.graphique.FenVisualisation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import util.Gestionnaire;
 
 /**
  *
  * @author Amandine
  */
-public class Lis_NouveauFichier implements ActionListener{
+public class Lis_Next implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("Lis_next()");
         try {
-            //TODO
             Gestionnaire gest = Gestionnaire.getInstance();
-            FenVisualisation fenetre = gest.getFVisualisation();
-            fenetre.getPc().removeAll();
-            fenetre.getPg().removeAll();
-            fenetre.setVisible(false);
-            gest.getChoixDiag().setVisible(true);
+            gest.getPanGraph().affichage();
         } catch (IOException ex) {
-            Logger.getLogger(Lis_NouveauFichier.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERREUR");//TODO
+            // JOptionPane.showMessageDialog(root, "ERREUR FATALE", "ERREUR", JOptionPane.WARNING_MESSAGE);
+            Logger.getLogger(Lis_Next.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
-    
+
 }

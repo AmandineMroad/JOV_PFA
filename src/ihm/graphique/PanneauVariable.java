@@ -5,6 +5,7 @@
  */
 package ihm.graphique;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -29,6 +30,11 @@ public class PanneauVariable extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        if (mi.modif){
+            System.out.println("PanneauVariable.paint: MODIF");
+            g2.setColor(Color.red);
+            mi.modif = false;
+        }
         g2.draw(mi.getForme());
         g2.drawString(String.valueOf(mi.getMonInt()), (int) (mi.getForme().getBounds().getX() + 2), (int) (mi.getForme().getBounds().getY() + 15));
         g2.drawString(mi.getCorrespondance(), (int) (mi.getForme().getBounds().getX() - 5), (int) (mi.getForme().getBounds().getY() - 5));
