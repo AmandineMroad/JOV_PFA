@@ -96,34 +96,46 @@ public class PanneauGraphique extends JPanel {
      *
      * @throws IOException
      */
-  /*  public void affichage() throws IOException {
-        for (int i = 0; i < utilitaire.getNbLignes(); i++) {
+    /*  public void affichage() throws IOException {
+     for (int i = 0; i < utilitaire.getNbLignes(); i++) {
+     utilitaire.execution();
+     pc.getZoneCode().setText(pc.getZoneCode().getText() + "\n" + pc.getLignes().get(i));
+     this.repaint();
+            
+     try {
+     Thread.sleep(1000);
+     } catch (InterruptedException ex) {
+     Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
+     }   
+             
+     }
+        
+     }
+     }*/
+    int ligneCourante = 0;
+
+    public void affichageBoucle() throws IOException {
+        for (int i = ligneCourante; i < utilitaire.getNbLignes(); i++) {
             utilitaire.execution();
             pc.getZoneCode().setText(pc.getZoneCode().getText() + "\n" + pc.getLignes().get(i));
             this.repaint();
-            
-             try {
-             Thread.sleep(1000);
-             } catch (InterruptedException ex) {
-             Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
-             }   
-             
         }
-        
+    
     }
-}*/
     
-    int ligneCourante = 0;
     
+
+    
+
     public void affichage() {
-        if(ligneCourante < utilitaire.getNbLignes()){
-        System.out.println("PG_ Affichage()");
-        try {
-            utilitaire.execution();
-        } catch (IOException ex) {
-            System.out.println("ERREUR Affichage()");
-            Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        if (ligneCourante < utilitaire.getNbLignes()) {
+            System.out.println("PG_ Affichage()");
+            try {
+                utilitaire.execution();
+            } catch (IOException ex) {
+                System.out.println("ERREUR Affichage()");
+                Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
+            }
             pc.getZoneCode().setText(pc.getZoneCode().getText() + "\n" + pc.getLignes().get(ligneCourante));
             ligneCourante++;
             this.repaint();
@@ -135,7 +147,7 @@ public class PanneauGraphique extends JPanel {
             } catch (IOException ex) {
                 Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
+
         }
     }
 }

@@ -71,8 +71,8 @@ public class FenVisualisation extends JFrame
         pg = new PanneauGraphique(pc, f);        
         
         
-        this.add(pc, BorderLayout.WEST);
-       //   this.add(pc);
+      //  this.add(pc, BorderLayout.WEST);
+          this.add(pc);
         this.add(pg);
         
         menuBar = new Menu();

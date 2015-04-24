@@ -8,6 +8,8 @@ package ihm;
 import ihm.listeners.Lis_Execute;
 import ihm.listeners.Lis_ExitJOV;
 import ihm.listeners.Lis_Next;
+import ihm.listeners.Lis_NouveauFichier;
+import ihm.listeners.Lis_Stop;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -34,9 +36,10 @@ public class Menu extends JMenuBar {
     
     
     JMenuItem next;
+    JMenuItem stop;
 
     public Menu() {
-        //item_1_1.addActionListener(new NouveauFichier());
+        item_1_1.addActionListener(new Lis_NouveauFichier());
         item_1_2.addActionListener (new Lis_Execute());
         item_2.addActionListener(new Lis_OpenReadMe());
         item_3.addActionListener(new Lis_ExitJOV());
@@ -48,13 +51,16 @@ public class Menu extends JMenuBar {
         
         //next.addActionListener(new Lis_Next());
         ImageIcon iconeNext = new ImageIcon(".\\src\\doc\\icon-next.gif");
-        
+        ImageIcon iconeStop = new ImageIcon(".\\src\\doc\\button-stop.png");
         next = new JMenuItem(iconeNext);
-        
-        
+        stop = new JMenuItem(iconeStop);
+       
+                
         next.addActionListener(new Lis_Next());
+        stop.addActionListener(new Lis_Stop());
         this.add(menu);
         this.add(next);
+        this.add(stop);
         
         //this.setVisible(true);
     }

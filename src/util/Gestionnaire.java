@@ -55,6 +55,13 @@ public final class Gestionnaire {
             if (fvisualisation == null) {
                 fvisualisation = new FenVisualisation(f);
             }
+            else{
+                FenVisualisation fen_tmp = fvisualisation;
+                fvisualisation = new FenVisualisation(f);
+                fen_tmp.dispose();
+            }
+            /*else {fvisualisation.getPc().removeAll();
+            fvisualisation.getPg().removeAll();}*/
             fvisualisation.setVisible(true);
             fvisualisation.getPg().affichage();
 
@@ -112,5 +119,9 @@ public final class Gestionnaire {
     
     public PanneauGraphique getPanGraph(){
         return fvisualisation.getPg();
+    }
+    
+    public ChoixDiag getChoixDiag(){
+        return fchoix;
     }
 }

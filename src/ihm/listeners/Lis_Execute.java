@@ -42,6 +42,7 @@ public class Lis_Execute implements ActionListener {
                 g.execute();
             }
             else if (!textField.getText().isEmpty()){
+                System.err.println("Lis_execute : elseIf; file = "+textField.getText());
                 g.setFileAndExecute(new File(textField.getText()));
             }
             else {
