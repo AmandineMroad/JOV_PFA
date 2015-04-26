@@ -23,14 +23,14 @@ public class Parser
     private final String INSTANCIATION = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]; */
     private final String INITIALISATION_ENTIER_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]=[ESP]chiffre[ESP]; */
     private final String INITIALISATION_VARIABLE_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; /* [ESP]int[ESP]variable[ESP]=[ESP]variable[ESP]; */
-    private final String INITIALISATION_ENTIER_DOUBLE = "";
-    private final String INITIALISATION_VARIABLE_DOUBLE = "";
+        private final String INITIALISATION_ENTIER_DOUBLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*[+-/\\*%]\\s*-?\\s*[0-9]*\\s*;$";
+        private final String INITIALISATION_VARIABLE_DOUBLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%]\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$";
     private final String AFFECTATION_ENTIER_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]chiffre[ESP];
     private final String AFFECTATION_VARIABLE_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]variable[ESP];
     private final String AFFECTATION_ENTIER_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*[+-/\\*%]\\s*-?\\s*[0-9]*\\s*;$"; // [ESP]variable[ESP]=[ESP]chiffre[ESP]+-*/%[ESP]chiffre[ESP];
-    private final String AFFECTATION_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%][a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable1[ESP]=[ESP]variable[ESP]+-*/%[ESP]variable[ESP];
-    private final String AFFECTATION_VARIABLE_ENTIER_DOUBLE = "";
-    private final String AFFECTATION_ENTIER_VARIABLE_DOUBLE = "";
+    private final String AFFECTATION_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%]\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable1[ESP]=[ESP]variable[ESP]+-*/%[ESP]variable[ESP];
+        private final String AFFECTATION_VARIABLE_ENTIER_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%]\\s*-?\\s*[0-9]*\\s*;$";
+        private final String AFFECTATION_ENTIER_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*[+-/\\*%]\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$";
     
     // AL<> qui va contenir les regex
     private ArrayList<String>regex;
@@ -55,10 +55,14 @@ public class Parser
         regex.add(INSTANCIATION);
         regex.add(INITIALISATION_ENTIER_SIMPLE);
         regex.add(INITIALISATION_VARIABLE_SIMPLE);
+        regex.add(INITIALISATION_ENTIER_DOUBLE);
+        regex.add(INITIALISATION_VARIABLE_DOUBLE);
         regex.add(AFFECTATION_ENTIER_SIMPLE);
         regex.add(AFFECTATION_VARIABLE_SIMPLE);
         regex.add(AFFECTATION_ENTIER_DOUBLE);
         regex.add(AFFECTATION_VARIABLE_DOUBLE);
+        regex.add(AFFECTATION_VARIABLE_ENTIER_DOUBLE);
+        regex.add(AFFECTATION_ENTIER_VARIABLE_DOUBLE);
     }
  
     
@@ -130,13 +134,13 @@ public class Parser
         
         System.out.println("extraireOperation:"+ligne);
         
-        if(Pattern.compile("^[0-9]*[+-/\\*%][0-9]*$").matcher(ligne).find())    // Si nb OP nb
+        if(Pattern.compile("^[a-zA-Z_0-9]*[+-/\\*%][a-zA-Z_0-9]*$").matcher(ligne).find())    // Si nb OP nb
         {
             System.out.println("nb OP nb");
             ligne = ligne.replaceAll("\\w", " ").replaceAll("\\s", "");
             return ligne;
         }
-        else if(Pattern.compile("^-[0-9]*[+-/\\*%][0-9]*$").matcher(ligne).find())   // Si - nb OP nb
+        else if(Pattern.compile("^-[a-zA-Z_0-9]*[+-/\\*%][a-zA-Z_0-9]*$").matcher(ligne).find())   // Si - nb OP nb
         {
             System.out.println("- nb OP nb");
             ligne = ligne.replaceFirst("-", " ").replaceAll("\\w", " ").replaceAll("\\s", "");
@@ -146,7 +150,7 @@ public class Parser
             else
                 return ligne;
         }
-        else if(Pattern.compile("^[0-9]*[+-/\\*%]*-[0-9]*$").matcher(ligne).find())   // Si nb OP - nb
+        else if(Pattern.compile("^[a-zA-Z_0-9]*[+-/\\*%]*-[a-zA-Z_0-9]*$").matcher(ligne).find())   // Si nb OP - nb
         {
             System.out.println("nb OP - nb");
             ligne  = ligne.replaceAll("\\w", " ").replaceAll("\\s", "");
@@ -157,14 +161,18 @@ public class Parser
             else
                 return ligne;
         }
-        else if((Pattern.compile("^-[0-9]*[+-/\\*%]*-[0-9]*$").matcher(ligne).find()))  // Si - nb OP - nb
+        else if((Pattern.compile("^-[a-zA-Z_0-9]*[+-/\\*%]*-[a-zA-Z_0-9]*$").matcher(ligne).find()))  // Si - nb OP - nb
         {
             System.out.println("- nb OP - nb");
-            ligne  = ligne.replaceAll("\\w", " ").replaceAll("\\s", ""); 
-            ligne.replaceFirst("-", " ").replaceAll("\\s", ""); 
+            ligne  = ligne.replaceAll("\\w", " ").replaceAll("\\s", ""); // -+-
+            ligne = ligne.replaceFirst("-", " ").replaceAll("\\s", "");  // +-
+            System.out.println("LIGNE : "+ligne);
             ligne = String.valueOf(ligne.charAt(0));
-            System.out.println(ligne);
-            return ligne;            
+            System.out.println("LIGNE FINALE : "+ligne);
+            if("-".equals(ligne))
+                return ligne+"3";
+            else
+                return ligne;           
         }        
         else
         {System.out.println("NULL");
@@ -218,6 +226,14 @@ public class Parser
             String f = ligne.substring(ligne.indexOf("-")+1);
             return (Integer.parseInt(d) - (Integer.parseInt(f)));             
         }
+        else if(type == 13) // SOUSTRACTON - nb OP - nb "- 10 - - 5"
+        {
+            ligne = ligne.replaceFirst("-", "");
+            String d = ligne.substring(0, ligne.indexOf("-"));
+            String f = ligne.substring(ligne.indexOf("-")+1);
+            System.out.println("d:"+d+" f:"+f);
+            return (-Integer.parseInt(d) - (Integer.parseInt(f)));             
+        }        
         else if(type == 2)  // MUTIPLICATION
         {
             String s[] = ligne.split("\\*");
@@ -236,18 +252,6 @@ public class Parser
         else
             return -1;
     }
-    
-    int nbMoins(String s)
-    {
-        int cpt=0;
-        for(int i=0; i<s.length(); i++)
-            if(s.charAt(i)=='-')
-                cpt++;
-        
-        System.out.println("nbMoins: "+cpt);
-        return cpt;
-    }
-    
     
     /*
         GET-SET

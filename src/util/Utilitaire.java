@@ -155,12 +155,18 @@ public class Utilitaire {
                             mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), vrb, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
                         }
                         break;
-                    case 3: // AFFECTATION_ENTIER_SIMPLE
+                    case 3: // INITIALISATION_ENTIER_DOUBLE
+                        
+                        break;
+                    case 4: //  INITIALISATION_VARIABLE_DOUBLE
+                        
+                        break;
+                    case 5: // AFFECTATION_ENTIER_SIMPLE
                         if ((tmp2 = rechercheObjet(parser.extraireVariable(tmp).replace("-", ""))) != -1) {
                             mesInt.get(tmp2).setMonInt(parser.extraireValeur(tmp));
                         }
                         break;
-                    case 4: // AFFECTATION_VARIABLE_SIMPLE
+                    case 6: // AFFECTATION_VARIABLE_SIMPLE
                         vrb = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
                         operation = parser.extraireVariable(tmp.substring(tmp.indexOf("=")));
 
@@ -178,8 +184,7 @@ public class Utilitaire {
                             }
                         }
                         break;
-                    case 5: // AFFECTATION_ENTIER_DOUBLE
-                        System.out.println("CAS 5 : "+tmp);
+                    case 7: // AFFECTATION_ENTIER_DOUBLE
                         if((tmp2 =rechercheObjet(parser.extraireVariable(tmp).replace("-", "")))!=-1)
                             {
                                 if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("+"))
@@ -190,8 +195,8 @@ public class Utilitaire {
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 11));
                                 else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-2"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 12)); 
-//                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-3"))
-//                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 13));                                     
+                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-3"))
+                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 13));                                     
                                 else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("*"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 2));
                                 else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("/"))
@@ -199,34 +204,50 @@ public class Utilitaire {
                                 else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("%"))
                                     mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 4));                                     
                             }   
-                        if ((tmp2 = rechercheObjet(parser.extraireVariable(tmp).replace("-", ""))) != -1) {
-
-                            //if(parser.extraireOperation(tmp).equals("+"))
-                            if ((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("+")) {
-                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 0));
-                            } else if ((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("-")) {
-                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 1));
-                            } else if ((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("*")) {
-                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 2));
-                            } else if ((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("/")) {
-                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 3));
-                            } else if ((parser.extraireOperation(tmp).replaceFirst("-", "")).equals("%")) {
-                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 4));
-                            }
-                        }
                         break;
-                    case 6: // AFFECTATION_VARIABLE_DOUBLE
+                    case 8: // AFFECTATION_VARIABLE_DOUBLE
                         vrb = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
                         if ((tmp2 = rechercheObjet(vrb)) != -1) {
-                            operation = tmp.substring(tmp.indexOf("=") + 1).replace(";", "").replaceAll("\\s", "");;
+                            operation = tmp.substring(tmp.indexOf("=") + 1).replace(";", "").replaceAll("\\s", "");
                             if (parser.extraireOperation(tmp).equals("+")) {
                                 s = operation.split("\\+");
                                 if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0]))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1]))) != -1) {
                                     mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() + mesInt.get(tmp4).getMonInt());
                                 }
                             }
+                            if (parser.extraireOperation(tmp).equals("-")) {
+                                s = operation.split("\\-");
+                                if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0]))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1]))) != -1) {
+                                    mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() - mesInt.get(tmp4).getMonInt());
+                                }
+                            }   
+                            if (parser.extraireOperation(tmp).equals("*")) {
+                                s = operation.split("\\*");
+                                if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0]))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1]))) != -1) {
+                                    mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() * mesInt.get(tmp4).getMonInt());
+                                }
+                            }
+                            if (parser.extraireOperation(tmp).equals("/")) {
+                                s = operation.split("\\/");
+                                if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0]))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1]))) != -1) {
+                                    mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() / mesInt.get(tmp4).getMonInt());
+                                }
+                            } 
+                            if (parser.extraireOperation(tmp).equals("%")) {
+                                s = operation.split("\\%");
+                                if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0]))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1]))) != -1) {
+                                    mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() % mesInt.get(tmp4).getMonInt());
+                                }
+                            }                            
                         }
                         break;
+                        
+                        
+                    case 9:
+                        break;
+                    case 10:
+                        break;
+                        
                 }
             } else {
                 try {
