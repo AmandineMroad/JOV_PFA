@@ -31,8 +31,9 @@ public class Parser
     private final String AFFECTATION_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%]\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable1[ESP]=[ESP]variable[ESP]+-*/%[ESP]variable[ESP];
         private final String AFFECTATION_VARIABLE_ENTIER_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%]\\s*-?\\s*[0-9]*\\s*;$";
         private final String AFFECTATION_ENTIER_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*[+-/\\*%]\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$";
-    private final String INITIALISATION_TABLEAU_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*\\{-?[0-9]*[,-?[0-9]*]*\\}\\s*;$"; // int t[] = {x, x, x};
-    private final String DECLARATION_TABLEAU_SIMPLE = ""; // int t[] = new int[6];
+    private final String INITIALISATION_TABLEAU_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*\\{-?\\s*[a-zA-Z_0-9]*[,-?\\s*[a-zA-Z_0-9]*]*\\}\\s*;$"; // int t[] = {x, x, x}; "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*\\{-?\\s*[0-9]*[,-?\\s*[0-9]*]*\\}\\s*;$";
+    private final String DECLARATION_TABLEAU_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*new\\s*int\\s*\\[\\s*[0-9]*\\s*\\]\\s*;$"; // int t[] = new int[6]; 
+    private final String INITIALISATION_TABLEAU_CASE_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*[0-9]*\\s*\\]\\s*=\\s*-?\\s*[0-9]*\\s*;$";   // t[0] = 4;  
     
     // AL<> qui va contenir les regex
     private ArrayList<String>regex;
@@ -67,6 +68,7 @@ public class Parser
         regex.add(AFFECTATION_ENTIER_VARIABLE_DOUBLE);
         regex.add(INITIALISATION_TABLEAU_SIMPLE);
         regex.add(DECLARATION_TABLEAU_SIMPLE);
+        regex.add(INITIALISATION_TABLEAU_CASE_SIMPLE);
     }
  
     
@@ -271,7 +273,10 @@ public class Parser
         
         String[] vlr = valeurs.split(",");
         for(int i=0; i<vlr.length; i++)
+        {
+            //System.out.println(vlr[i]);
             retour.add(vlr[i]);
+        }
         
         return retour;
     }

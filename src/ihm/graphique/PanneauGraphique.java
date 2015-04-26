@@ -102,9 +102,9 @@ public class PanneauGraphique extends JPanel {
      * Traite et affiche la ligne courante
      */
     public void affichage() {
-        System.out.println("PG_ Affichage() ligne courante = " + ligneCourante + "/" + utilitaire.getNbLignes());
+        //System.out.println("PG_ Affichage() ligne courante = " + ligneCourante + "/" + utilitaire.getNbLignes());
         if (ligneCourante < utilitaire.getNbLignes()) {
-            System.out.println("PG_ Affichage() dans le if");
+            //System.out.println("PG_ Affichage() dans le if");
             try {
                 utilitaire.execution();
             } catch (IOException ex) {
@@ -124,7 +124,7 @@ public class PanneauGraphique extends JPanel {
                 Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        System.out.println("Fin affichage: ligne courante = " + ligneCourante);
+        //System.out.println("Fin affichage: ligne courante = " + ligneCourante);
     }
 
     /**

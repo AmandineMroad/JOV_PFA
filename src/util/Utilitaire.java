@@ -111,7 +111,7 @@ public class Utilitaire {
      * @throws IOException
      */
     public void execution() throws FileNotFoundException, IOException {
-        System.out.println("Utilitaire.execution()");
+        //System.out.println("Utilitaire.execution()");
         String tmp;
         String s[];
         String vrb;
@@ -251,13 +251,48 @@ public class Utilitaire {
                         System.out.println("INITIALISATION_TABLEAU_SIMPLE : "+tmp);
                         
                         ArrayList<String> rtr = parser.extraireTableauSimple(tmp);
-                        for(int i=1; i<rtr.size(); i++)
-                            mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
                         
+                        int c=0;
+                        int c1=0;
+                        for(int i=1; i<rtr.size(); i++)
+                        {
+                            System.out.println(rtr.get(i));
+                            c = (int) rtr.get(i).charAt(0);
+
+                            if(c==45)   // Si negatif
+                            {
+                                c1 = (int) rtr.get(i).charAt(1);
+                                
+                                if((c1>=65 && c1<=90) || (c1>=97 && c1<=122))
+                                {
+                                    //System.out.println("VB NETAGIVE : "+c1+" "+i);
+                                    if((tmp2 = rechercheObjet(rtr.get(i).replace("-", ""))) != -1)
+                                    {
+                                        mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
+                                    }
+                                }
+                                else
+                                    mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                            }
+                            else if((c>=65 && c<=90) || (c>=97 && c<=122))
+                            {
+                                //System.out.println("VB POSITIVE : "+c+" "+i);
+                                if((tmp2 = rechercheObjet(rtr.get(i))) != -1)
+                                    mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                            }
+                            else
+                                mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                        }
                         
                         break;
                     case 12:    //  DECLARATION_TABLEAU_SIMPLE
-                        break;                        
+                        System.out.println("DECLARATION_TABLEAU_SIMPLE");
+                        
+                        break; 
+                    case 13:    //  INITIALISATION_TABLEAU_CASE_SIMPLE
+                        System.out.println("INITIALISATION_TABLEAU_CASE_SIMPLE");
+                        
+                        break;
                 }
             } else {
                 try {
