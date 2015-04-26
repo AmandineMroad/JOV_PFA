@@ -19,7 +19,7 @@ public class TestVueJOV {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        
+
         Gestionnaire g = Gestionnaire.getInstance();
        
     }

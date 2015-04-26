@@ -247,7 +247,17 @@ public class Utilitaire {
                         break;
                     case 10:
                         break;
+                    case 11:    //  INITIALISATION_TABLEAU_SIMPLE
+                        System.out.println("INITIALISATION_TABLEAU_SIMPLE : "+tmp);
                         
+                        ArrayList<String> rtr = parser.extraireTableauSimple(tmp);
+                        for(int i=1; i<rtr.size(); i++)
+                            mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
+                        
+                        
+                        break;
+                    case 12:    //  DECLARATION_TABLEAU_SIMPLE
+                        break;                        
                 }
             } else {
                 try {
