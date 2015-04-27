@@ -84,12 +84,15 @@ public class PanneauGraphique extends JPanel {
                 ArrayList<MonInt> list = new ArrayList();
                 String[] tabName;
                 tabName = mi.getCorrespondance().split("\\[");
-                while (mi.isTabValue() && i<size && (mi.getCorrespondance().split("\\[")[0]).equals(tabName)) { //verif nom
+                String tabName_tmp = tabName[0];
+                while (mi.isTabValue() && i<size && tabName_tmp.equals(tabName[0])) { //verif nom
                     nb_val++;
                     i++;
                     list.add(mi);
-                    if (i<size)
+                    if (i<size) {
                         mi = utilitaire.getMesInt().get(i);
+                        tabName_tmp = mi.getCorrespondance().split("\\[")[0];
+                    }
                 }
                 
                 int lignes = ((nb_val * PanneauVariable.DEFAULT_WIDTH) / this.getWidth()) + 1;
