@@ -5,7 +5,6 @@
  */
 package ihm.graphique;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import util.Utilitaire;
 import java.awt.Graphics;

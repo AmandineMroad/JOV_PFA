@@ -31,6 +31,7 @@ public class Menu extends JMenuBar {
 
     JMenuItem next;
     JMenuItem stop;
+    JMenuItem replay;
 
     /**
      * Constructeur: ajoute les éléments de menu et attache les listeners
@@ -48,14 +49,19 @@ public class Menu extends JMenuBar {
         
         ImageIcon iconeNext = new ImageIcon(".\\src\\doc\\icon-next.gif");
         ImageIcon iconeStop = new ImageIcon(".\\src\\doc\\button-stop.png");
+        ImageIcon iconeReplay = new ImageIcon(".\\src\\doc\\replay.png");
         next = new JMenuItem(iconeNext);
+        
         stop = new JMenuItem(iconeStop);
+        replay = new JMenuItem(iconeReplay);
        
         next.addActionListener(new Lis_Next());
         stop.addActionListener(new Lis_Stop());
+        replay.addActionListener(new Lis_Execute());
         this.add(menu);
         this.add(next);
         this.add(stop);
+        this.add(replay);
         
     }
     
