@@ -281,6 +281,23 @@ public class Parser
         return retour;
     }
     
+    public int extraireTailleDeclarationTableau(String ligne)
+    {
+        String taille = ligne.substring(ligne.indexOf("=")+1).replace("new", " ").replaceFirst("^\\s*int\\s*", " ").replace("["," ").replace("]"," ").replace(";", " ").replaceAll("\\s", "");
+        
+        return Integer.valueOf(taille);
+    }
+    
+    public String extraireNomDeclarationTableau(String ligne)
+    {
+        return ligne.substring(0, ligne.indexOf("=")).replaceFirst("^\\s*int\\s*", " ").replace("["," ").replace("]"," ").replace(";", " ").replaceAll("\\s", "");
+    }  
+    
+    public String extraireNomInitialisationCase(String ligne)
+    {
+        return ligne.substring(0, ligne.indexOf("=")).replaceAll("\\d", " ").replace("["," ").replace("]"," ").replaceAll("\\s", "");
+    }     
+    
     /*
         GET-SET
     */

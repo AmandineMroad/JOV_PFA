@@ -121,9 +121,9 @@ public class Utilitaire {
 
         MonInt mi;
 
-        int tmp2;
-        int tmp3;
-        int tmp4;
+        int tmp2=0;
+        int tmp3=0;
+        int tmp4=0;
         int res;
 
         if ((tmp = br.readLine()) != null) {
@@ -288,9 +288,16 @@ public class Utilitaire {
                     case 12:    //  DECLARATION_TABLEAU_SIMPLE
                         System.out.println("DECLARATION_TABLEAU_SIMPLE");
                         
+                        for(int i=0; i<parser.extraireTailleDeclarationTableau(tmp); i++)
+                            mesInt.add(new MonInt(0, parser.extraireNomDeclarationTableau(tmp)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
+                        
                         break; 
                     case 13:    //  INITIALISATION_TABLEAU_CASE_SIMPLE
-                        System.out.println("INITIALISATION_TABLEAU_CASE_SIMPLE");
+                        System.out.println("INITIALISATION_TABLEAU_CASE_SIMPLE: ");
+                        
+                        // Soit structure qui contiens nomTab - taille ; soit ajoute un champs taille dans classe monInt - 
+                        
+                        
                         
                         break;
                 }
@@ -319,9 +326,20 @@ public class Utilitaire {
             if (mesInt.get(i).getCorrespondance().equals(vb)) {
                 return i;
             }
-        }
-
+        
         return -1;
+    }
+        
+        
+    public int rechercheTableau(String tab)
+    {
+        for (int i = 0; i < mesInt.size(); i++) {
+            if (mesInt.get(i).getCorrespondance().equals(tab)) {
+                return i;
+            }
+            
+            return -1;
+        }
     }
 
     /*
