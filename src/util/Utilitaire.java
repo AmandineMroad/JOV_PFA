@@ -255,8 +255,8 @@ public class Utilitaire {
 
                         int c = 0;
                         int c1 = 0;
-//                        for (int i = 1; i < rtr.size(); i++) {
-                        for (int i = 0; i < rtr.size()-1; i++) {
+                       // for (int i = 1; i < rtr.size(); i++) {
+                         for (int i = 0; i < rtr.size()-1; i++) {
                             System.out.println(rtr.get(i));
                             c = (int) rtr.get(i).charAt(0);
 
@@ -268,24 +268,24 @@ public class Utilitaire {
                                     //System.out.println("VB NETAGIVE : "+c1+" "+i);
                                     if ((tmp2 = rechercheObjet(rtr.get(i).replace("-", ""))) != -1) {
                                         //mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
-                                        mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0) + '['+ i + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
+                                        mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0) + '['+ (i-1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
                                     }
                                 } else
                                 {
                                      //mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
-                                    mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '['+ i + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                                    mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '['+ (i-1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                                 }
                             } else if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) {
                                 //System.out.println("VB POSITIVE : "+c+" "+i);
                                 if ((tmp2 = rechercheObjet(rtr.get(i))) != -1) 
                                 {
                                     // mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
-                                    mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0) + '['+ i + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                        
+                                    mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0) + '['+ (i-1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                        
                                 }
                             } else 
                             {
                                 // mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
-                                mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '['+ i + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                                mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '['+ (i-1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                             }
                         }
 

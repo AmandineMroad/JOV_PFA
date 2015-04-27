@@ -82,9 +82,11 @@ public class PanneauGraphique extends JPanel {
             if (mi.isTabValue()) {
                 int nb_val = 0;
                 ArrayList<MonInt> list = new ArrayList();
+                
                 String[] tabName;
                 tabName = mi.getCorrespondance().split("\\[");
                 String tabName_tmp = tabName[0];
+                
                 while (mi.isTabValue() && i<size && tabName_tmp.equals(tabName[0])) { //verif nom
                     nb_val++;
                     i++;
@@ -94,36 +96,40 @@ public class PanneauGraphique extends JPanel {
                         tabName_tmp = mi.getCorrespondance().split("\\[")[0];
                     }
                 }
+                i--;
                 
                 int lignes = ((nb_val * PanneauVariable.DEFAULT_WIDTH) / this.getWidth()) + 1;
-                if(position.x <=marge)  position.setLocation(0,position.y);
+                
+                Point tmp_position =new Point();
+                
+                if(position.x <=marge)  tmp_position.setLocation(0,position.y);
                 else    position.setLocation(0, position.y + PanneauVariable.DEFAULT_HEIGHT + marge);
                 marge = 15;
                 
-                pan = new PanneauTab(position, this.getWidth(), (lignes * PanneauVariable.DEFAULT_HEIGHT) + ((lignes + 1) * marge), Color.pink);
+                pan = new PanneauTab(tmp_position, this.getWidth(), (lignes * PanneauVariable.DEFAULT_HEIGHT) + ((lignes + 1) * marge), Color.pink);
                 PanneauVariable tmp_panVar;
                 int tmp_x=marge, tmp_y=marge;
-                position.setLocation(marge, marge);
+                tmp_position.setLocation(marge, marge);
                
                 for (int j = 0; j < list.size(); j++) {
                     tmp_panVar = new PanneauVariable(list.get(j));
                     tmp_panVar.setBounds(tmp_x, tmp_y, tmp_panVar.getWidth(), tmp_panVar.getHeight());
                     
-                    tmp_x = position.x + tmp_panVar.getWidth();
-                    tmp_y = position.y;
+                    tmp_x = tmp_position.x + tmp_panVar.getWidth();
+                    tmp_y = tmp_position.y;
                     if (tmp_x + tmp_panVar.getWidth() > this.getWidth()) {
-                        tmp_y = position.y + tmp_panVar.getHeight() + marge;
+                        tmp_y = tmp_position.y + tmp_panVar.getHeight() + marge;
                         tmp_x = marge;
                     }
-                    position.setLocation(tmp_x, tmp_y);
+                    tmp_position.setLocation(tmp_x, tmp_y);
                     pan.add(tmp_panVar);                    
                 }
-                newY = position.y + PanneauVariable.DEFAULT_HEIGHT + marge;
+                newY = position.y + pan.getHeight() + marge;
                 position.setLocation(0, newY);
             } else {
                 marge = 5;
                 pan = new PanneauVariable(mi);
-                pan.setBounds(position.x, position.y, pan.getWidth(), pan.getHeight());
+                pan.setBounds(position.x+marge, position.y, pan.getWidth(), pan.getHeight());
 
                 newX = position.x + pan.getWidth();
                 newY = position.y;
