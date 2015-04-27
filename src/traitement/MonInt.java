@@ -30,6 +30,9 @@ public class MonInt implements Comparable<MonInt>
     // Permet de détecter si l'élément est modifié
     public boolean modif;
     
+    //Précise si c'est un élément de tableau
+    private boolean tabVal;
+    
     /**
      * Constructeur par défaut
      */
@@ -51,16 +54,30 @@ public class MonInt implements Comparable<MonInt>
         this.correspondance = correspondance;
         this.forme = forme;
         this.modif = true;
+        this.tabVal = false;
     }
     
-    
+    /**
+     * Constucteur initialisant tous les attributs de classe
+     * @param monInt
+     * @param correspondance
+     * @param forme 
+     */
+    public MonInt(int monInt, String correspondance, Shape forme, boolean isTabValue)
+    {
+        this.monInt = monInt;
+        this.correspondance = correspondance;
+        this.forme = forme;
+        this.modif = true;
+        this.tabVal = isTabValue;
+    }
     /**
      * Redefinition de la fonction compareTo() de l'interface Comparable
      * @param o
      * @return 
      */
     @Override
-    public int compareTo(MonInt o) {
+    public int compareTo(MonInt o) { //TODO
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }    
     
@@ -137,5 +154,9 @@ public class MonInt implements Comparable<MonInt>
 
     public void setForme(Shape forme) {
         this.forme = forme;
+    }
+
+    public boolean isTabValue() {
+        return tabVal;
     }
 }

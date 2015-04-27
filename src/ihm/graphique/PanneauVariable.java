@@ -19,14 +19,21 @@ import traitement.MonInt;
 public class PanneauVariable extends JPanel {
 
     MonInt mi;
-    
+
+    /**
+     *
+     */
+    public static final int DEFAULT_WIDTH = 110;
+    public static final int DEFAULT_HEIGHT = 40;
     /**
      * Constructeur 
      * @param monInt: l'objet MonInt à modéliser 
      */
     public PanneauVariable(MonInt monInt) {
         mi = monInt;
-        this.setSize(new Dimension(110, 40));
+        this.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        Color c = new Color( 255, 255, 255, 1);
+        this.setBackground(c);
     }
 
     @Override
@@ -34,7 +41,7 @@ public class PanneauVariable extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         if (mi.modif){
-            System.out.println("PanneauVariable.paint: MODIF");
+           // System.out.println("PanneauVariable.paint: MODIF");
             g2.setColor(Color.red);
             mi.modif = false;
         }

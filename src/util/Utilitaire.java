@@ -69,10 +69,11 @@ public class Utilitaire {
 
     /**
      * Constructeur
+     *
      * @param d
      * @param f
      * @throws FileNotFoundException
-     * @throws IOException 
+     * @throws IOException
      */
     public Utilitaire(Dimension d, File f) throws FileNotFoundException, IOException {
         parser = new Parser();
@@ -156,10 +157,10 @@ public class Utilitaire {
                         }
                         break;
                     case 3: // INITIALISATION_ENTIER_DOUBLE
-                        
+
                         break;
                     case 4: //  INITIALISATION_VARIABLE_DOUBLE
-                        
+
                         break;
                     case 5: // AFFECTATION_ENTIER_SIMPLE
                         if ((tmp2 = rechercheObjet(parser.extraireVariable(tmp).replace("-", ""))) != -1) {
@@ -185,25 +186,26 @@ public class Utilitaire {
                         }
                         break;
                     case 7: // AFFECTATION_ENTIER_DOUBLE
-                        if((tmp2 =rechercheObjet(parser.extraireVariable(tmp).replace("-", "")))!=-1)
-                            {
-                                if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("+"))
-                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 0));
-                                if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-"))
-                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 1));                                
-                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-1"))
-                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 11));
-                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-2"))
-                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 12)); 
-                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-3"))
-                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 13));                                     
-                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("*"))
-                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 2));
-                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("/"))
-                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 3));                                
-                                else if((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("%"))
-                                    mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 4));                                     
-                            }   
+                        if ((tmp2 = rechercheObjet(parser.extraireVariable(tmp).replace("-", ""))) != -1) {
+                            if ((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("+")) {
+                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 0));
+                            }
+                            if ((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-")) {
+                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 1));
+                            } else if ((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-1")) {
+                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 11));
+                            } else if ((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-2")) {
+                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 12));
+                            } else if ((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("-3")) {
+                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 13));
+                            } else if ((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("*")) {
+                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 2));
+                            } else if ((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("/")) {
+                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 3));
+                            } else if ((parser.extraireOperation(tmp)/*.replaceFirst("-", "")*/).equals("%")) {
+                                mesInt.get(tmp2).setMonInt(parser.extraireOperationADeuxOp(tmp, 4));
+                            }
+                        }
                         break;
                     case 8: // AFFECTATION_VARIABLE_DOUBLE
                         vrb = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
@@ -220,7 +222,7 @@ public class Utilitaire {
                                 if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0]))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1]))) != -1) {
                                     mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() - mesInt.get(tmp4).getMonInt());
                                 }
-                            }   
+                            }
                             if (parser.extraireOperation(tmp).equals("*")) {
                                 s = operation.split("\\*");
                                 if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0]))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1]))) != -1) {
@@ -232,64 +234,67 @@ public class Utilitaire {
                                 if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0]))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1]))) != -1) {
                                     mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() / mesInt.get(tmp4).getMonInt());
                                 }
-                            } 
+                            }
                             if (parser.extraireOperation(tmp).equals("%")) {
                                 s = operation.split("\\%");
                                 if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0]))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1]))) != -1) {
                                     mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() % mesInt.get(tmp4).getMonInt());
                                 }
-                            }                            
+                            }
                         }
                         break;
-                        
-                        
+
                     case 9:
                         break;
                     case 10:
                         break;
                     case 11:    //  INITIALISATION_TABLEAU_SIMPLE
-                        System.out.println("INITIALISATION_TABLEAU_SIMPLE : "+tmp);
-                        
+                        System.out.println("INITIALISATION_TABLEAU_SIMPLE : " + tmp);
+
                         ArrayList<String> rtr = parser.extraireTableauSimple(tmp);
-                        
-                        int c=0;
-                        int c1=0;
-                        for(int i=1; i<rtr.size(); i++)
-                        {
+
+                        int c = 0;
+                        int c1 = 0;
+//                        for (int i = 1; i < rtr.size(); i++) {
+                        for (int i = 0; i < rtr.size()-1; i++) {
                             System.out.println(rtr.get(i));
                             c = (int) rtr.get(i).charAt(0);
 
-                            if(c==45)   // Si negatif
+                            if (c == 45) // Si negatif
                             {
                                 c1 = (int) rtr.get(i).charAt(1);
-                                
-                                if((c1>=65 && c1<=90) || (c1>=97 && c1<=122))
-                                {
+
+                                if ((c1 >= 65 && c1 <= 90) || (c1 >= 97 && c1 <= 122)) {
                                     //System.out.println("VB NETAGIVE : "+c1+" "+i);
-                                    if((tmp2 = rechercheObjet(rtr.get(i).replace("-", ""))) != -1)
-                                    {
-                                        mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
+                                    if ((tmp2 = rechercheObjet(rtr.get(i).replace("-", ""))) != -1) {
+                                        //mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
+                                        mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0) + '['+ i + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
                                     }
+                                } else
+                                {
+                                     //mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                                    mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '['+ i + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                                 }
-                                else
-                                    mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
-                            }
-                            else if((c>=65 && c<=90) || (c>=97 && c<=122))
-                            {
+                            } else if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) {
                                 //System.out.println("VB POSITIVE : "+c+" "+i);
-                                if((tmp2 = rechercheObjet(rtr.get(i))) != -1)
-                                    mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                                if ((tmp2 = rechercheObjet(rtr.get(i))) != -1) 
+                                {
+                                    // mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                                    mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0) + '['+ i + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                        
+                                }
+                            } else 
+                            {
+                                // mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                                mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '['+ i + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                             }
-                            else
-                                mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                         }
-                        
+
                         break;
                     case 12:    //  DECLARATION_TABLEAU_SIMPLE
                         System.out.println("DECLARATION_TABLEAU_SIMPLE");
                         
                         for(int i=0; i<parser.extraireTailleDeclarationTableau(tmp); i++)
-                            mesInt.add(new MonInt(0, parser.extraireNomDeclarationTableau(tmp)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
+                            mesInt.add(new MonInt(0, parser.extraireNomDeclarationTableau(tmp)+i, new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
                         
                         break; 
                     case 13:    //  INITIALISATION_TABLEAU_CASE_SIMPLE
@@ -299,7 +304,10 @@ public class Utilitaire {
                         
                         
                         
+
+
                         break;
+
                 }
             } else {
                 try {
@@ -326,12 +334,13 @@ public class Utilitaire {
             if (mesInt.get(i).getCorrespondance().equals(vb)) {
                 return i;
             }
-        
+        }
         return -1;
     }
         
         
-    public int rechercheTableau(String tab)
+        
+   /* public int rechercheTableau(String tab)
     {
         for (int i = 0; i < mesInt.size(); i++) {
             if (mesInt.get(i).getCorrespondance().equals(tab)) {
@@ -340,7 +349,7 @@ public class Utilitaire {
             
             return -1;
         }
-    }
+    }*/
 
     /*
      GET-SET
