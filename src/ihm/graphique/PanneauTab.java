@@ -7,17 +7,19 @@ package ihm.graphique;
 
 import java.awt.Color;
 import java.awt.Point;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+
 
 /**
  *
  * @author Amandine
  */
 public class PanneauTab extends JPanel{
-
-    public PanneauTab(Point position, int width, int height, Color color) {
+    public PanneauTab(Point position, int width, int height, String tabName){
         this.setBounds(position.x, position.y, width, height);
-        this.setBackground(color);
+        this.setBorder(BorderFactory.createTitledBorder(tabName));
     }
+
     
 }

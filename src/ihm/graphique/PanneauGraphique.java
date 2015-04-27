@@ -6,6 +6,7 @@
 package ihm.graphique;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import util.Utilitaire;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import traitement.MonInt;
 import util.Gestionnaire;
@@ -106,15 +108,14 @@ public class PanneauGraphique extends JPanel {
                 else    position.setLocation(0, position.y + PanneauVariable.DEFAULT_HEIGHT + marge);
                 marge = 15;
                 
-                pan = new PanneauTab(position, this.getWidth(), (lignes * PanneauVariable.DEFAULT_HEIGHT) + ((lignes + 1) * marge), Color.pink);
+                pan = new PanneauTab(position, this.getWidth(), (lignes * PanneauVariable.DEFAULT_HEIGHT) + ((lignes + 1) * marge), tabName[0]);
                 PanneauVariable tmp_panVar;
-                int tmp_x=marge, tmp_y=marge;
-                tmp_position.setLocation(marge, marge);
+                int tmp_x=marge, tmp_y=marge+10;
+                tmp_position.setLocation(marge, marge+10);
                
-                for (int j = 0; j < list.size(); j++) {
-                    tmp_panVar = new PanneauVariable(list.get(j));
+                for (MonInt myInt : list) {
+                    tmp_panVar = new PanneauVariable(myInt);
                     tmp_panVar.setBounds(tmp_x, tmp_y, tmp_panVar.getWidth(), tmp_panVar.getHeight());
-                    
                     tmp_x = tmp_position.x + tmp_panVar.getWidth();
                     tmp_y = tmp_position.y;
                     if (tmp_x + tmp_panVar.getWidth() > this.getWidth()) {
@@ -144,6 +145,12 @@ public class PanneauGraphique extends JPanel {
 
         }
 
+        pan = new PanneauTransition(new Dimension(this.getWidth(), this.getHeight()));
+        //pan.setBounds(0, 0, this.getWidth(), this.getHeight());
+       // this.add(pan, JLayeredPane.DRAG_LAYER);
+       // this.add(pan);
+        //this.validate();
+        //this.repaint();
     }
 
     /**
