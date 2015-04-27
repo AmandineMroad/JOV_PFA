@@ -106,7 +106,7 @@ public class PanneauGraphique extends JPanel {
                 else    position.setLocation(0, position.y + PanneauVariable.DEFAULT_HEIGHT + marge);
                 marge = 15;
                 
-                pan = new PanneauTab(tmp_position, this.getWidth(), (lignes * PanneauVariable.DEFAULT_HEIGHT) + ((lignes + 1) * marge), Color.pink);
+                pan = new PanneauTab(position, this.getWidth(), (lignes * PanneauVariable.DEFAULT_HEIGHT) + ((lignes + 1) * marge), Color.pink);
                 PanneauVariable tmp_panVar;
                 int tmp_x=marge, tmp_y=marge;
                 tmp_position.setLocation(marge, marge);

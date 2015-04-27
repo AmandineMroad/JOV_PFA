@@ -255,8 +255,7 @@ public class Utilitaire {
 
                         int c = 0;
                         int c1 = 0;
-                       // for (int i = 1; i < rtr.size(); i++) {
-                         for (int i = 0; i < rtr.size()-1; i++) {
+                        for (int i = 1; i < rtr.size(); i++) {
                             System.out.println(rtr.get(i));
                             c = (int) rtr.get(i).charAt(0);
 
