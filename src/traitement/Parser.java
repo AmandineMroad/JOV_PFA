@@ -298,6 +298,20 @@ public class Parser
         return ligne.substring(0, ligne.indexOf("=")).replaceAll("\\d", " ").replace("["," ").replace("]"," ").replaceAll("\\s", "");
     }     
     
+    public int extraireIndiceInitialisationCase(String ligne)
+    {
+        String taille = ligne.substring(0, ligne.indexOf("=")).replaceAll("[a-zA-Z_]", " ").replace("["," ").replace("]"," ").replace(";", " ").replaceAll("\\s", "");
+        
+        return Integer.valueOf(taille);
+    }    
+    
+    public int extraireValeurInitialisationCase(String ligne)
+    {
+        String valeur = ligne.substring(ligne.indexOf("=")+1).replace(";", " ").replaceAll("\\s", "");
+        
+        return Integer.valueOf(valeur);
+    }
+    
     /*
         GET-SET
     */
