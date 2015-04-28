@@ -40,10 +40,15 @@ public class PanneauVariable extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        if (mi.modif){
+        if (mi.isModified()){
            // System.out.println("PanneauVariable.paint: MODIF");
             g2.setColor(Color.red);
-            mi.modif = false;
+            mi.setModified(false);
+            mi.setUsed(false);
+        }
+        else if (mi.isUsed()){
+            g2.setColor(Color.blue);
+            mi.setUsed(false);
         }
         g2.draw(mi.getForme());
         g2.drawString(String.valueOf(mi.getMonInt()), (int) (mi.getForme().getBounds().getX() + 2), (int) (mi.getForme().getBounds().getY() + 15));

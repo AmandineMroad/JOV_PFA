@@ -362,8 +362,11 @@ public class Utilitaire {
      * @return
      */
     public int rechercheObjet(String vb) {
+        MonInt mi;
         for (int i = 0; i < mesInt.size(); i++) {
-            if (mesInt.get(i).getCorrespondance().equals(vb)) {
+            mi = mesInt.get(i);
+            if (mi.getCorrespondance().equals(vb)) {
+                mi.setUsed(true);
                 return i;
             }
         }

@@ -28,19 +28,13 @@ public class MonInt implements Comparable<MonInt>
     private Shape forme;
     
     // Permet de détecter si l'élément est modifié
-    public boolean modif;
+    private boolean modif;
+    private boolean used;
     
     //Précise si c'est un élément de tableau
-    private boolean tabVal;
+    private final boolean tabVal;
     
-    /**
-     * Constructeur par défaut
-     */
-        
-    public MonInt()
-    {
-        
-    }
+  
     
     /**
      * Constucteur initialisant tous les attributs de classe
@@ -55,6 +49,7 @@ public class MonInt implements Comparable<MonInt>
         this.forme = forme;
         this.modif = true;
         this.tabVal = false;
+        this.used = false;
     }
     
     /**
@@ -70,6 +65,7 @@ public class MonInt implements Comparable<MonInt>
         this.forme = forme;
         this.modif = true;
         this.tabVal = isTabValue;
+        this.used = false;
     }
     /**
      * Redefinition de la fonction compareTo() de l'interface Comparable
@@ -158,5 +154,21 @@ public class MonInt implements Comparable<MonInt>
 
     public boolean isTabValue() {
         return tabVal;
+    }
+    
+    public boolean isModified(){
+        return modif;
+    }
+    
+    public void setModified(boolean b){
+        modif = b;
+    }
+    
+    public boolean isUsed(){
+        return used;
+    }
+    
+    public void setUsed(boolean b){
+        used=b;
     }
 }
