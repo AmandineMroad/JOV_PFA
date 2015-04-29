@@ -5,7 +5,6 @@
  */
 package ihm.graphique;
 
-import java.awt.Dimension;
 import util.Utilitaire;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import javax.swing.RepaintManager;
 import traitement.MonInt;
 import util.Gestionnaire;
 
@@ -31,6 +31,7 @@ public class PanneauGraphique extends JPanel {
     private PanneauCode pc;
 
     private int ligneCourante;
+    RepaintManager rm;
 
     /**
      * Constructeur recevant simplement un PanneauCode en parametre
@@ -56,6 +57,7 @@ public class PanneauGraphique extends JPanel {
         this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         this.pc = pc;
         ligneCourante = 0;
+        rm =RepaintManager.currentManager(this);
         utilitaire = new Utilitaire(pc.getD(), f);
     }
 
@@ -66,8 +68,8 @@ public class PanneauGraphique extends JPanel {
      */
     @Override
     public void paintComponent(Graphics g) {
+        System.out.println("Appel PanneauGraphique.paintComponent()");
         super.paintComponent(g);
-        // PanneauVariable pan;
         JPanel pan;
         int size = utilitaire.getMesInt().size();
         this.removeAll();
@@ -75,10 +77,11 @@ public class PanneauGraphique extends JPanel {
         int marge = 5;
         Point position = new Point(marge, marge);
         int newX, newY;
-
+        /* Boucle d'affichage */
         MonInt mi;
         for (int i = 0; i < size; i++) {
             mi = utilitaire.getMesInt().get(i);
+            /* Affichage tableau */
             if (mi.isTabValue()) {
                 int nb_val = 0;
                 ArrayList<MonInt> list = new ArrayList();
@@ -87,6 +90,7 @@ public class PanneauGraphique extends JPanel {
                 tabName = mi.getCorrespondance().split("\\[");
                 String tabName_tmp = tabName[0];
                 
+                //Extraction de la taille et du nom du tableau
                 while (mi.isTabValue() && i<size && tabName_tmp.equals(tabName[0])) { //verif nom
                     nb_val++;
                     i++;
@@ -98,8 +102,8 @@ public class PanneauGraphique extends JPanel {
                 }
                 i--;
                 
+                //Dimensionnement et placement du panneau
                 int lignes = ((nb_val * PanneauVariable.DEFAULT_WIDTH) / this.getWidth()) + 1;
-                
                 Point tmp_position =new Point();
                 
                 if(position.x <=marge)  tmp_position.setLocation(0,position.y);
@@ -107,6 +111,8 @@ public class PanneauGraphique extends JPanel {
                 marge = 15;
                 
                 pan = new PanneauTab(position, this.getWidth(), (lignes * PanneauVariable.DEFAULT_HEIGHT) + ((lignes + 1) * marge), tabName[0]);
+                
+                //Insertion des valeurs
                 PanneauVariable tmp_panVar;
                 int tmp_x=marge, tmp_y=marge+10;
                 tmp_position.setLocation(marge, marge+10);
@@ -121,11 +127,15 @@ public class PanneauGraphique extends JPanel {
                         tmp_x = marge;
                     }
                     tmp_position.setLocation(tmp_x, tmp_y);
-                    pan.add(tmp_panVar);                    
+                    pan.add(tmp_panVar); 
                 }
+                
+                //Repositionnement pour prochain objet à afficher
                 newY = position.y + pan.getHeight() + marge;
                 position.setLocation(0, newY);
-            } else {
+            } 
+            /* Affichage variable */
+            else { 
                 marge = 5;
                 pan = new PanneauVariable(mi);
                 pan.setBounds(position.x+marge, position.y, pan.getWidth(), pan.getHeight());
@@ -140,7 +150,6 @@ public class PanneauGraphique extends JPanel {
                 position.setLocation(newX + marge, newY);
             }
             this.add(pan);
-
         }
     }
 
@@ -151,34 +160,39 @@ public class PanneauGraphique extends JPanel {
      */
     public void affichageBoucle() throws IOException {
         for (int i = ligneCourante; i < utilitaire.getNbLignes(); i++) {
-            utilitaire.execution();
-            this.afficheLigne();
+            affichage();
+            try {
+               // System.out.println("GO TO SLEEP");
+                Thread.sleep(1000);
+                //System.out.println("Réveillé");
+            } catch (InterruptedException ex) {
+                System.err.println("ERREUR !!! Don't want to sleep");
+                Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }
 
     /**
      * Traite et affiche la ligne courante
+     * @throws java.io.IOException
      */
-    public void affichage() {
-        if (ligneCourante < utilitaire.getNbLignes()) {
-            try {
-                utilitaire.execution();
-            } catch (IOException ex) {
-                System.out.println("ERREUR Affichage()");
-                Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.afficheLigne();
+    public void affichage() throws IOException {
+        int totalLigne = utilitaire.getNbLignes();
+        
+        boolean regex = utilitaire.execution();
+        afficheLigne();
+        
+        //Tant que utilitaire.execution() renvoie false (id. la ligne ne correspond à aucun regex)
+        while (!regex && ligneCourante<totalLigne ){
+            regex = utilitaire.execution();
         }
-
-        if (ligneCourante == utilitaire.getNbLignes()) {
-            try {
-                Gestionnaire gest = Gestionnaire.getInstance();
-                gest.getFVisualisation().getToolBar().disableNext();
-            } catch (IOException ex) {
-                Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        
+        if (ligneCourante == totalLigne) {
+            Gestionnaire gest = Gestionnaire.getInstance();
+            gest.getFVisualisation().getToolBar().disableNext();
         }
+        rm.paintDirtyRegions();
     }
 
     /**
@@ -189,7 +203,10 @@ public class PanneauGraphique extends JPanel {
             pc.getZoneCode().setText(pc.getZoneCode().getText() + "\n" + pc.getLignes().get(ligneCourante));
             ligneCourante++;
             this.repaint();
+            
+            rm.isCompletelyDirty(this);
+
         }
     }
-
+    
 }

@@ -65,6 +65,7 @@ public final class Gestionnaire {
 
             fvisualisation = new FenVisualisation(f);
             fvisualisation.setVisible(true);
+            fvisualisation.setExtendedState(FenVisualisation.MAXIMIZED_BOTH);
             fvisualisation.getPg().affichage();
 
         } else {

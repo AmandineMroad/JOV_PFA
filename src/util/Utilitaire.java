@@ -46,7 +46,7 @@ public class Utilitaire {
 
     // Contiens le nombre de lignes du fichier source
     private int nbLignes;
-
+   
     // 
     private Dimension d;
 
@@ -101,8 +101,8 @@ public class Utilitaire {
         fr = new FileReader(fichier);
         br = new BufferedReader(fr);
     }
-
-    /**
+   
+   /**
      * Fonction centrale du programme. A chaque appelle elle lit la ligne
      * suivante, l'envoie au parser qui lui indique quel type de ligne c'est
      * (initialisation, instanciation ..). La ligne peut ne pas être reconnus si
@@ -111,7 +111,7 @@ public class Utilitaire {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void execution() throws FileNotFoundException, IOException {
+    public boolean execution() throws FileNotFoundException, IOException {
         //System.out.println("Utilitaire.execution()");
         String tmp;
         String s[];
@@ -127,12 +127,15 @@ public class Utilitaire {
         int tmp4=0;
         int res;
 
+        boolean reg = true;
+        
         if ((tmp = br.readLine()) != null) {
             // res recupere le type de regex de la ligne
             res = parser.correspondRegex(tmp);
 
             // -1 correspond à aucune regex
             if (res != -1) {
+                reg = true;
                 switch (res) {
                     case 0: // INSTANCIATION
                         // mesInt.add(new MonInt(0, parser.extraireVariable(tmp), new Rectangle2D.Double(100,100,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
@@ -342,18 +345,18 @@ public class Utilitaire {
 
                 }
             } else {
+                reg = false;
                 try {
                     Gestionnaire gest = Gestionnaire.getInstance();
-                    gest.getPanGraph().affichage();
+                    gest.getPanGraph().afficheLigne();
                 } catch (IOException ex) {
-                    System.out.println("ERREUR");//TODO
-                    // JOptionPane.showMessageDialog(root, "ERREUR FATALE", "ERREUR", JOptionPane.WARNING_MESSAGE);
                     Logger.getLogger(Lis_Next.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
+        return reg;
     }
-
+  
     /**
      * Permet de determiner si le string passé en parametre correspond à un
      * objet MonInt déjà crée

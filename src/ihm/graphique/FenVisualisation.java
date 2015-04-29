@@ -83,8 +83,8 @@ public class FenVisualisation extends JFrame
         this.setMenuBar(menuBar);
         toolBar = new BarreOutil("Tools");
         this.add(toolBar, BorderLayout.PAGE_START);
-        
-        this.setVisible(false);    
+
+        this.setVisible(false);  
     }
 
     /* Accesseurs */
