@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import traitement.MonInt;
 import util.Gestionnaire;
@@ -143,13 +142,6 @@ public class PanneauGraphique extends JPanel {
             this.add(pan);
 
         }
-
-        pan = new PanneauTransition(new Dimension(this.getWidth(), this.getHeight()));
-        //pan.setBounds(0, 0, this.getWidth(), this.getHeight());
-       // this.add(pan, JLayeredPane.DRAG_LAYER);
-       // this.add(pan);
-        //this.validate();
-        //this.repaint();
     }
 
     /**
@@ -169,29 +161,24 @@ public class PanneauGraphique extends JPanel {
      * Traite et affiche la ligne courante
      */
     public void affichage() {
-      //  System.out.println("PG_ Affichage() ligne courante = " + ligneCourante + "/" + utilitaire.getNbLignes());
         if (ligneCourante < utilitaire.getNbLignes()) {
-            //System.out.println("PG_ Affichage() dans le if");
             try {
                 utilitaire.execution();
             } catch (IOException ex) {
                 System.out.println("ERREUR Affichage()");
                 Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
             }
-
             this.afficheLigne();
         }
 
         if (ligneCourante == utilitaire.getNbLignes()) {
             try {
-                //disable nextButton
                 Gestionnaire gest = Gestionnaire.getInstance();
-                gest.getFVisualisation().getMenu().disableNext();
+                gest.getFVisualisation().getToolBar().disableNext();
             } catch (IOException ex) {
                 Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-      //  System.out.println("Fin affichage: ligne courante = " + ligneCourante);
     }
 
     /**

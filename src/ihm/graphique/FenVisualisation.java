@@ -5,7 +5,8 @@
  */
 package ihm.graphique;
 
-import ihm.Menu;
+import ihm.BarreOutil;
+import ihm.JOV_Menu;
 import ihm.listeners.Lis_ExitJOV;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -31,7 +32,7 @@ public class FenVisualisation extends JFrame
     // 
     private Dimension d;
     
-    private Menu menuBar;
+    private BarreOutil toolBar;
     
     /**
      * A SUPPRIMER
@@ -76,11 +77,13 @@ public class FenVisualisation extends JFrame
         
 
         this.add(pc, BorderLayout.WEST);
-       //   this.add(pc);
         this.add(pg);
         
-        menuBar = new Menu();
-        this.setJMenuBar(menuBar);
+        JOV_Menu menuBar = new JOV_Menu();
+        this.setMenuBar(menuBar);
+        toolBar = new BarreOutil("Tools");
+        this.add(toolBar, BorderLayout.PAGE_START);
+        
         this.setVisible(false);    
     }
 
@@ -102,7 +105,7 @@ public class FenVisualisation extends JFrame
         this.pg = pg;
     }
     
-    public Menu getMenu(){
-        return menuBar;
+    public BarreOutil getToolBar(){
+        return toolBar;
     }
 }

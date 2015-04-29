@@ -23,7 +23,7 @@ public class Lis_Stop implements ActionListener{
          System.out.println("Lis_stop()");
         try {
             Gestionnaire gest = Gestionnaire.getInstance();
-            gest.getFVisualisation().getMenu().disableNext();
+            gest.getFVisualisation().getToolBar().disableNext();
             gest.getPanGraph().affichageBoucle();
         } catch (IOException ex) {
             System.out.println("ERREUR");//TODO
