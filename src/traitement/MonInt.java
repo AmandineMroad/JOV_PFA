@@ -33,6 +33,8 @@ public class MonInt implements Comparable<MonInt>
     //Précise si c'est un élément de tableau
     private boolean tabVal;
     
+    private boolean used;
+    
     /**
      * Constructeur par défaut
      */
@@ -159,4 +161,8 @@ public class MonInt implements Comparable<MonInt>
     public boolean isTabValue() {
         return tabVal;
     }
+    
+public void setUsed(boolean b){
+        used=b;
+    }    
 }
