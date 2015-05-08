@@ -68,7 +68,7 @@ public class PanneauGraphique extends JPanel {
      */
     @Override
     public void paintComponent(Graphics g) {
-        System.out.println("Appel PanneauGraphique.paintComponent()");
+       // System.out.println("Appel PanneauGraphique.paintComponent()");
         super.paintComponent(g);
         JPanel pan;
         int size = utilitaire.getMesInt().size();

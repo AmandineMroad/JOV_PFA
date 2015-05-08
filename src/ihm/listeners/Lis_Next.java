@@ -20,7 +20,7 @@ public class Lis_Next implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Lis_next()");
+       // System.out.println("Lis_next()");
         try {
             Gestionnaire gest = Gestionnaire.getInstance();
             gest.getPanGraph().affichage();

@@ -20,7 +20,7 @@ public class Lis_ExitJOV extends WindowAdapter implements ActionListener{
     public void windowClosing(WindowEvent e) {
         int conf = JOptionPane.showConfirmDialog(e.getComponent(), "Vous allez quitter le programme.\nEtes-vous sûr?", "Arrêt du programme", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (conf == JOptionPane.YES_OPTION) {
-            System.out.println("fermeture JOV");
+          //  System.out.println("fermeture JOV");
             System.exit(conf);
         } 
 
@@ -30,7 +30,7 @@ public class Lis_ExitJOV extends WindowAdapter implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         int conf = JOptionPane.showConfirmDialog(null, "Vous allez quitter le programme.\nEtes-vous sûr?", "Arrêt du programme", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (conf == JOptionPane.YES_OPTION) {
-            System.out.println("fermeture JOV");
+           // System.out.println("fermeture JOV");
             System.exit(conf);
         }
     }

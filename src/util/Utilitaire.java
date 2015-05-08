@@ -118,7 +118,7 @@ public class Utilitaire {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void execution() throws FileNotFoundException, IOException {
+    public boolean execution() throws FileNotFoundException, IOException {
         //System.out.println("Utilitaire.execution()");
         String tmp = null;
         String s[];
@@ -136,9 +136,11 @@ public class Utilitaire {
         int tmp3=0;
         int tmp4=0;
         int res;
+        boolean reg = true;
         
         if(int_while==true)
         {
+            reg = false;
             execution = true;
             System.out.println("WHILE DETECTE");
             if(mesInt.get(indice_while).getMonInt()!=Integer.parseInt(cond[2]))
@@ -174,6 +176,7 @@ public class Utilitaire {
             res = parser.correspondRegex(tmp);
             // -1 correspond à aucune regex
             if (res != -1) {
+				reg = true;
                 switch (res) {
                     case 0: // INSTANCIATION
                         // mesInt.add(new MonInt(0, parser.extraireVariable(tmp), new Rectangle2D.Double(100,100,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
@@ -456,9 +459,10 @@ public class Utilitaire {
                         break;
                 }
             } else {
+				reg = false;
                 try {
                     Gestionnaire gest = Gestionnaire.getInstance();
-                    gest.getPanGraph().affichage();
+                    gest.getPanGraph().afficheLigne();
                 } catch (IOException ex) {
                     System.out.println("ERREUR");//TODO
                     // JOptionPane.showMessageDialog(root, "ERREUR FATALE", "ERREUR", JOptionPane.WARNING_MESSAGE);
@@ -466,6 +470,7 @@ public class Utilitaire {
                 }
             }
         }
+		return reg;
     }
 
     /**
@@ -476,8 +481,11 @@ public class Utilitaire {
      * @return
      */
     public int rechercheObjet(String vb) {
+        MonInt mi;
         for (int i = 0; i < mesInt.size(); i++) {
-            if (mesInt.get(i).getCorrespondance().equals(vb)) {
+            mi = mesInt.get(i);
+            if (mi.getCorrespondance().equals(vb)) {
+                mi.setUsed(true);
                 return i;
             }
         }

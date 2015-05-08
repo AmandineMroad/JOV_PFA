@@ -20,7 +20,7 @@ public class Lis_Stop implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-         System.out.println("Lis_stop()");
+       //  System.out.println("Lis_stop()");
         try {
             Gestionnaire gest = Gestionnaire.getInstance();
             gest.getFVisualisation().getToolBar().disableNext();

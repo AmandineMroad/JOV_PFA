@@ -54,7 +54,7 @@ public final class Gestionnaire {
      */
     public void execute() throws IOException {
         if (ready) {
-            System.out.println("Gestionnaire.execute()");
+          //  System.out.println("Gestionnaire.execute()");
             fchoix.dispose();
             if (fvisualisation != null) {
                 FenVisualisation fen_tmp = fvisualisation;

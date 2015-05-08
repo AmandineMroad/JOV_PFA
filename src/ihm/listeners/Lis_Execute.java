@@ -44,7 +44,7 @@ public class Lis_Execute implements ActionListener {
         try {
             Gestionnaire g = Gestionnaire.getInstance();
             if (replay && g.isReady()){
-                System.out.println("Lis_execute : replay");
+               // System.out.println("Lis_execute : replay");
                 g.execute();
             }
             else if (!textField.getText().isEmpty()){
