@@ -7,6 +7,7 @@ package ihm.graphique;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.TextArea;
 import java.io.BufferedReader;
 import java.io.File;
@@ -155,5 +156,10 @@ public class PanneauCode extends JPanel
 
     public void setD(Dimension d) {
         this.d = d;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        zoneCode.setSize(zoneCode.getWidth(), this.getHeight()- 50);   
     }
 }
