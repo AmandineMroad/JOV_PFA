@@ -47,12 +47,13 @@ public class Utilitaire {
     // Contiens le nombre de lignes du fichier source
     private int nbLignes;
 
-    boolean int_while = false;
+    boolean is_while = false;
     ArrayList<String> string_while = new ArrayList<>();
     String[] cond = null;
     int i_while = 0;
     int indice_while = 0;
     boolean firstWhile =false;
+    boolean execution = false;
     //BufferedReader brtmp;
     // 
     private Dimension d;
@@ -126,7 +127,7 @@ public class Utilitaire {
         String vrb;
         String operation;
 
-        boolean execution = false;
+        
 
         Rectangle2D.Double r = null;
 
@@ -138,37 +139,59 @@ public class Utilitaire {
         int res;
         boolean reg = true;
 
-        if (int_while == true) {
+        if (is_while == true) {
             reg = false;
             execution = true;
-            System.out.println("WHILE DETECTE");
-            if (mesInt.get(indice_while).getMonInt() != Integer.parseInt(cond[2])) {
-                System.out.println("CONDITION OK");
-                if (i_while == string_while.size()) {
-                    i_while = 0;
-                    //firstWhile = false;
+            
+           if (cond[1].equals("==")) {
+                if (mesInt.get(indice_while).getMonInt() == Integer.parseInt(cond[2]) || i_while != string_while.size()) {
+                    tmp = executionWhile();
+                } else {
+                    finWhile();
                 }
-
-                tmp = string_while.get(i_while);
-                i_while++;
-            } else {
-                int_while = false;
-                execution = false;
+            }            
+           else if (cond[1].equals("!=")) {
+                if (mesInt.get(indice_while).getMonInt() != Integer.parseInt(cond[2]) || i_while != string_while.size()) {
+                    tmp = executionWhile();
+                } else {
+                    finWhile();
+                }
             }
+           else if (cond[1].equals(">")) {
+                if (mesInt.get(indice_while).getMonInt() > Integer.parseInt(cond[2]) || i_while != string_while.size()) {
+                    tmp = executionWhile();
+                } else {
+                    finWhile();
+                }
+            }  
+           else if (cond[1].equals("<")) {
+                if (mesInt.get(indice_while).getMonInt() < Integer.parseInt(cond[2]) || i_while != string_while.size()) {
+                    tmp = executionWhile();
+                } else {
+                    finWhile();
+                }
+            }
+           else if (cond[1].equals("<=")) {
+                if (mesInt.get(indice_while).getMonInt() <= Integer.parseInt(cond[2]) || i_while != string_while.size()) {
+                    tmp = executionWhile();
+                } else {
+                    finWhile();
+                }
+            }   
+           else if (cond[1].equals(">=")) {
+                if (mesInt.get(indice_while).getMonInt() >= Integer.parseInt(cond[2]) || i_while != string_while.size()) {
+                    tmp = executionWhile();
+                } else {
+                    finWhile();
+                }
+            }           
+            
         } else if ((tmp = br.readLine()) != null) {
             execution = true;
         }
 
         if (execution == true) {
-            //System.out.println(tmp);
-            /*if(tmp.replaceAll("\\s", "").equals("}") && int_while==true)       
-             {
-             System.out.println("BLA:"+brtmp.readLine());
-             //br = brtmp;
-             return;
-             }*/
 
-            //System.out.println(tmp);
             // res recupere le type de regex de la ligne
             res = parser.correspondRegex(tmp);
             // -1 correspond à aucune regex
@@ -176,11 +199,9 @@ public class Utilitaire {
                 reg = true;
                 switch (res) {
                     case 0: // INSTANCIATION
-                        // mesInt.add(new MonInt(0, parser.extraireVariable(tmp), new Rectangle2D.Double(100,100,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
                         mesInt.add(new MonInt(0, parser.extraireVariable(tmp), new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
                         break;
                     case 1: // INITIALISATION_ENTIER_SIMPLE
-                        //mesInt.add(new MonInt(parser.extraireValeur(tmp), parser.extraireVariable(tmp), new Rectangle2D.Double(200,200,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
                         mesInt.add(new MonInt(parser.extraireValeur(tmp), parser.extraireVariable(tmp).replace("-", ""), new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>
                         break;
                     case 2: // INITIALISATION_VARIABLE_SIMPLE
@@ -398,49 +419,53 @@ public class Utilitaire {
                         System.out.println("BOUCLE_WHILE");
 
                         cond = parser.extraireConditionWhile(tmp);
-//                        int_while = true;
                         if ((tmp2 = rechercheObjet(parser.extraireVariableWhile(cond[0]))) != -1) {
                             firstWhile = true;
                             
                             indice_while = tmp2;
+                           
                             if (cond[1].equals("==")) {
                                 if (mesInt.get(tmp2).getMonInt() != Integer.parseInt(cond[2])) {
                                     ConditionPasRespectee();
                                 } else {
-                                    while (mesInt.get(tmp2).getMonInt() == Integer.parseInt(cond[2])) {
-                                        //System.out.println("Respectée");
-                                        this.execution();
-                                    }
-
-                                    ConditionPasRespectee();
+                                    ajouterLigneWhile();
                                 }
-                            }
-                            if (cond[1].equals("!=")) {
-                                //System.out.println("!=");
+                            }                            
+                            else if (cond[1].equals("!=")) {
                                 if (mesInt.get(tmp2).getMonInt() == Integer.parseInt(cond[2])) {
                                     ConditionPasRespectee();
-//                                    int_while = false;
                                 } else {
-                                    int_while = true;
-                                    //while(mesInt.get(tmp2).getMonInt()!=Integer.parseInt(cond[2]))
-                                    //{   
-                                    tmp = br.readLine();
-                                    tmp = br.readLine().replaceAll("\\s*", "");
-                                    string_while.add(tmp);
-                                    //System.out.println(tmp);
-                                    while (!"}".equals(tmp = br.readLine().replaceAll("\\s*", ""))) {
-                                        //System.out.println(tmp);
-                                        string_while.add(tmp);
-                                    }
-
-                                        //System.out.println("Respectée : "+mesInt.get(tmp2).getMonInt());
-                                    //this.execution();
-                                    //}
-                                    //ConditionPasRespectee(); 
-//                                    int_while = false;
+                                    ajouterLigneWhile();
                                 }
                             }
-
+                            else if (cond[1].equals(">")) {
+                                if (mesInt.get(tmp2).getMonInt() <= Integer.parseInt(cond[2])) {
+                                    ConditionPasRespectee();
+                                } else {
+                                    ajouterLigneWhile();
+                                }
+                            }   
+                            else if (cond[1].equals("<")) {
+                                if (mesInt.get(tmp2).getMonInt() >= Integer.parseInt(cond[2])) {
+                                    ConditionPasRespectee();
+                                } else {
+                                    ajouterLigneWhile();
+                                }
+                            }                            
+                            else if (cond[1].equals("<=")) {
+                                if (mesInt.get(tmp2).getMonInt() > Integer.parseInt(cond[2])) {
+                                    ConditionPasRespectee();
+                                } else {
+                                    ajouterLigneWhile();
+                                }
+                            } 
+                            else if (cond[1].equals(">=")) {
+                                if (mesInt.get(tmp2).getMonInt() < Integer.parseInt(cond[2])) {
+                                    ConditionPasRespectee();
+                                } else {
+                                    ajouterLigneWhile();
+                                }
+                            }                             
                         }
                         break;
                     case 15:
@@ -520,6 +545,40 @@ public class Utilitaire {
         br = brtmp;
     }
 
+    public String executionWhile()
+    {
+        String tmp;
+        
+        if (i_while == string_while.size()) {
+            i_while = 0;
+        }
+
+        tmp = string_while.get(i_while);
+        i_while++; 
+        return tmp;
+    }
+    
+    public void finWhile()
+    {
+        is_while = false;
+        execution = false;        
+    }
+    
+    public void ajouterLigneWhile() throws IOException
+    {
+        String tmp;
+        
+        is_while = true;
+        tmp = br.readLine().replaceAll("\\s*", "");
+        string_while.add(tmp);
+        //System.out.println(tmp);
+        while (!"}".equals(tmp = br.readLine().replaceAll("\\s*", ""))) {
+            //System.out.println(tmp);
+            string_while.add(tmp);
+        }        
+    }
+    
+    
     /*
      GET-SET
      */
@@ -548,7 +607,7 @@ public class Utilitaire {
     }
 
     public boolean isWhileLine(){
-        return int_while;
+        return is_while;
     }
     
     public boolean isFirstWhile () {

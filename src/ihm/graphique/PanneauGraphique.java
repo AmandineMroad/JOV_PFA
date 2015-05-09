@@ -212,12 +212,12 @@ public class PanneauGraphique extends JPanel {
             }
             int while_size = utilitaire.getWhileSize() + 3; //ajout accolade + ligne condition
             boolean affiche = (utilitaire.isWhileLine()) && (ligneCourante < ligne_tmp + while_size);
-            System.out.println("affiche = " + affiche 
+            /*System.out.println("affiche = " + affiche 
                     + "\n\tligne courante = " + ligneCourante
                     + "\n\tligne tmp = "+ligne_tmp 
-                    + "\n\twhile size = " + utilitaire.getWhileSize());
+                    + "\n\twhile size = " + utilitaire.getWhileSize());*/
             if (!utilitaire.isWhileLine() || affiche) {
-                System.out.println("affiche ligne alpha at: " + ligneCourante);
+                //System.out.println("affiche ligne alpha at: " + ligneCourante);
                 JTextArea zoneCode = pc.getZoneCode();
                 zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
                 highLightLine(ligneCourante);
@@ -242,7 +242,7 @@ public class PanneauGraphique extends JPanel {
     public void highLightLine(int lineNumber) {
         JTextArea zoneCode = pc.getZoneCode();
         pc.getHighLighter().removeAllHighlights();
-        System.out.println("HIGHLIGHT line : "+lineNumber);
+        //System.out.println("HIGHLIGHT line : "+lineNumber);
         try {
             pc.getHighLighter().addHighlight(zoneCode.getLineStartOffset(lineNumber + 1), zoneCode.getLineEndOffset(lineNumber + 1), pc.getHlPainter());
         } catch (BadLocationException e) {
