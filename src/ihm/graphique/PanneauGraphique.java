@@ -205,17 +205,19 @@ public class PanneauGraphique extends JPanel {
     private int ligne_tmp;
     public void afficheLigne() {
         if (ligneCourante < utilitaire.getNbLignes()) {
-            //if (!utilitaire.isWhileLine() || utilitaire.isFirstWhile()) {
             if (utilitaire.isFirstWhile()) {
                 ligne_tmp = ligneCourante;
                 utilitaire.CancelFirstWhile();
             }
-            int while_size = utilitaire.getWhileSize() + 3; //ajout accolade + ligne condition
+            //TODO ajouter test pour créer uniquement si besoin
+            int while_size = utilitaire.getWhileSize() + 2; //ajout accolade + ligne condition
             boolean affiche = (utilitaire.isWhileLine()) && (ligneCourante < ligne_tmp + while_size);
-            /*System.out.println("affiche = " + affiche 
-                    + "\n\tligne courante = " + ligneCourante
-                    + "\n\tligne tmp = "+ligne_tmp 
-                    + "\n\twhile size = " + utilitaire.getWhileSize());*/
+            
+//            System.out.println("affiche = " + affiche 
+//                    + "\n\tligne courante = " + ligneCourante
+//                    + "\n\tligne tmp = "+ligne_tmp 
+//                    + "\n\twhile size = " + utilitaire.getWhileSize());
+//            
             if (!utilitaire.isWhileLine() || affiche) {
                 //System.out.println("affiche ligne alpha at: " + ligneCourante);
                 JTextArea zoneCode = pc.getZoneCode();
@@ -223,7 +225,7 @@ public class PanneauGraphique extends JPanel {
                 highLightLine(ligneCourante);
                 ligneCourante++;
             } else {
-                int ind = utilitaire.getIndWhile() + 2;
+                int ind = utilitaire.getIndWhile();
                 int tmp = ligne_tmp + ind;
                 System.out.println("affiche ligne beta at: " + tmp);
                 highLightLine(tmp);
