@@ -162,7 +162,7 @@ public class PanneauGraphique extends JPanel {
      * @throws IOException
      */
     public void affichageBoucle() throws IOException {
-        for (int i = ligneCourante; i < utilitaire.getNbLignes(); i++) {
+        while (ligneCourante < utilitaire.getNbLignes()){
             affichage();
             try {
                 // System.out.println("GO TO SLEEP");
@@ -200,36 +200,40 @@ public class PanneauGraphique extends JPanel {
     }
 
     /**
-     * Affiche la ligne courante sur le panneau code
+     * Affiche et/ou met en surbrillance la ligne couramment exécutée
      */
-    private int ligne_tmp;
+    private int ligne_tmp; 
     public void afficheLigne() {
         if (ligneCourante < utilitaire.getNbLignes()) {
-            if (utilitaire.isFirstWhile()) {
-                ligne_tmp = ligneCourante;
-                utilitaire.CancelFirstWhile();
+            boolean affiche = false;
+            /* Affichage while */
+            if (utilitaire.isWhileLine()) {
+                /* premier passage dans le while */
+                if (utilitaire.isFirstWhile()) {
+                    ligne_tmp = ligneCourante;
+                    utilitaire.CancelFirstWhile();
+                }
+                
+                int while_size = utilitaire.getWhileSize() + 2; //ajout accolade + ligne condition
+                affiche = (ligneCourante < ligne_tmp + while_size);
             }
-            //TODO ajouter test pour créer uniquement si besoin
-            int while_size = utilitaire.getWhileSize() + 2; //ajout accolade + ligne condition
-            boolean affiche = (utilitaire.isWhileLine()) && (ligneCourante < ligne_tmp + while_size);
-            
-//            System.out.println("affiche = " + affiche 
-//                    + "\n\tligne courante = " + ligneCourante
-//                    + "\n\tligne tmp = "+ligne_tmp 
-//                    + "\n\twhile size = " + utilitaire.getWhileSize());
-//            
+          
+            /* Affichage classique*/
             if (!utilitaire.isWhileLine() || affiche) {
                 //System.out.println("affiche ligne alpha at: " + ligneCourante);
                 JTextArea zoneCode = pc.getZoneCode();
                 zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
                 highLightLine(ligneCourante);
                 ligneCourante++;
-            } else {
+            } 
+            /* boucle : surbrillance des lignes */
+            else { 
                 int ind = utilitaire.getIndWhile();
                 int tmp = ligne_tmp + ind;
                 System.out.println("affiche ligne beta at: " + tmp);
                 highLightLine(tmp);
             }
+            /* Refresh forcé de l'affichage */
             this.repaint();
             rm.isCompletelyDirty(this);
 
@@ -244,12 +248,13 @@ public class PanneauGraphique extends JPanel {
     public void highLightLine(int lineNumber) {
         JTextArea zoneCode = pc.getZoneCode();
         pc.getHighLighter().removeAllHighlights();
-        //System.out.println("HIGHLIGHT line : "+lineNumber);
+      //  System.out.println("HIGHLIGHT line : "+lineNumber);
         try {
             pc.getHighLighter().addHighlight(zoneCode.getLineStartOffset(lineNumber + 1), zoneCode.getLineEndOffset(lineNumber + 1), pc.getHlPainter());
         } catch (BadLocationException e) {
             System.err.println("HighLight failed");
         }
+        pc.repaint();
     }
 
 }
