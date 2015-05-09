@@ -65,7 +65,7 @@ public class Utilitaire {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public Utilitaire(Dimension d) throws FileNotFoundException, IOException {
+ /*   public Utilitaire(Dimension d) throws FileNotFoundException, IOException {
         parser = new Parser();
         mesInt = new ArrayList<>();
         fr = new FileReader(nomF);
@@ -74,7 +74,7 @@ public class Utilitaire {
         this.d = d;
         NombreLignes();
     }
-
+*/
     /**
      * Constructeur
      *
@@ -98,7 +98,7 @@ public class Utilitaire {
      *
      * @throws IOException
      */
-    public void NombreLignes() throws IOException {
+    public final void NombreLignes() throws IOException {
         while (br.readLine() != null) {
             nbLignes++;
         }
@@ -117,6 +117,7 @@ public class Utilitaire {
      * (initialisation, instanciation ..). La ligne peut ne pas être reconnus si
      * ce n'est pas une opération sur les entiers
      *
+     * @return true si un traitement est effectué (la ligne contient une regex connue), false sinon
      * @throws FileNotFoundException
      * @throws IOException
      */
@@ -126,12 +127,6 @@ public class Utilitaire {
         String s[];
         String vrb;
         String operation;
-
-        
-
-        Rectangle2D.Double r = null;
-
-        MonInt mi;
 
         int tmp2 = 0;
         int tmp3 = 0;

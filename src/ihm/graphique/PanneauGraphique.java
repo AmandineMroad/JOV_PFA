@@ -41,13 +41,13 @@ public class PanneauGraphique extends JPanel {
      * @param pc
      * @throws IOException
      */
-    public PanneauGraphique(PanneauCode pc) throws IOException {
+/*    public PanneauGraphique(PanneauCode pc) throws IOException {
         this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         this.pc = pc;
         utilitaire = new Utilitaire(pc.getD());
     }
-
+*/
     /**
      * Constructeur du panneau graphique
      *
@@ -206,6 +206,7 @@ public class PanneauGraphique extends JPanel {
     public void afficheLigne() {
         if (ligneCourante < utilitaire.getNbLignes()) {
             boolean affiche = false;
+            int while_size = 0;
             /* Affichage while */
             if (utilitaire.isWhileLine()) {
                 /* premier passage dans le while */
@@ -214,7 +215,7 @@ public class PanneauGraphique extends JPanel {
                     utilitaire.CancelFirstWhile();
                 }
                 
-                int while_size = utilitaire.getWhileSize() + 2; //ajout accolade + ligne condition
+                while_size = utilitaire.getWhileSize() + 2; //ajout accolade + ligne condition
                 affiche = (ligneCourante < ligne_tmp + while_size);
             }
           
@@ -225,6 +226,12 @@ public class PanneauGraphique extends JPanel {
                 zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
                 highLightLine(ligneCourante);
                 ligneCourante++;
+                if ((affiche) && (ligneCourante == ligne_tmp + while_size -1) ) {
+                    zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
+                    ligneCourante++;
+                    highLightLine(ligneCourante-2);
+                }
+                
             } 
             /* boucle : surbrillance des lignes */
             else { 
