@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.RepaintManager;
+import javax.swing.text.BadLocationException;
 import traitement.MonInt;
 import util.Gestionnaire;
 
@@ -57,7 +59,7 @@ public class PanneauGraphique extends JPanel {
         this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         this.pc = pc;
         ligneCourante = 0;
-        rm =RepaintManager.currentManager(this);
+        rm = RepaintManager.currentManager(this);
         utilitaire = new Utilitaire(pc.getD(), f);
     }
 
@@ -68,7 +70,7 @@ public class PanneauGraphique extends JPanel {
      */
     @Override
     public void paintComponent(Graphics g) {
-       // System.out.println("Appel PanneauGraphique.paintComponent()");
+        // System.out.println("Appel PanneauGraphique.paintComponent()");
         super.paintComponent(g);
         JPanel pan;
         int size = utilitaire.getMesInt().size();
@@ -85,38 +87,41 @@ public class PanneauGraphique extends JPanel {
             if (mi.isTabValue()) {
                 int nb_val = 0;
                 ArrayList<MonInt> list = new ArrayList();
-                
+
                 String[] tabName;
                 tabName = mi.getCorrespondance().split("\\[");
                 String tabName_tmp = tabName[0];
-                
+
                 //Extraction de la taille et du nom du tableau
-                while (mi.isTabValue() && i<size && tabName_tmp.equals(tabName[0])) { //verif nom
+                while (mi.isTabValue() && i < size && tabName_tmp.equals(tabName[0])) { //verif nom
                     nb_val++;
                     i++;
                     list.add(mi);
-                    if (i<size) {
+                    if (i < size) {
                         mi = utilitaire.getMesInt().get(i);
                         tabName_tmp = mi.getCorrespondance().split("\\[")[0];
                     }
                 }
                 i--;
-                
+
                 //Dimensionnement et placement du panneau
                 int lignes = ((nb_val * PanneauVariable.DEFAULT_WIDTH) / this.getWidth()) + 1;
-                Point tmp_position =new Point();
-                
-                if(position.x <=marge)  tmp_position.setLocation(0,position.y);
-                else    position.setLocation(0, position.y + PanneauVariable.DEFAULT_HEIGHT + marge);
+                Point tmp_position = new Point();
+
+                if (position.x <= marge) {
+                    tmp_position.setLocation(0, position.y);
+                } else {
+                    position.setLocation(0, position.y + PanneauVariable.DEFAULT_HEIGHT + marge);
+                }
                 marge = 15;
-                
+
                 pan = new PanneauTab(position, this.getWidth(), (lignes * PanneauVariable.DEFAULT_HEIGHT) + ((lignes + 1) * marge), tabName[0]);
-                
+
                 //Insertion des valeurs
                 PanneauVariable tmp_panVar;
-                int tmp_x=marge, tmp_y=marge+10;
-                tmp_position.setLocation(marge, marge+10);
-               
+                int tmp_x = marge, tmp_y = marge + 10;
+                tmp_position.setLocation(marge, marge + 10);
+
                 for (MonInt myInt : list) {
                     tmp_panVar = new PanneauVariable(myInt);
                     tmp_panVar.setBounds(tmp_x, tmp_y, tmp_panVar.getWidth(), tmp_panVar.getHeight());
@@ -127,18 +132,16 @@ public class PanneauGraphique extends JPanel {
                         tmp_x = marge;
                     }
                     tmp_position.setLocation(tmp_x, tmp_y);
-                    pan.add(tmp_panVar); 
+                    pan.add(tmp_panVar);
                 }
-                
+
                 //Repositionnement pour prochain objet à afficher
                 newY = position.y + pan.getHeight() + marge;
                 position.setLocation(0, newY);
-            } 
-            /* Affichage variable */
-            else { 
+            } /* Affichage variable */ else {
                 marge = 5;
                 pan = new PanneauVariable(mi);
-                pan.setBounds(position.x+marge, position.y, pan.getWidth(), pan.getHeight());
+                pan.setBounds(position.x + marge, position.y, pan.getWidth(), pan.getHeight());
 
                 newX = position.x + pan.getWidth();
                 newY = position.y;
@@ -162,7 +165,7 @@ public class PanneauGraphique extends JPanel {
         for (int i = ligneCourante; i < utilitaire.getNbLignes(); i++) {
             affichage();
             try {
-               // System.out.println("GO TO SLEEP");
+                // System.out.println("GO TO SLEEP");
                 Thread.sleep(1000);
                 //System.out.println("Réveillé");
             } catch (InterruptedException ex) {
@@ -175,19 +178,20 @@ public class PanneauGraphique extends JPanel {
 
     /**
      * Traite et affiche la ligne courante
+     *
      * @throws java.io.IOException
      */
     public void affichage() throws IOException {
         int totalLigne = utilitaire.getNbLignes();
-        
+
         boolean regex = utilitaire.execution();
         afficheLigne();
-        
+
         //Tant que utilitaire.execution() renvoie false (id. la ligne ne correspond à aucun regex)
-        while (!regex && ligneCourante<totalLigne ){
+        while (!regex && ligneCourante < totalLigne) {
             regex = utilitaire.execution();
         }
-        
+
         if (ligneCourante == totalLigne) {
             Gestionnaire gest = Gestionnaire.getInstance();
             gest.getFVisualisation().getToolBar().disableNext();
@@ -198,15 +202,52 @@ public class PanneauGraphique extends JPanel {
     /**
      * Affiche la ligne courante sur le panneau code
      */
+    private int ligne_tmp;
     public void afficheLigne() {
         if (ligneCourante < utilitaire.getNbLignes()) {
-            pc.getZoneCode().setText(pc.getZoneCode().getText() + "\n" + pc.getLignes().get(ligneCourante));
-            ligneCourante++;
+            //if (!utilitaire.isWhileLine() || utilitaire.isFirstWhile()) {
+            if (utilitaire.isFirstWhile()) {
+                ligne_tmp = ligneCourante;
+                utilitaire.CancelFirstWhile();
+            }
+            int while_size = utilitaire.getWhileSize() + 3; //ajout accolade + ligne condition
+            boolean affiche = (utilitaire.isWhileLine()) && (ligneCourante < ligne_tmp + while_size);
+            System.out.println("affiche = " + affiche 
+                    + "\n\tligne courante = " + ligneCourante
+                    + "\n\tligne tmp = "+ligne_tmp 
+                    + "\n\twhile size = " + utilitaire.getWhileSize());
+            if (!utilitaire.isWhileLine() || affiche) {
+                System.out.println("affiche ligne alpha at: " + ligneCourante);
+                JTextArea zoneCode = pc.getZoneCode();
+                zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
+                highLightLine(ligneCourante);
+                ligneCourante++;
+            } else {
+                int ind = utilitaire.getIndWhile() + 2;
+                int tmp = ligne_tmp + ind;
+                System.out.println("affiche ligne beta at: " + tmp);
+                highLightLine(tmp);
+            }
             this.repaint();
-            
             rm.isCompletelyDirty(this);
 
         }
     }
     
+    /**
+     * Fait apparaitre la ligne <i>line number</i> en surbrillance dans la zone de texte du PanneauCode
+     * @param lineNumber la ligne à surligner
+     */
+    
+    public void highLightLine(int lineNumber) {
+        JTextArea zoneCode = pc.getZoneCode();
+        pc.getHighLighter().removeAllHighlights();
+        System.out.println("HIGHLIGHT line : "+lineNumber);
+        try {
+            pc.getHighLighter().addHighlight(zoneCode.getLineStartOffset(lineNumber + 1), zoneCode.getLineEndOffset(lineNumber + 1), pc.getHlPainter());
+        } catch (BadLocationException e) {
+            System.err.println("HighLight failed");
+        }
+    }
+
 }

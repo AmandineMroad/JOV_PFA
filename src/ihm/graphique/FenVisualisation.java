@@ -38,7 +38,7 @@ public class FenVisualisation extends JFrame
      * A SUPPRIMER
      * @throws IOException 
      */
-    public FenVisualisation() throws IOException
+  /*  public FenVisualisation() throws IOException
     {
         d = new Dimension(850, 400);
         this.setSize(d);
@@ -56,7 +56,7 @@ public class FenVisualisation extends JFrame
         
         this.setVisible(true);    
     }
-
+*/
     /**
      * Constructeur
      * @param f : le fichier à visualiser

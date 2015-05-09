@@ -46,12 +46,13 @@ public class Utilitaire {
 
     // Contiens le nombre de lignes du fichier source
     private int nbLignes;
-    
+
     boolean int_while = false;
     ArrayList<String> string_while = new ArrayList<>();
     String[] cond = null;
     int i_while = 0;
     int indice_while = 0;
+    boolean firstWhile =false;
     //BufferedReader brtmp;
     // 
     private Dimension d;
@@ -124,59 +125,55 @@ public class Utilitaire {
         String s[];
         String vrb;
         String operation;
-        
-        
+
         boolean execution = false;
-        
+
         Rectangle2D.Double r = null;
 
         MonInt mi;
 
-        int tmp2=0;
-        int tmp3=0;
-        int tmp4=0;
+        int tmp2 = 0;
+        int tmp3 = 0;
+        int tmp4 = 0;
         int res;
         boolean reg = true;
-        
-        if(int_while==true)
-        {
+
+        if (int_while == true) {
             reg = false;
             execution = true;
             System.out.println("WHILE DETECTE");
-            if(mesInt.get(indice_while).getMonInt()!=Integer.parseInt(cond[2]))
-            {
+            if (mesInt.get(indice_while).getMonInt() != Integer.parseInt(cond[2])) {
                 System.out.println("CONDITION OK");
-                if(i_while==string_while.size())
-                    i_while=0;
-                
+                if (i_while == string_while.size()) {
+                    i_while = 0;
+                    //firstWhile = false;
+                }
+
                 tmp = string_while.get(i_while);
                 i_while++;
-            }
-            else
-            {
+            } else {
                 int_while = false;
                 execution = false;
             }
-        }
-        else if ((tmp = br.readLine()) != null) 
+        } else if ((tmp = br.readLine()) != null) {
             execution = true;
-            
-        if(execution == true)
-        {
+        }
+
+        if (execution == true) {
             //System.out.println(tmp);
             /*if(tmp.replaceAll("\\s", "").equals("}") && int_while==true)       
-            {
-                System.out.println("BLA:"+brtmp.readLine());
-                //br = brtmp;
-                return;
-            }*/
-            
+             {
+             System.out.println("BLA:"+brtmp.readLine());
+             //br = brtmp;
+             return;
+             }*/
+
             //System.out.println(tmp);
             // res recupere le type de regex de la ligne
             res = parser.correspondRegex(tmp);
             // -1 correspond à aucune regex
             if (res != -1) {
-				reg = true;
+                reg = true;
                 switch (res) {
                     case 0: // INSTANCIATION
                         // mesInt.add(new MonInt(0, parser.extraireVariable(tmp), new Rectangle2D.Double(100,100,100,20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
@@ -258,74 +255,81 @@ public class Utilitaire {
                             if (parser.extraireOperation(tmp).equals("+")) {
                                 s = operation.split("\\+");
                                 if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0].replace("-", "")))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1].replace("-", "")))) != -1) {
-                                    
-                                    if(s[0].indexOf("-")==-1 && s[1].indexOf("-")==-1)   // Si les deux sont POSITIF
+
+                                    if (s[0].indexOf("-") == -1 && s[1].indexOf("-") == -1) // Si les deux sont POSITIF
+                                    {
                                         mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() + mesInt.get(tmp4).getMonInt());
-                                    else if((s[0].indexOf("-")!=-1) && s[1].indexOf("-")!=-1)
-                                      mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() + -mesInt.get(tmp4).getMonInt());                                    
-                                    else if(s[0].indexOf("-")!=-1)   // Si 1er NEGATIF
+                                    } else if ((s[0].indexOf("-") != -1) && s[1].indexOf("-") != -1) {
+                                        mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() + -mesInt.get(tmp4).getMonInt());
+                                    } else if (s[0].indexOf("-") != -1) // Si 1er NEGATIF
+                                    {
                                         mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() + mesInt.get(tmp4).getMonInt());
-                                    else if(s[1].indexOf("-")!=-1)   // Si 2em NEGATIF
-                                        mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() + -mesInt.get(tmp4).getMonInt());                                    
+                                    } else if (s[1].indexOf("-") != -1) // Si 2em NEGATIF
+                                    {
+                                        mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() + -mesInt.get(tmp4).getMonInt());
+                                    }
                                 }
-                            }
-                            else if (parser.extraireOperation(tmp).equals("-")) {
+                            } else if (parser.extraireOperation(tmp).equals("-")) {
                                 s = operation.split("\\-");
                                 if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0]))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1]))) != -1) {
                                     mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() - mesInt.get(tmp4).getMonInt());
                                 }
-                            }
-                            else if (parser.extraireOperation(tmp).equals("-1")) {
-                                
-                            }
-                            else if (parser.extraireOperation(tmp).equals("-2")) {
-                                
-                            }
-                            else if (parser.extraireOperation(tmp).equals("-3")) {
-                                
-                            }                            
-                            
-                            else if (parser.extraireOperation(tmp).equals("*")) {
+                            } else if (parser.extraireOperation(tmp).equals("-1")) {
+
+                            } else if (parser.extraireOperation(tmp).equals("-2")) {
+
+                            } else if (parser.extraireOperation(tmp).equals("-3")) {
+
+                            } else if (parser.extraireOperation(tmp).equals("*")) {
                                 s = operation.split("\\*");
                                 if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0].replace("-", "")))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1].replace("-", "")))) != -1) {
-                                    
-                                    if(s[0].indexOf("-")==-1 && s[1].indexOf("-")==-1)   // Si les deux sont POSITIF
+
+                                    if (s[0].indexOf("-") == -1 && s[1].indexOf("-") == -1) // Si les deux sont POSITIF
+                                    {
                                         mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() * mesInt.get(tmp4).getMonInt());
-                                    else if((s[0].indexOf("-")!=-1) && s[1].indexOf("-")!=-1)
-                                      mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() * -mesInt.get(tmp4).getMonInt());                                    
-                                    else if(s[0].indexOf("-")!=-1)   // Si 1er NEGATIF
+                                    } else if ((s[0].indexOf("-") != -1) && s[1].indexOf("-") != -1) {
+                                        mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() * -mesInt.get(tmp4).getMonInt());
+                                    } else if (s[0].indexOf("-") != -1) // Si 1er NEGATIF
+                                    {
                                         mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() * mesInt.get(tmp4).getMonInt());
-                                    else if(s[1].indexOf("-")!=-1)   // Si 2em NEGATIF
-                                        mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() * -mesInt.get(tmp4).getMonInt());                                    
+                                    } else if (s[1].indexOf("-") != -1) // Si 2em NEGATIF
+                                    {
+                                        mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() * -mesInt.get(tmp4).getMonInt());
+                                    }
                                 }
-                            }
-                            else if (parser.extraireOperation(tmp).equals("/")) {
+                            } else if (parser.extraireOperation(tmp).equals("/")) {
                                 s = operation.split("\\/");
                                 if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0].replace("-", "")))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1].replace("-", "")))) != -1) {
-                                    
-                                    if(s[0].indexOf("-")==-1 && s[1].indexOf("-")==-1)   // Si les deux sont POSITIF
+
+                                    if (s[0].indexOf("-") == -1 && s[1].indexOf("-") == -1) // Si les deux sont POSITIF
+                                    {
                                         mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() / mesInt.get(tmp4).getMonInt());
-                                    else if((s[0].indexOf("-")!=-1) && s[1].indexOf("-")!=-1)
-                                      mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() / -mesInt.get(tmp4).getMonInt());                                    
-                                    else if(s[0].indexOf("-")!=-1)   // Si 1er NEGATIF
+                                    } else if ((s[0].indexOf("-") != -1) && s[1].indexOf("-") != -1) {
+                                        mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() / -mesInt.get(tmp4).getMonInt());
+                                    } else if (s[0].indexOf("-") != -1) // Si 1er NEGATIF
+                                    {
                                         mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() / mesInt.get(tmp4).getMonInt());
-                                    else if(s[1].indexOf("-")!=-1)   // Si 2em NEGATIF
-                                        mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() / -mesInt.get(tmp4).getMonInt());                                                                        
+                                    } else if (s[1].indexOf("-") != -1) // Si 2em NEGATIF
+                                    {
+                                        mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() / -mesInt.get(tmp4).getMonInt());
+                                    }
                                 }
-                            }
-                            else if (parser.extraireOperation(tmp).equals("%")) {
+                            } else if (parser.extraireOperation(tmp).equals("%")) {
                                 s = operation.split("\\%");
                                 if ((tmp3 = rechercheObjet(parser.extraireVariable(s[0].replace("-", "")))) != -1 && (tmp4 = rechercheObjet(parser.extraireVariable(s[1].replace("-", "")))) != -1) {
-                                    
-                                    if(s[0].indexOf("-")==-1 && s[1].indexOf("-")==-1)   // Si les deux sont POSITIF
-                                        mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() % mesInt.get(tmp4).getMonInt());
-                                    else if((s[0].indexOf("-")!=-1) && s[1].indexOf("-")!=-1)
-                                      mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() % -mesInt.get(tmp4).getMonInt());                                    
-                                    else if(s[0].indexOf("-")!=-1)   // Si 1er NEGATIF
-                                        mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() % mesInt.get(tmp4).getMonInt());
-                                    else if(s[1].indexOf("-")!=-1)   // Si 2em NEGATIF
-                                        mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() % -mesInt.get(tmp4).getMonInt());                                                                        
 
+                                    if (s[0].indexOf("-") == -1 && s[1].indexOf("-") == -1) // Si les deux sont POSITIF
+                                    {
+                                        mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() % mesInt.get(tmp4).getMonInt());
+                                    } else if ((s[0].indexOf("-") != -1) && s[1].indexOf("-") != -1) {
+                                        mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() % -mesInt.get(tmp4).getMonInt());
+                                    } else if (s[0].indexOf("-") != -1) // Si 1er NEGATIF
+                                    {
+                                        mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt() % mesInt.get(tmp4).getMonInt());
+                                    } else if (s[1].indexOf("-") != -1) // Si 2em NEGATIF
+                                    {
+                                        mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() % -mesInt.get(tmp4).getMonInt());
+                                    }
 
 //mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() % mesInt.get(tmp4).getMonInt());
                                 }
@@ -356,110 +360,95 @@ public class Utilitaire {
                                     //System.out.println("VB NETAGIVE : "+c1+" "+i);
                                     if ((tmp2 = rechercheObjet(rtr.get(i).replace("-", ""))) != -1) {
                                         //mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
-                                        mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0) + '['+ (i-1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
+                                        mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0) + '[' + (i - 1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
                                     }
-                                } else
-                                {
-                                     //mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
-                                    mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '['+ (i-1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                                } else {
+                                    //mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                                    mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '[' + (i - 1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                                 }
                             } else if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) {
                                 //System.out.println("VB POSITIVE : "+c+" "+i);
-                                if ((tmp2 = rechercheObjet(rtr.get(i))) != -1) 
-                                {
+                                if ((tmp2 = rechercheObjet(rtr.get(i))) != -1) {
                                     // mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
-                                    mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0) + '['+ (i-1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                        
+                                    mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0) + '[' + (i - 1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                        
                                 }
-                            } else 
-                            {
+                            } else {
                                 // mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
-                                mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '['+ (i-1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
+                                mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '[' + (i - 1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                             }
                         }
 
                         break;
                     case 12:    //  DECLARATION_TABLEAU_SIMPLE
                         System.out.println("DECLARATION_TABLEAU_SIMPLE");
-                        
-                        for(int i=0; i<parser.extraireTailleDeclarationTableau(tmp); i++)
-                            mesInt.add(new MonInt(0, parser.extraireNomDeclarationTableau(tmp)+ '['+ i + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
-                        
-                        break; 
+
+                        for (int i = 0; i < parser.extraireTailleDeclarationTableau(tmp); i++) {
+                            mesInt.add(new MonInt(0, parser.extraireNomDeclarationTableau(tmp) + '[' + i + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
+                        }
+                        break;
                     case 13:    //  INITIALISATION_TABLEAU_CASE_SIMPLE
                         System.out.println("INITIALISATION_TABLEAU_CASE_SIMPLE");
-                                                
-                        if((tmp2 = rechercheTableau(parser.extraireNomInitialisationCase(tmp)+'['+parser.extraireIndiceInitialisationCase(tmp)+']')) !=-1)
-                        {
-                             mesInt.get(tmp2).setMonInt(parser.extraireValeurInitialisationCase(tmp));  
+
+                        if ((tmp2 = rechercheTableau(parser.extraireNomInitialisationCase(tmp) + '[' + parser.extraireIndiceInitialisationCase(tmp) + ']')) != -1) {
+                            mesInt.get(tmp2).setMonInt(parser.extraireValeurInitialisationCase(tmp));
                         }
-                        
+
                         break;
                     case 14:    // BOUCLE_WHILE
                         System.out.println("BOUCLE_WHILE");
-                        
-                       
+
                         cond = parser.extraireConditionWhile(tmp);
 //                        int_while = true;
-                        if((tmp2=rechercheObjet(parser.extraireVariableWhile(cond[0]))) != -1)
-                        {
+                        if ((tmp2 = rechercheObjet(parser.extraireVariableWhile(cond[0]))) != -1) {
+                            firstWhile = true;
+                            
                             indice_while = tmp2;
-                            if(cond[1].equals("=="))
-                            {
-                                if(mesInt.get(tmp2).getMonInt()!=Integer.parseInt(cond[2]))
-                                {
-                                    ConditionPasRespectee();  
-                                }
-                                else
-                                {
-                                    while(mesInt.get(tmp2).getMonInt()==Integer.parseInt(cond[2]))
-                                    {   
+                            if (cond[1].equals("==")) {
+                                if (mesInt.get(tmp2).getMonInt() != Integer.parseInt(cond[2])) {
+                                    ConditionPasRespectee();
+                                } else {
+                                    while (mesInt.get(tmp2).getMonInt() == Integer.parseInt(cond[2])) {
                                         //System.out.println("Respectée");
                                         this.execution();
                                     }
-                                    
-                                    ConditionPasRespectee();  
+
+                                    ConditionPasRespectee();
                                 }
                             }
-                            if(cond[1].equals("!="))
-                            {
+                            if (cond[1].equals("!=")) {
                                 //System.out.println("!=");
-                                if(mesInt.get(tmp2).getMonInt()==Integer.parseInt(cond[2]))
-                                {
-                                    ConditionPasRespectee();  
+                                if (mesInt.get(tmp2).getMonInt() == Integer.parseInt(cond[2])) {
+                                    ConditionPasRespectee();
 //                                    int_while = false;
-                                }
-                                else
-                                {
+                                } else {
                                     int_while = true;
                                     //while(mesInt.get(tmp2).getMonInt()!=Integer.parseInt(cond[2]))
                                     //{   
-                                        tmp = br.readLine();
-                                        tmp = br.readLine().replaceAll("\\s*", "");
-                                        string_while.add(tmp);
+                                    tmp = br.readLine();
+                                    tmp = br.readLine().replaceAll("\\s*", "");
+                                    string_while.add(tmp);
+                                    //System.out.println(tmp);
+                                    while (!"}".equals(tmp = br.readLine().replaceAll("\\s*", ""))) {
                                         //System.out.println(tmp);
-                                        while(!"}".equals(tmp = br.readLine().replaceAll("\\s*", "")))
-                                        {
-                                            //System.out.println(tmp);
-                                            string_while.add(tmp);
-                                        }
-                                        
+                                        string_while.add(tmp);
+                                    }
+
                                         //System.out.println("Respectée : "+mesInt.get(tmp2).getMonInt());
-                                        //this.execution();
+                                    //this.execution();
                                     //}
-                                    
                                     //ConditionPasRespectee(); 
 //                                    int_while = false;
                                 }
-                            }     
-                            
+                            }
+
                         }
                         break;
                     case 15:
-                        
+
                         break;
                 }
             } else {
-				reg = false;
+                reg = false;
                 try {
                     Gestionnaire gest = Gestionnaire.getInstance();
                     gest.getPanGraph().afficheLigne();
@@ -470,7 +459,7 @@ public class Utilitaire {
                 }
             }
         }
-		return reg;
+        return reg;
     }
 
     /**
@@ -491,52 +480,46 @@ public class Utilitaire {
         }
         return -1;
     }
-        
-        
+
     /**
-     * 
+     *
      * @param tab
-     * @return 
+     * @return
      */
-   public int rechercheTableau(String tab)
-    {
+    public int rechercheTableau(String tab) {
         for (int i = 0; i < mesInt.size(); i++) {
             if (mesInt.get(i).getCorrespondance().equals(tab)) {
                 return i;
             }
-        }    
-            return -1;
-        
+        }
+        return -1;
+
     }
 
-   public void ConditionPasRespectee() throws IOException
-   {
+    public void ConditionPasRespectee() throws IOException {
         System.out.println("Condition pas respectée");
         BufferedReader brtmp = br;
         String wh;
-        int cpt=0;
+        int cpt = 0;
         wh = brtmp.readLine();
         System.out.println(wh);
-        if(wh.replaceAll("\\s", "").equals("{"))
-        {
+        if (wh.replaceAll("\\s", "").equals("{")) {
             System.out.println("Accolade ouvrante");
             cpt++;
         }
-        while(cpt!=0)
-        {
-             wh = brtmp.readLine();
-             System.out.println(wh);
-             if(wh.replaceAll("\\s", "").equals("{"))
-                 cpt++;
-             else if(wh.replaceAll("\\s", "").equals("}"))
-                 cpt--;
+        while (cpt != 0) {
+            wh = brtmp.readLine();
+            System.out.println(wh);
+            if (wh.replaceAll("\\s", "").equals("{")) {
+                cpt++;
+            } else if (wh.replaceAll("\\s", "").equals("}")) {
+                cpt--;
+            }
         }
 
-        br = brtmp;        
-   }
-   
-   
-   
+        br = brtmp;
+    }
+
     /*
      GET-SET
      */
@@ -564,4 +547,23 @@ public class Utilitaire {
         this.nbLignes = nbLignes;
     }
 
+    public boolean isWhileLine(){
+        return int_while;
+    }
+    
+    public boolean isFirstWhile () {
+        return firstWhile;
+    }
+    
+    public void CancelFirstWhile(){
+        firstWhile = false;
+    }
+    
+    public int getWhileSize(){
+        return string_while.size();
+    }
+    
+    public int getIndWhile(){
+        return i_while;
+    }
 }
