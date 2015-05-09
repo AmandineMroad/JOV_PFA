@@ -8,7 +8,6 @@ package ihm.graphique;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.TextArea;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,10 +36,8 @@ public class PanneauCode extends JPanel
     // Permet de lire dans un fichier
     private BufferedReader br;
     
-    private final String nomF = "CODE.java";    
     private File fichier;
     // Permet l'affichage du CS 
-  //  private TextArea zoneCode;
       private JTextArea zoneCode;
     
     // Contient l'ensemble des lignes du code source
@@ -48,32 +45,6 @@ public class PanneauCode extends JPanel
     
     
     private Dimension d;
-    
-    /**
-     * Constucteur
-     * @param d
-     * @throws FileNotFoundException
-     * @throws IOException 
-     */
-  /*  public PanneauCode(Dimension d) throws FileNotFoundException, IOException
-    {
-        this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        zoneCode = new TextArea();
-        zoneCode.setEditable(false);
-        zoneCode.setBackground(Color.WHITE);
-        lignes = new ArrayList<>();
-        this.add(zoneCode);
-        
-        
-        this.d = d;
-        this.d.width=this.d.width/3;
-        
-        fr = new FileReader(nomF);
-        br = new BufferedReader(fr);
-        zoneCode.setPreferredSize(d);
-       
-        enregistrement();
-    }*/
     
     JScrollPane jsp;
     Highlighter hl;
@@ -120,7 +91,8 @@ public class PanneauCode extends JPanel
         fr = new FileReader(fichier);
         br = new BufferedReader(fr);
      //   zoneCode.setPreferredSize(d);
-       jsp.setPreferredSize(d);
+     //  jsp.setPreferredSize(d);
+        jsp.setSize(d);
         enregistrement();
     }
     
@@ -159,16 +131,6 @@ public class PanneauCode extends JPanel
     public void setBr(BufferedReader br) {
         this.br = br;
     }
-/*
-    public TextArea getZoneCode() {
-        return zoneCode;
-    }
-
-    public void setZoneCode(TextArea zoneCode) {
-        this.zoneCode = zoneCode;
-    }
-*/
-    
     
     public JTextArea getZoneCode() {
         return zoneCode;
