@@ -6,6 +6,7 @@
 package ihm.graphique;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.BufferedReader;
@@ -60,39 +61,30 @@ public class PanneauCode extends JPanel
     public PanneauCode(Dimension d, File f) throws FileNotFoundException, IOException
     {
         this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-      //  zoneCode = new TextArea();
         lignes = new ArrayList<>();
-        
+        this.setOpaque(true);
         zoneCode = new JTextArea();
         zoneCode.setEditable(false);
         zoneCode.setBackground(Color.WHITE);  
-        
+        zoneCode.setOpaque(true);
         hl = new DefaultHighlighter();
         hl_painter = new DefaultHighlighter.DefaultHighlightPainter(Color.yellow);
         zoneCode.setHighlighter(hl);
         
-        
-        
         jsp = new JScrollPane(zoneCode);
-        
-        
-        
-    //    Highlighter hl = new DefaultHighlighter();
-    //    Highlighter.HighlightPainter hl_painter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+        jsp.setSize(d);
+        jsp.setOpaque(true);
         this.add(jsp);
-       // this.add(zoneCode);
+        
         
         this.d = d;
         this.d.width=this.d.width/3;
-        
         
         this.fichier = f;
         
         fr = new FileReader(fichier);
         br = new BufferedReader(fr);
-     //   zoneCode.setPreferredSize(d);
-     //  jsp.setPreferredSize(d);
-        jsp.setSize(d);
+        
         enregistrement();
     }
     
@@ -104,11 +96,11 @@ public class PanneauCode extends JPanel
     private void enregistrement() throws IOException
     {
         String tmp;
-        int i = 0;
+//        int i = 0;
         while((tmp = br.readLine()) != null)
         {
             lignes.add(tmp);
-            i++;
+//            i++;
         }        
     }
 
@@ -166,7 +158,17 @@ public class PanneauCode extends JPanel
     
     @Override
     protected void paintComponent(Graphics g) {
-        zoneCode.setSize(zoneCode.getWidth(), this.getHeight()- 50);   
-        jsp.setSize(jsp.getWidth(), this.getHeight() -50);
+        this.setSize(this.getParent().getWidth() / 3, this.getParent().getHeight());
+        int w = zoneCode.getWidth();
+        int h = zoneCode.getHeight();
+        int pcw = this.getWidth() - 10;
+        int pch = this.getHeight() - 50;
+        
+        if (pcw > w) {  w = pcw;  }
+        if (pch > h) {  h = pch;  }
+
+        zoneCode.setSize(w, h);
+        jsp.setSize(pcw, pch);
+
     }
 }

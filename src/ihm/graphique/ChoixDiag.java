@@ -1,8 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
+
 package ihm.graphique;
 
 import ihm.listeners.Lis_Execute;
@@ -26,11 +28,11 @@ import ihm.listeners.Lis_OpenReadMe;
  */
 public class ChoixDiag extends JDialog {
 
-    JButton boutonParcourir;
-    JButton boutonReadMe;
-    JButton exec;
-    JTextField pathField;
-    boolean ok;
+    JButton boutonParcourir; /** bouton "Parcourir" . Ouvre l'exporateur de fichier. */
+    JButton boutonReadMe; /** bouton Ouvrir le ReadMe*/
+    JButton exec; /** bouton "Lancer la visualisation" */
+    JTextField pathField; /** sert à afficher le chemin du fichier sélectionné */
+    boolean ok; /** indique si un fichier a été selectionné */
 
     /**
      * Constructeur

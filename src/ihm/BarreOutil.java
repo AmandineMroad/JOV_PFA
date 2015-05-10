@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package ihm;
 
@@ -16,7 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 
 /**
- *
+ *  Barre d'outil du JOV
  * @author Amandine
  */
 public class BarreOutil extends JToolBar{
@@ -24,6 +25,11 @@ public class BarreOutil extends JToolBar{
     JButton stop;
     JButton replay;
 
+    /**
+     *  Créé et initialise la barre d'outils
+     * @param name le titre de la fenêtre créée lorsque la barre d'outils est détachée
+     * @see JToolBar
+     */
     public BarreOutil(String name) {
         super(name);
         
@@ -56,7 +62,9 @@ public class BarreOutil extends JToolBar{
         return tmp;
     }
     
-    
+    /**
+     *  Désactive le bouton 
+     */
     public void disableNext(){
         next.setEnabled(false);
     }

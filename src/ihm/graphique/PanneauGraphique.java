@@ -41,13 +41,13 @@ public class PanneauGraphique extends JPanel {
      * @param pc
      * @throws IOException
      */
-/*    public PanneauGraphique(PanneauCode pc) throws IOException {
-        this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+    /*    public PanneauGraphique(PanneauCode pc) throws IOException {
+     this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        this.pc = pc;
-        utilitaire = new Utilitaire(pc.getD());
-    }
-*/
+     this.pc = pc;
+     utilitaire = new Utilitaire(pc.getD());
+     }
+     */
     /**
      * Constructeur du panneau graphique
      *
@@ -70,8 +70,10 @@ public class PanneauGraphique extends JPanel {
      */
     @Override
     public void paintComponent(Graphics g) {
-        // System.out.println("Appel PanneauGraphique.paintComponent()");
+        System.out.println("Appel PanneauGraphique.paintComponent()");
         super.paintComponent(g);
+        this.setSize(this.getParent().getWidth() * 2 / 3, this.getParent().getHeight());
+        this.setLocation(this.getParent().getWidth() / 3, pc.getY());
         JPanel pan;
         int size = utilitaire.getMesInt().size();
         this.removeAll();
@@ -162,7 +164,7 @@ public class PanneauGraphique extends JPanel {
      * @throws IOException
      */
     public void affichageBoucle() throws IOException {
-        while (ligneCourante < utilitaire.getNbLignes()){
+        while (ligneCourante < utilitaire.getNbLignes()) {
             affichage();
             try {
                 // System.out.println("GO TO SLEEP");
@@ -181,10 +183,12 @@ public class PanneauGraphique extends JPanel {
      *
      * @throws java.io.IOException
      */
+    private boolean regex = false;
+
     public void affichage() throws IOException {
         int totalLigne = utilitaire.getNbLignes();
 
-        boolean regex = utilitaire.execution();
+        regex = utilitaire.execution();
         afficheLigne();
 
         //Tant que utilitaire.execution() renvoie false (id. la ligne ne correspond à aucun regex)
@@ -202,7 +206,8 @@ public class PanneauGraphique extends JPanel {
     /**
      * Affiche et/ou met en surbrillance la ligne couramment exécutée
      */
-    private int ligne_tmp; 
+    private int ligne_tmp;
+
     public void afficheLigne() {
         if (ligneCourante < utilitaire.getNbLignes()) {
             boolean affiche = false;
@@ -214,11 +219,11 @@ public class PanneauGraphique extends JPanel {
                     ligne_tmp = ligneCourante;
                     utilitaire.CancelFirstWhile();
                 }
-                
+
                 while_size = utilitaire.getWhileSize() + 2; //ajout accolade + ligne condition
                 affiche = (ligneCourante < ligne_tmp + while_size);
             }
-          
+
             /* Affichage classique*/
             if (!utilitaire.isWhileLine() || affiche) {
                 //System.out.println("affiche ligne alpha at: " + ligneCourante);
@@ -226,36 +231,41 @@ public class PanneauGraphique extends JPanel {
                 zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
                 highLightLine(ligneCourante);
                 ligneCourante++;
-                if ((affiche) && (ligneCourante == ligne_tmp + while_size -1) ) {
+                if ((affiche) && (ligneCourante == ligne_tmp + while_size - 1)) {
                     zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
                     ligneCourante++;
-                    highLightLine(ligneCourante-2);
+                    highLightLine(ligneCourante - 2);
                 }
-                
-            } 
-            /* boucle : surbrillance des lignes */
-            else { 
+
+            } /* boucle : surbrillance des lignes */ else {
                 int ind = utilitaire.getIndWhile();
                 int tmp = ligne_tmp + ind;
                 System.out.println("affiche ligne beta at: " + tmp);
                 highLightLine(tmp);
             }
             /* Refresh forcé de l'affichage */
-            this.repaint();
-            rm.isCompletelyDirty(this);
+            if (regex) {
+                try {
+                    Gestionnaire.getInstance().getFVisualisation().getContentPane().repaint();
+                } catch (IOException ex) {
+                    Logger.getLogger(PanneauCode.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                rm.isCompletelyDirty(this);
+            }
 
         }
     }
-    
+
     /**
-     * Fait apparaitre la ligne <i>line number</i> en surbrillance dans la zone de texte du PanneauCode
+     * Fait apparaitre la ligne <i>line number</i> en surbrillance dans la zone
+     * de texte du PanneauCode
+     *
      * @param lineNumber la ligne à surligner
      */
-    
     public void highLightLine(int lineNumber) {
         JTextArea zoneCode = pc.getZoneCode();
         pc.getHighLighter().removeAllHighlights();
-      //  System.out.println("HIGHLIGHT line : "+lineNumber);
+        //  System.out.println("HIGHLIGHT line : "+lineNumber);
         try {
             pc.getHighLighter().addHighlight(zoneCode.getLineStartOffset(lineNumber + 1), zoneCode.getLineEndOffset(lineNumber + 1), pc.getHlPainter());
         } catch (BadLocationException e) {

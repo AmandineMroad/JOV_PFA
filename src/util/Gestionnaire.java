@@ -54,8 +54,9 @@ public final class Gestionnaire {
      */
     public void execute() throws IOException {
         if (ready) {
-          //  System.out.println("Gestionnaire.execute()");
             fchoix.dispose();
+            
+            // Cas du replay
             if (fvisualisation != null) {
                 FenVisualisation fen_tmp = fvisualisation;
                 fen_tmp.dispose();
@@ -69,8 +70,8 @@ public final class Gestionnaire {
             fvisualisation.getPg().affichage();
 
         } else {
-            System.out.println("ERREUR");//TODO
-            JOptionPane.showMessageDialog(fvisualisation, "ERREUR FATALE", "ERREUR", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(fvisualisation, "ERREUR FATALE \n Gestionnaire.execute()", "ERREUR", JOptionPane.ERROR_MESSAGE);
+            fchoix.setVisible(true);
         }
     }
 
