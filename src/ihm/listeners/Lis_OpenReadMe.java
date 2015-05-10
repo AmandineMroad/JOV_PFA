@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package ihm.listeners;
 
@@ -14,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Ouvrir le fichier JOV_ReadMe.txt
  * @author Amandine
  */
 public class Lis_OpenReadMe implements ActionListener{
@@ -22,9 +23,8 @@ public class Lis_OpenReadMe implements ActionListener{
         if (Desktop.isDesktopSupported()){
             try {
                 Desktop.getDesktop().open(new File(".\\src\\doc\\JOV_ReadMe.txt"));
-                //Desktop.getDesktop().open(new File(".\\JOV_ReadMe.txt"));
             } catch (IOException ex) {
-                System.out.println("Erreur open ReadMe");
+                System.err.println("Erreur open ReadMe");
                 Logger.getLogger(Lis_OpenReadMe.class.getName()).log(Level.SEVERE, null, ex);
             }
             

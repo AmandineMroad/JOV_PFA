@@ -1,12 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package ihm.graphique;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.BufferedReader;
@@ -31,25 +31,31 @@ public class PanneauCode extends JPanel
         ATTRIBUT
     */
     
-    // Permet d'ouvrir un fichier en lecture
+    /** Permet d'ouvrir un fichier en lecture*/
     private FileReader fr;
     
-    // Permet de lire dans un fichier
+    /** Permet de lire dans un fichier*/
     private BufferedReader br;
     
+    /** Fichier à visualiser */
     private File fichier;
-    // Permet l'affichage du CS 
+    
+    /** Permet l'affichage du CS */
       private JTextArea zoneCode;
     
-    // Contient l'ensemble des lignes du code source
+    /** Contient l'ensemble des lignes du code source*/
     private ArrayList<String> lignes;
     
-    
+    /** Dimension par défaut*/
     private Dimension d;
     
-    JScrollPane jsp;
-    Highlighter hl;
-    Highlighter.HighlightPainter hl_painter;
+    /** Contient la zone de texte */
+    private JScrollPane jsp;
+    
+    /** Outils pour surlignement des lignes */
+    private Highlighter hl;
+    /** Outils pour surlignement des lignes */
+    private Highlighter.HighlightPainter hl_painter;
     
     /**
      * Constructeur
@@ -96,11 +102,9 @@ public class PanneauCode extends JPanel
     private void enregistrement() throws IOException
     {
         String tmp;
-//        int i = 0;
         while((tmp = br.readLine()) != null)
         {
             lignes.add(tmp);
-//            i++;
         }        
     }
 
@@ -108,51 +112,101 @@ public class PanneauCode extends JPanel
     /*
         GET - SET
     */
+
+    /**
+     *  Renvoie le file reader du panneau code
+     * @return file reader
+     */
+    
     public FileReader getFr() {
         return fr;
     }
 
+    /**
+     * Change le file reader
+     * @param fr le nouveau file reader
+     */
     public void setFr(FileReader fr) {
         this.fr = fr;
     }
 
+    /**
+     *
+     * @return
+     */
     public BufferedReader getBr() {
         return br;
     }
 
+    /**
+     *
+     * @param br
+     */
     public void setBr(BufferedReader br) {
         this.br = br;
     }
     
+    /**
+     *
+     * @return
+     */
     public JTextArea getZoneCode() {
         return zoneCode;
     }
 
+    /**
+     *
+     * @param zoneCode
+     */
     public void setZoneCode(JTextArea zoneCode) {
         this.zoneCode = zoneCode;
     }
 
-    
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> getLignes() {
         return lignes;
     }
 
+    /**
+     *
+     * @param lignes
+     */
     public void setLignes(ArrayList<String> lignes) {
         this.lignes = lignes;
     }
 
+    /**
+     *
+     * @return
+     */
     public Dimension getD() {
         return d;
     }
 
+    /**
+     *
+     * @param d
+     */
     public void setD(Dimension d) {
         this.d = d;
     }
 
+    /**
+     *
+     * @return
+     */
     public Highlighter getHighLighter () {
         return hl;
     }
-     public Highlighter.HighlightPainter getHlPainter(){
+
+    /**
+     * Renvoie le HightLightPainter pour surlignement
+     * @return
+     */
+    public Highlighter.HighlightPainter getHlPainter(){
          return hl_painter;
      }
     

@@ -20,12 +20,18 @@ import javax.swing.JMenuItem;
  */
 public class JOV_Menu extends JMenuBar{
     
-    JMenu menu = new JMenu("Menu"); /** Menu principal */
-    JMenu fic = new JMenu("Fichier"); /** Sous-menu fichier */
-    JMenuItem item_2 = new JMenuItem("Ouvrir le ReadMe"); /** Item */
-    JMenuItem item_3 = new JMenuItem("Quitter");    /** Item */
-    JMenuItem item_1_1 = new JMenuItem("Nouveau"); /** Item du sous menu fichier */
-    JMenuItem item_1_2 = new JMenuItem("Recommencer");/** Item du sous menu fichier */
+    /** Menu principal */
+    private JMenu menu = new JMenu("Menu"); 
+    /** Sous-menu fichier */
+    private JMenu fic = new JMenu("Fichier");
+    /** Item */
+    private JMenuItem item_2 = new JMenuItem("Ouvrir le ReadMe");
+    /** Item */
+    private JMenuItem item_3 = new JMenuItem("Quitter");    
+    /** Item du sous menu fichier */
+    private JMenuItem item_1_1 = new JMenuItem("Nouveau"); 
+    /** Item du sous menu fichier */
+    private JMenuItem item_1_2 = new JMenuItem("Recommencer");
     
     /**
      * Constructeur: ajoute les éléments de menu et attache les listeners

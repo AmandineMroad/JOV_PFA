@@ -63,7 +63,7 @@ public class BarreOutil extends JToolBar{
     }
     
     /**
-     *  Désactive le bouton 
+     *  Désactive le bouton next
      */
     public void disableNext(){
         next.setEnabled(false);

@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package ihm.graphique;
 
@@ -26,28 +27,27 @@ import util.Gestionnaire;
  */
 public class PanneauGraphique extends JPanel {
 
-    // Contient un Utilitaire pour le traitement du fichier source
-    private Utilitaire utilitaire;
-
-    // Posséde un PanneauCode pour gérer à partir du PanneauGraphique l'affiche des lignes du fichier source
-    private PanneauCode pc;
-
-    private int ligneCourante;
-    RepaintManager rm;
+    /**
+     * Utilitaire pour le traitement du fichier source
+     */
+    private final Utilitaire utilitaire;
 
     /**
-     * Constructeur recevant simplement un PanneauCode en parametre
-     *
-     * @param pc
-     * @throws IOException
+     * PanneauCode pour gérer à partir du PanneauGraphique l'affichage des
+     * lignes du fichier source
      */
-    /*    public PanneauGraphique(PanneauCode pc) throws IOException {
-     this.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+    private final PanneauCode pc;
 
-     this.pc = pc;
-     utilitaire = new Utilitaire(pc.getD());
-     }
+    /**
+     * ligne courante d'exécution
      */
+    private int ligneCourante;
+
+    /**
+     * RepaintManager pour contrôle des repaint
+     */
+    RepaintManager rm;
+
     /**
      * Constructeur du panneau graphique
      *
@@ -70,8 +70,8 @@ public class PanneauGraphique extends JPanel {
      */
     @Override
     public void paintComponent(Graphics g) {
-        System.out.println("Appel PanneauGraphique.paintComponent()");
         super.paintComponent(g);
+
         this.setSize(this.getParent().getWidth() * 2 / 3, this.getParent().getHeight());
         this.setLocation(this.getParent().getWidth() / 3, pc.getY());
         JPanel pan;
@@ -167,24 +167,21 @@ public class PanneauGraphique extends JPanel {
         while (ligneCourante < utilitaire.getNbLignes()) {
             affichage();
             try {
-                // System.out.println("GO TO SLEEP");
                 Thread.sleep(1000);
-                //System.out.println("Réveillé");
             } catch (InterruptedException ex) {
                 System.err.println("ERREUR !!! Don't want to sleep");
                 Logger.getLogger(PanneauGraphique.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
     }
+
+    private boolean regex = false;
 
     /**
      * Traite et affiche la ligne courante
      *
      * @throws java.io.IOException
      */
-    private boolean regex = false;
-
     public void affichage() throws IOException {
         int totalLigne = utilitaire.getNbLignes();
 
@@ -203,10 +200,11 @@ public class PanneauGraphique extends JPanel {
         rm.paintDirtyRegions();
     }
 
+    private int ligne_tmp;
+
     /**
      * Affiche et/ou met en surbrillance la ligne couramment exécutée
      */
-    private int ligne_tmp;
 
     public void afficheLigne() {
         if (ligneCourante < utilitaire.getNbLignes()) {
@@ -262,10 +260,9 @@ public class PanneauGraphique extends JPanel {
      *
      * @param lineNumber la ligne à surligner
      */
-    public void highLightLine(int lineNumber) {
+    private void highLightLine(int lineNumber) {
         JTextArea zoneCode = pc.getZoneCode();
         pc.getHighLighter().removeAllHighlights();
-        //  System.out.println("HIGHLIGHT line : "+lineNumber);
         try {
             pc.getHighLighter().addHighlight(zoneCode.getLineStartOffset(lineNumber + 1), zoneCode.getLineEndOffset(lineNumber + 1), pc.getHlPainter());
         } catch (BadLocationException e) {
@@ -273,5 +270,4 @@ public class PanneauGraphique extends JPanel {
         }
         pc.repaint();
     }
-
 }

@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package traitement;
 
@@ -18,28 +19,29 @@ public class MonInt implements Comparable<MonInt>
         ATTRIBUTS
     */
     
-    // Contiens la valeur de l'entier primitif du CS
+    /** Valeur de l'entier primitif du CS*/
     private int monInt;
     
-    // Contiens le nom de la variable associé à l'objet MonInt
+    /**Nom de la variable associé à l'objet MonInt*/
     private String correspondance;
     
-    // Permet la représentation graphique de l'objet
+    /** Permet la représentation graphique de l'objet*/
     private Shape forme;
     
-    // Permet de détecter si l'élément est modifié
+    /** Permet de détecter si l'élément est modifié*/
     private boolean modif;
-	private boolean used;
+    /** Permet de détecter si l'élément est utilisé*/
+    private boolean used;
     
-    //Précise si c'est un élément de tableau
+    /**Précise si c'est un élément de tableau*/
     private final boolean tabVal;
     
     
     /**
      * Constucteur initialisant tous les attributs de classe
-     * @param monInt
-     * @param correspondance
-     * @param forme 
+     * @param monInt    valeur de l'entier
+     * @param correspondance    nom de la variable
+     * @param forme représentation graphique de l'objet
      */
     public MonInt(int monInt, String correspondance, Shape forme)
     {
@@ -48,7 +50,7 @@ public class MonInt implements Comparable<MonInt>
         this.forme = forme;
         this.modif = true;
         this.tabVal = false;
-		this.used = false;
+        this.used = false;
     }
     
     /**
@@ -56,6 +58,7 @@ public class MonInt implements Comparable<MonInt>
      * @param monInt
      * @param correspondance
      * @param forme 
+     * @param isTabValue 
      */
     public MonInt(int monInt, String correspondance, Shape forme, boolean isTabValue)
     {
@@ -125,49 +128,82 @@ public class MonInt implements Comparable<MonInt>
     /* 
         GET-SET
     */
-
+    /**
+     * Renvoie la valeur de l'entier
+     * @return 
+     */
     public int getMonInt() {
         return monInt;
     }
 
+    /**
+     * Modifie la valeur de l'entier
+     * @param monInt : la nouvelle valeur
+     */
     public void setMonInt(int monInt) {
         this.monInt = monInt;
         modif = true;
     }       
 
+    /**
+     * Renvoie le nom de la variable
+     * @return 
+     */
     public String getCorrespondance() {
         return correspondance;
     }
 
+    /**
+     * Modifie le nom de la variable
+     * @param correspondance : le nouveau nom
+     */
     public void setCorrespondance(String correspondance) {
         this.correspondance = correspondance;
     }
-
+    
+    /**
+     * Renvoie la forme associée à l'objet
+     * @return 
+     */
     public Shape getForme() {
         return forme;
     }
 
-    public void setForme(Shape forme) {
-        this.forme = forme;
-    }
-
+    /**
+     * Indique si l'objet représente une case de tableau
+     * @return true si c'est une case de tableau, false sinon
+     */
     public boolean isTabValue() {
         return tabVal;
     }
     
+    /**
+     * Indique si l'objet a été modifié depuis le dernier affichage
+     * @return true si l'objet a été modifié, false sinon
+     */
 	public boolean isModified(){
         return modif;
     }
     
-    public void setModified(boolean b){
+    /**
+     * Modifie la valeur du booleen modif
+     * @param b : true si la valeur a été modifiée, false sinon
+     */
+    public void setModified(boolean b) {
         modif = b;
     }
-    
+    /**
+     * Indique si l'objet a été utilisé depuis le dernier affichage
+     * @return true si l'objet a été modifié, false sinn
+     */
     public boolean isUsed(){
         return used;
     }
-    
-public void setUsed(boolean b){
+    /**
+     * Modifie la valeur du booleen used
+     * @param b : true si l'objet a été utilisé, false sinon
+     */
+    public void setUsed(boolean b){
         used=b;
     }    
 

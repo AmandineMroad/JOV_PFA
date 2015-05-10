@@ -28,11 +28,16 @@ import ihm.listeners.Lis_OpenReadMe;
  */
 public class ChoixDiag extends JDialog {
 
-    JButton boutonParcourir; /** bouton "Parcourir" . Ouvre l'exporateur de fichier. */
-    JButton boutonReadMe; /** bouton Ouvrir le ReadMe*/
-    JButton exec; /** bouton "Lancer la visualisation" */
-    JTextField pathField; /** sert à afficher le chemin du fichier sélectionné */
-    boolean ok; /** indique si un fichier a été selectionné */
+    /** bouton "Parcourir" . Ouvre l'exporateur de fichier. */
+    JButton boutonParcourir; 
+    /** bouton Ouvrir le ReadMe*/
+    JButton boutonReadMe;
+    /** bouton "Lancer la visualisation" */
+    JButton exec;
+    /** sert à afficher le chemin du fichier sélectionné */
+    JTextField pathField; 
+    /** indique si un fichier a été selectionné */
+    boolean ok; 
 
     /**
      * Constructeur

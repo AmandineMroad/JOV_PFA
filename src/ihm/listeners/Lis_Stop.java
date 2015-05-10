@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package ihm.listeners;
 
@@ -20,13 +21,12 @@ public class Lis_Stop implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-       //  System.out.println("Lis_stop()");
         try {
             Gestionnaire gest = Gestionnaire.getInstance();
             gest.getFVisualisation().getToolBar().disableNext();
             gest.getPanGraph().affichageBoucle();
         } catch (IOException ex) {
-            System.out.println("ERREUR");//TODO
+            System.err.println("ERREUR_Stop");
             Logger.getLogger(Lis_Next.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

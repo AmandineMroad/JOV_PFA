@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package util;
 
@@ -22,7 +23,7 @@ public final class Gestionnaire {
     private File f;
     private boolean ready;
     private static Gestionnaire i = null;
-    private ChoixDiag fchoix;
+    private final ChoixDiag fchoix;
     private FenVisualisation fvisualisation;
 
     private Gestionnaire() throws IOException {
@@ -30,16 +31,12 @@ public final class Gestionnaire {
         fchoix = new ChoixDiag();
         fchoix.setVisible(true);
     }
-
-    public File getFile() {
-        return f;
-    }
-
-    public void setFile(File ff) {
-        f = ff;
-        ready = true;
-    }
-
+    
+    /**
+     * prépare le gestionnaire pour l'exécution
+     * @param ff : le fichier à visualiser
+     * @throws IOException 
+     */
     public void setFileAndExecute(File ff) throws IOException {
         f = ff;
         ready = true;
@@ -74,7 +71,12 @@ public final class Gestionnaire {
             fchoix.setVisible(true);
         }
     }
-
+    /**
+     * Renvoie le gestionnaire
+     * Gestionnaire est un singleton
+     * @return l'unique instance de Gestionnaire
+     * @throws IOException 
+     */
     public static Gestionnaire getInstance() throws IOException {
         if (i == null) {
             i = new Gestionnaire();
@@ -82,28 +84,34 @@ public final class Gestionnaire {
 
         return i;
     }
-
+    /**
+     * Indique si le gestionnaire est prêt pour l'exécution
+     * @return true s'il est prêt, false sinon
+     */
     public boolean isReady() {
         return ready;
     }
 
+    /**
+     * Renvoie la fenetre principale du programme
+     * @return 
+     */
     public FenVisualisation getFVisualisation() {
         return fvisualisation;
     }
 
-    public void reset() {
-        f = null;
-        ready = false;
-    }
-
-    public PanneauCode getPanCode() {
-        return fvisualisation.getPc();
-    }
-
+    /**
+     * Renvoie le panneau graphique
+     * @return 
+     */
     public PanneauGraphique getPanGraph() {
         return fvisualisation.getPg();
     }
 
+    /**
+     * renvoie la boite de dialogue de choix de fichier
+     * @return 
+     */
     public ChoixDiag getChoixDiag() {
         return fchoix;
     }

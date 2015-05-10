@@ -1,8 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
+
 package ihm.listeners;
 
 import java.awt.event.ActionEvent;
@@ -22,6 +24,7 @@ import util.Gestionnaire;
 public class Lis_Execute implements ActionListener {
 
     private JTextField textField;
+    @SuppressWarnings("FieldMayBeFinal")
     private boolean replay;
 
     /**
@@ -44,11 +47,9 @@ public class Lis_Execute implements ActionListener {
         try {
             Gestionnaire g = Gestionnaire.getInstance();
             if (replay && g.isReady()){
-               // System.out.println("Lis_execute : replay");
                 g.execute();
             }
             else if (!textField.getText().isEmpty()){
-                System.err.println("Lis_execute : elseIf; file = "+textField.getText());
                 g.setFileAndExecute(new File(textField.getText()));
             }
             else {

@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package ihm.listeners;
 
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
 import util.Gestionnaire;
 
 /**
- *
+ * Listener: ouvrir un nouveau fichier
  * @author Amandine
  */
 public class Lis_NouveauFichier implements ActionListener{

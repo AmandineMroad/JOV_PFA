@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package ihm.listeners;
 
@@ -12,7 +13,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Listener : fermeture de l'application
  * @author Amandine
  */
 public class Lis_ExitJOV extends WindowAdapter implements ActionListener{
@@ -20,7 +21,6 @@ public class Lis_ExitJOV extends WindowAdapter implements ActionListener{
     public void windowClosing(WindowEvent e) {
         int conf = JOptionPane.showConfirmDialog(e.getComponent(), "Vous allez quitter le programme.\nEtes-vous sûr?", "Arrêt du programme", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (conf == JOptionPane.YES_OPTION) {
-          //  System.out.println("fermeture JOV");
             System.exit(conf);
         } 
 
@@ -30,7 +30,6 @@ public class Lis_ExitJOV extends WindowAdapter implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         int conf = JOptionPane.showConfirmDialog(null, "Vous allez quitter le programme.\nEtes-vous sûr?", "Arrêt du programme", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (conf == JOptionPane.YES_OPTION) {
-           // System.out.println("fermeture JOV");
             System.exit(conf);
         }
     }

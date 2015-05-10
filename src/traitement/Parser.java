@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package traitement;
 
@@ -36,13 +37,13 @@ public class Parser
     private final String INITIALISATION_TABLEAU_CASE_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*[0-9]*\\s*\\]\\s*=\\s*-?\\s*[0-9]*\\s*;$";   // t[0] = 4;  
     private final String BOUCLE_WHILE = "^\\s*while\\([a-zA-Z]{1}[a-zA-Z_0-9]*(==)|(!=)|(>)|(<)|(>=)|(<=)[a-zA-Z_0-9]*\\)\\s*\\{\\s*$";
     
-    // AL<> qui va contenir les regex
+    /** AL<> qui va contenir les regex*/
     private ArrayList<String>regex;
     
-    // Permet de transformer la string en regex
+    /** Permet de transformer la string en regex*/
     private Pattern pattern;
     
-    // Permet de tester si une regex match avec une ligne
+    /** Permet de tester si une regex match avec une ligne*/
     private Matcher matcher;
     
     
@@ -341,37 +342,4 @@ public class Parser
     {
         return condition.replaceAll("==", " ").replaceAll("[0-9]*", " ").replaceAll("\\s", "");
     }
-    
-    
-    
-    /*
-        GET-SET
-    */
-
-    public ArrayList<String> getRegex() {
-        return regex;
-    }
-
-    public void setRegex(ArrayList<String> regex) {
-        this.regex = regex;
-    }
-
-    public Pattern getPattern() {
-        return pattern;
-    }
-
-    public void setPattern(Pattern pattern) {
-        this.pattern = pattern;
-    }
-
-    public Matcher getMatcher() {
-        return matcher;
-    }
-
-    public void setMatcher(Matcher matcher) {
-        this.matcher = matcher;
-    }
-    
-    
-    
 }

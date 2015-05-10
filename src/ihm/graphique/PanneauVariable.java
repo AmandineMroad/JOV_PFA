@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package ihm.graphique;
 
@@ -13,24 +14,25 @@ import javax.swing.JPanel;
 import traitement.MonInt;
 
 /**
- *
+ * Panneau pour affichage variables
  * @author Amandine
  */
 public class PanneauVariable extends JPanel {
 
-    MonInt mi;
+    private MonInt mi;
 
-    /**
-     *
-     */
+    /** longueur par défaut */
     public static final int DEFAULT_WIDTH = 110;
+    /** largeur par défaut*/
     public static final int DEFAULT_HEIGHT = 40;
+    
     /**
      * Constructeur 
      * @param monInt: l'objet MonInt à modéliser 
      */
     public PanneauVariable(MonInt monInt) {
         mi = monInt;
+        this.setOpaque(true);
         this.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
         Color c = new Color( 255, 255, 255, 1);
         this.setBackground(c);
@@ -41,7 +43,6 @@ public class PanneauVariable extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         if (mi.isModified()){
-           // System.out.println("PanneauVariable.paint: MODIF");
             g2.setColor(Color.red);
             mi.setModified(false);
             mi.setUsed(false);

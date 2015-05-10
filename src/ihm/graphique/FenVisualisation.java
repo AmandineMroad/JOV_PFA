@@ -10,8 +10,6 @@ import ihm.BarreOutil;
 import ihm.JOV_Menu;
 import ihm.listeners.Lis_ExitJOV;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
@@ -26,10 +24,10 @@ public class FenVisualisation extends JFrame
     /*
         ATTRIBUTS
     */
-    // Contient un PanneauCode
+    /** PanneauCode pour affichage contenu du fichier source */
     private PanneauCode pc;
     
-    // Contient un PanneauGraphique
+    /** PanneauGraphique pour affichage modélisation*/
     private PanneauGraphique pg;
     
     private Dimension d;

@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @name : JAVA OBJECT VIEWER
+ * @author : Simon LACHKAR, Amandine ROGER
+ * @company : Polytech Marseille
+ * @date: mai 2015
  */
 package util;
 
@@ -28,23 +29,23 @@ public class Utilitaire {
     /*
      ATTRIBUTS
      */
-    // Objet contenant l'ensemble des regex
+    /** Objet contenant l'ensemble des regex*/
     private Parser parser;
 
-    // Contiendra l'ensemble des objet MonInt crée durant la lecture du fichier source
+    /** Ensemble des objet MonInt créés durant la lecture du fichier source */
     private ArrayList<MonInt> mesInt;
 
-    // Permet d'ouvrir un fichier en lecture
+    /** Permet d'ouvrir un fichier en lecture*/
     private FileReader fr;
 
-    // Permet de lire dans un fichier ouvert
+    /** Permet de lire dans un fichier ouvert*/
     private BufferedReader br;
 
-    //
-    private final String nomF = "CODE.java";
-    private File fichier;
+   // private final String nomF = "CODE.java";
+    /** Le fichier à visualiser*/
+    private final File fichier;
 
-    // Contiens le nombre de lignes du fichier source
+    /** Le nombre de lignes du fichier source */
     private int nbLignes;
 
     boolean is_while = false;
@@ -122,7 +123,6 @@ public class Utilitaire {
      * @throws IOException
      */
     public boolean execution() throws FileNotFoundException, IOException {
-        //System.out.println("Utilitaire.execution()");
         String tmp = null;
         String s[];
         String vrb;
@@ -473,8 +473,7 @@ public class Utilitaire {
                     Gestionnaire gest = Gestionnaire.getInstance();
                     gest.getPanGraph().afficheLigne();
                 } catch (IOException ex) {
-                    System.out.println("ERREUR");//TODO
-                    // JOptionPane.showMessageDialog(root, "ERREUR FATALE", "ERREUR", JOptionPane.WARNING_MESSAGE);
+                    System.err.println("ERREUR _ Utilitaire.execution()");//TODO
                     Logger.getLogger(Lis_Next.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
