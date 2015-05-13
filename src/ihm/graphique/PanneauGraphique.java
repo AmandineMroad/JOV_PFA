@@ -157,16 +157,16 @@ public class PanneauGraphique extends JPanel {
             this.add(pan);
         }
     }
-
     /**
      * Traite et affiche l'ensemble des instructions restantes
      *
      * @throws IOException
      */
+    @SuppressWarnings("SleepWhileInLoop")
     public void affichageBoucle() throws IOException {
         while (ligneCourante < utilitaire.getNbLignes()) {
             affichage();
-            try {
+            try {                
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 System.err.println("ERREUR !!! Don't want to sleep");

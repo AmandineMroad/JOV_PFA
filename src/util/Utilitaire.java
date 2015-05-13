@@ -6,7 +6,6 @@
  */
 package util;
 
-import ihm.listeners.Lis_Next;
 import java.awt.Dimension;
 import traitement.Parser;
 import traitement.MonInt;
@@ -17,8 +16,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -473,8 +470,7 @@ public class Utilitaire {
                     Gestionnaire gest = Gestionnaire.getInstance();
                     gest.getPanGraph().afficheLigne();
                 } catch (IOException ex) {
-                    System.err.println("ERREUR _ Utilitaire.execution()");//TODO
-                    Logger.getLogger(Lis_Next.class.getName()).log(Level.SEVERE, null, ex);
+                    System.err.println("ERREUR _ Utilitaire.execution()\n\t" + ex.toString());                    
                 }
             }
         }

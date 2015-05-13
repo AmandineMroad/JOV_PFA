@@ -7,14 +7,15 @@
 package ihm;
 
 import ihm.listeners.Lis_Execute;
-import ihm.listeners.Lis_Next;
-import ihm.listeners.Lis_Stop;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
+import util.Gestionnaire;
 
 /**
  *  Barre d'outil du JOV
@@ -35,11 +36,32 @@ public class BarreOutil extends JToolBar{
         
         //ajout des boutons
         next = createToolBarButton(new ImageIcon(".\\src\\doc\\next.png"),
-                new Lis_Next(), "Passer à l'instruction suivante");
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            Gestionnaire gest = Gestionnaire.getInstance();
+                            gest.getPanGraph().affichage();
+                        } catch (IOException ex) {
+                            System.err.println("ERREUR _ Next\n\t" + ex.toString());
+                        }
+                    }
+                }, "Passer à l'instruction suivante");
         this.add(next);
         
         stop = createToolBarButton(new ImageIcon(".\\src\\doc\\stop.png"),
-                new Lis_Stop(), "Aller à la fin et arrêter");
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            Gestionnaire gest = Gestionnaire.getInstance();
+                            gest.getFVisualisation().getToolBar().disableNext();
+                            gest.getPanGraph().affichageBoucle();
+                        } catch (IOException ex) {
+                            System.err.println("ERREUR_Stop\n\t" + ex.toString());
+                        }
+                    }
+                }, "Aller à la fin et arrêter");
         this.add(stop);
         
         replay =createToolBarButton(new ImageIcon(".\\src\\doc\\replay.png"),
