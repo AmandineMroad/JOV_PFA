@@ -112,7 +112,7 @@ public class Utilitaire {
     /**
      * Fonction centrale du programme. A chaque appelle elle lit la ligne
      * suivante, l'envoie au parser qui lui indique quel type de ligne c'est
-     * (initialisation, instanciation ..). La ligne peut ne pas être reconnus si
+     * (initialisation, instanciation ..). La ligne n'est pas reconnus si
      * ce n'est pas une opération sur les entiers
      *
      * @return true si un traitement est effectué (la ligne contient une regex connue), false sinon
