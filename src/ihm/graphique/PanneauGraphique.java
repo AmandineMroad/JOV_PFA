@@ -122,37 +122,38 @@ public class PanneauGraphique extends JPanel {
                 //Insertion des valeurs
                 PanneauVariable tmp_panVar;
                 int tmp_x = marge, tmp_y = marge + 10;
-                tmp_position.setLocation(marge, marge + 10);
+                tmp_position.setLocation(tmp_x, tmp_y);
 
                 for (MonInt myInt : list) {
                     tmp_panVar = new PanneauVariable(myInt);
-                    tmp_panVar.setBounds(tmp_x, tmp_y, tmp_panVar.getWidth(), tmp_panVar.getHeight());
+                    tmp_panVar.setLocation(tmp_position);
+                    pan.add(tmp_panVar);
+                    
+                    //Position du prochain panneau
                     tmp_x = tmp_position.x + tmp_panVar.getWidth();
-                    tmp_y = tmp_position.y;
                     if (tmp_x + tmp_panVar.getWidth() > this.getWidth()) {
                         tmp_y = tmp_position.y + tmp_panVar.getHeight() + marge;
                         tmp_x = marge;
                     }
                     tmp_position.setLocation(tmp_x, tmp_y);
-                    pan.add(tmp_panVar);
                 }
 
                 //Repositionnement pour prochain objet à afficher
                 newY = position.y + pan.getHeight() + marge;
-                position.setLocation(0, newY);
+                position.setLocation(5, newY);
             } /* Affichage variable */ else {
                 marge = 5;
                 pan = new PanneauVariable(mi);
-                pan.setBounds(position.x + marge, position.y, pan.getWidth(), pan.getHeight());
-
+                pan.setLocation(position);
+                
                 newX = position.x + pan.getWidth();
                 newY = position.y;
 
                 if (newX + pan.getWidth() > this.getWidth()) {
                     newY = position.y + pan.getHeight() + marge;
-                    newX = 0;
+                    newX = marge;
                 }
-                position.setLocation(newX + marge, newY);
+                position.setLocation(newX, newY);
             }
             this.add(pan);
         }
@@ -224,7 +225,6 @@ public class PanneauGraphique extends JPanel {
 
             /* Affichage classique*/
             if (!utilitaire.isWhileLine() || affiche) {
-                //System.out.println("affiche ligne alpha at: " + ligneCourante);
                 JTextArea zoneCode = pc.getZoneCode();
                 zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
                 highLightLine(ligneCourante);
@@ -235,7 +235,7 @@ public class PanneauGraphique extends JPanel {
                     highLightLine(ligneCourante - 2);
                 }
 
-            } /* boucle : surbrillance des lignes */ else {
+            } else { /* boucle : surbrillance des lignes */
                 int ind = utilitaire.getIndWhile();
                 int tmp = ligne_tmp + ind;
                 //System.out.println("affiche ligne beta at: " + tmp);
