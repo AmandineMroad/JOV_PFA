@@ -52,6 +52,7 @@ public class Utilitaire {
     int indice_while = 0;
     boolean firstWhile =false;
     boolean execution = false;
+    boolean isIf = false;
     //BufferedReader brtmp;
     // 
     private Dimension d;
@@ -130,7 +131,8 @@ public class Utilitaire {
         int tmp4 = 0;
         int res;
         boolean reg = true;
-
+        execution = false;
+        
         if (is_while == true) {
             reg = false;
             execution = true;
@@ -140,6 +142,7 @@ public class Utilitaire {
                     tmp = executionWhile();
                 } else {
                     finWhile();
+                    
                 }
             }            
            else if (cond[1].equals("!=")) {
@@ -184,8 +187,14 @@ public class Utilitaire {
 
         if (execution == true) {
 
+            //System.out.println(tmp + " " + execution + " " + is_while);
             // res recupere le type de regex de la ligne
             res = parser.correspondRegex(tmp);
+            
+            if(res==14 && tmp.contains("if"))
+                res = 15;
+            
+            //System.out.println(tmp + " " + res);
             // -1 correspond à aucune regex
             if (res != -1) {
                 reg = true;
@@ -408,10 +417,10 @@ public class Utilitaire {
 
                         break;
                     case 14:    // BOUCLE_WHILE
-                        System.out.println("BOUCLE_WHILE");
-
-                        cond = parser.extraireConditionWhile(tmp);
-                        if ((tmp2 = rechercheObjet(parser.extraireVariableWhile(cond[0]))) != -1) {
+                        System.out.println("BOUCLE_WHILE " + tmp);
+                            
+                        cond = parser.extraireCondition(tmp);
+                        if ((tmp2 = rechercheObjet(parser.extraireVariableWhileIf(cond[0]))) != -1) {
                             firstWhile = true;
                             
                             indice_while = tmp2;
@@ -460,9 +469,72 @@ public class Utilitaire {
                             }                             
                         }
                         break;
-                    case 15:
-
+                    case 15:    // CONDITION_IF
+                        
+                        System.out.println("CONDITION_IF : "+tmp);
+                        
+                        cond = parser.extraireCondition(tmp);
+                        
+                        if ((tmp2 = rechercheObjet(parser.extraireVariableWhileIf(cond[0]))) != -1) {
+                        
+                            if (cond[1].equals("==")) {
+                                if (mesInt.get(tmp2).getMonInt() != Integer.parseInt(cond[2])) {
+                                    ConditionPasRespecteeIf();
+                                } else {
+                                    isIf = true;
+                                }
+                            }
+                            else if (cond[1].equals("!=")) {
+                                System.out.println("DIFF");
+                                if (mesInt.get(tmp2).getMonInt() == Integer.parseInt(cond[2])) {
+                                    ConditionPasRespecteeIf();
+                                } else {
+                                    System.out.println("TRUE");
+                                    isIf = true;
+                                }
+                            }
+                            else if (cond[1].equals(">")) {
+                                if (mesInt.get(tmp2).getMonInt() <= Integer.parseInt(cond[2])) {
+                                    ConditionPasRespecteeIf();
+                                } else {
+                                    isIf = true;
+                                }
+                            }   
+                            else if (cond[1].equals("<")) {
+                                if (mesInt.get(tmp2).getMonInt() >= Integer.parseInt(cond[2])) {
+                                    ConditionPasRespecteeIf();
+                                } else {
+                                   isIf = true;
+                                }
+                            }                            
+                            else if (cond[1].equals("<=")) {
+                                if (mesInt.get(tmp2).getMonInt() > Integer.parseInt(cond[2])) {
+                                    ConditionPasRespecteeIf();
+                                } else {
+                                    isIf = true;
+                                }
+                            } 
+                            else if (cond[1].equals(">=")) {
+                                if (mesInt.get(tmp2).getMonInt() < Integer.parseInt(cond[2])) {
+                                    ConditionPasRespecteeIf();
+                                } else {
+                                    isIf = true;
+                                }
+                            }                             
+                        }
+                        
+                        
                         break;
+                    case 16:    // CONDITION_ELSE
+                            System.out.println("CONDITION_ELSE : "+tmp);
+                            
+                            if(isIf==true) {
+                                System.out.println("isIf à TRUE");;
+                                isIf = false;
+                                ConditionPasRespectee();
+                            }
+                        break;
+
                 }
             } else {
                 reg = false;
@@ -512,8 +584,9 @@ public class Utilitaire {
     }
 
     public void ConditionPasRespectee() throws IOException {
+        
         System.out.println("Condition pas respectée");
-        BufferedReader brtmp = br;
+       /* BufferedReader brtmp = br;
         String wh;
         int cpt = 0;
         wh = brtmp.readLine();
@@ -532,9 +605,35 @@ public class Utilitaire {
             }
         }
 
-        br = brtmp;
+        br = brtmp;*/
+        String tmp;
+        tmp = br.readLine().replaceAll("\\s", "");
+        while(!tmp.equals("}") && tmp!=null) 
+        {
+//            System.out.println(tmp);
+            tmp = br.readLine().replaceAll("\\s", "");
+        }
+//        System.out.println("SORT: "+tmp);
+        
     }
-
+    
+    public void ConditionPasRespecteeIf() throws IOException
+    {
+        String tmp;
+        tmp = br.readLine().replaceAll("\\s", "");
+        while(tmp!=null)
+        {
+            System.out.println(tmp);
+            if(tmp.equals("}else{"))
+                return;
+            else if(tmp.equals("}"))
+                return;
+            
+            tmp = br.readLine().replaceAll("\\s", "");
+        }        
+    }
+    
+    
     public String executionWhile()
     {
         String tmp;

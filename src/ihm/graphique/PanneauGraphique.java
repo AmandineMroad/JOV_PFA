@@ -238,7 +238,7 @@ public class PanneauGraphique extends JPanel {
             } /* boucle : surbrillance des lignes */ else {
                 int ind = utilitaire.getIndWhile();
                 int tmp = ligne_tmp + ind;
-                System.out.println("affiche ligne beta at: " + tmp);
+                //System.out.println("affiche ligne beta at: " + tmp);
                 highLightLine(tmp);
             }
             /* Refresh forcé de l'affichage */

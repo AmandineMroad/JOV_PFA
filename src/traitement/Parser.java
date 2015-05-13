@@ -35,7 +35,9 @@ public class Parser
     private final String INITIALISATION_TABLEAU_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*\\{-?\\s*[a-zA-Z_0-9]*[,-?\\s*[a-zA-Z_0-9]*]*\\}\\s*;$"; // int t[] = {x, x, x}; "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*\\{-?\\s*[0-9]*[,-?\\s*[0-9]*]*\\}\\s*;$";
     private final String DECLARATION_TABLEAU_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*new\\s*int\\s*\\[\\s*[0-9]*\\s*\\]\\s*;$"; // int t[] = new int[6]; 
     private final String INITIALISATION_TABLEAU_CASE_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*[0-9]*\\s*\\]\\s*=\\s*-?\\s*[0-9]*\\s*;$";   // t[0] = 4;  
-    private final String BOUCLE_WHILE = "^\\s*while\\([a-zA-Z]{1}[a-zA-Z_0-9]*(==)|(!=)|(>)|(<)|(>=)|(<=)[a-zA-Z_0-9]*\\)\\s*\\{\\s*$";
+    private final String BOUCLE_WHILE = "^\\s*while\\([a-zA-Z]{1}[a-zA-Z_0-9]*==|!=|>|<|>=|<=[a-zA-Z_0-9]*\\)\\s*\\{\\s*$";
+    private final String CONDITION_IF = "^\\s*if\\([a-zA-Z]{1}[a-zA-Z_0-9]*(==)|(!=)|(>)|(<)|(>=)|(<=)[a-zA-Z_0-9]*\\)\\s*\\{\\s*$";
+    private final String CONDITION_ELSE = "^\\s*\\}\\s*else\\s*\\{";
     
     /** AL<> qui va contenir les regex*/
     private ArrayList<String>regex;
@@ -72,7 +74,8 @@ public class Parser
         regex.add(DECLARATION_TABLEAU_SIMPLE);
         regex.add(INITIALISATION_TABLEAU_CASE_SIMPLE);
         regex.add(BOUCLE_WHILE);
-
+        regex.add(CONDITION_IF);
+        regex.add(CONDITION_ELSE);
     }
  
     
@@ -317,12 +320,12 @@ public class Parser
         return Integer.valueOf(valeur);
     }
     
-    public String[] extraireConditionWhile(String ligne)
+    public String[] extraireCondition(String ligne)
     {
         String cond[] = new String[3];
         
         // recupere uniquement la condition : [vb]OP[vbOUint]
-        ligne = ligne.replace("while", " ").replace("(", " ").replace(")", " ").replace("{", " ").replaceAll("\\s", "");
+        ligne = ligne.replace("while", " ").replace("if", " ").replace("(", " ").replace(")", " ").replace("{", " ").replaceAll("\\s", "");
 //System.out.println(ligne);
         // recupere la variable
         cond[0] = ligne.replaceAll("=", " ").replace(">", " ").replace("<", " ").replace("!", " ").replaceAll("[0-9]*", " ").replaceAll("\\s", "");
@@ -338,7 +341,7 @@ public class Parser
      //   return ligne.replace("while", " ").replace("(", " ").replace(")", " ").replaceAll("\\s", "");
     }
     
-    public String extraireVariableWhile(String condition)
+    public String extraireVariableWhileIf(String condition)
     {
         return condition.replaceAll("==", " ").replaceAll("[0-9]*", " ").replaceAll("\\s", "");
     }
