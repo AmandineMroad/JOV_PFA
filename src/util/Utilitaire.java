@@ -650,7 +650,8 @@ public class Utilitaire {
     public void finWhile()
     {
         is_while = false;
-        execution = false;        
+        execution = false;  
+        string_while.clear();
     }
     
     public void ajouterLigneWhile() throws IOException
