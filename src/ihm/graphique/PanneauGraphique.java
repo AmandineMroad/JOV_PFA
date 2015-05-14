@@ -111,9 +111,9 @@ public class PanneauGraphique extends JPanel {
                 Point tmp_position = new Point();
 
                 if (position.x <= marge) {
-                    tmp_position.setLocation(0, position.y);
+                    tmp_position.setLocation(position.x, position.y);
                 } else {
-                    position.setLocation(0, position.y + PanneauVariable.DEFAULT_HEIGHT + marge);
+                    position.setLocation(marge, position.y + PanneauVariable.DEFAULT_HEIGHT + marge);
                 }
                 marge = 15;
 
