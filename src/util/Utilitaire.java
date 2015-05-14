@@ -38,7 +38,6 @@ public class Utilitaire {
     /** Permet de lire dans un fichier ouvert*/
     private BufferedReader br;
 
-   // private final String nomF = "CODE.java";
     /** Le fichier à visualiser*/
     private final File fichier;
 
@@ -53,27 +52,9 @@ public class Utilitaire {
     boolean firstWhile =false;
     boolean execution = false;
     boolean isIf = false;
-    //BufferedReader brtmp;
-    // 
+
     private Dimension d;
 
-    /**
-     * Constructeur
-     *
-     * @param d
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
- /*   public Utilitaire(Dimension d) throws FileNotFoundException, IOException {
-        parser = new Parser();
-        mesInt = new ArrayList<>();
-        fr = new FileReader(nomF);
-        // fr = new FileReader(fichier);
-        br = new BufferedReader(fr);
-        this.d = d;
-        NombreLignes();
-    }
-*/
     /**
      * Constructeur
      *
@@ -107,13 +88,12 @@ public class Utilitaire {
 
         fr = new FileReader(fichier);
         br = new BufferedReader(fr);
-        //brtmp = new BufferedReader(fr);
     }
 
     /**
-     * Fonction centrale du programme. A chaque appelle elle lit la ligne
+     * Fonction centrale du programme. A chaque appel elle lit la ligne
      * suivante, l'envoie au parser qui lui indique quel type de ligne c'est
-     * (initialisation, instanciation ..). La ligne n'est pas reconnus si
+     * (initialisation, instanciation ..). La ligne n'est pas reconnue si
      * ce n'est pas une opération sur les entiers
      *
      * @return true si un traitement est effectué (la ligne contient une regex connue), false sinon
@@ -121,7 +101,7 @@ public class Utilitaire {
      * @throws IOException
      */
     public boolean execution() throws FileNotFoundException, IOException {
-        String tmp = null;
+        String tmp = "";
         String s[];
         String vrb;
         String operation;
@@ -130,11 +110,11 @@ public class Utilitaire {
         int tmp3 = 0;
         int tmp4 = 0;
         int res;
-        boolean reg = true;
+        boolean reg = false;
         execution = false;
         
         if (is_while == true) {
-            reg = false;
+            reg = true;
             execution = true;
             
            if (cond[1].equals("==")) {
@@ -170,7 +150,7 @@ public class Utilitaire {
                 if (mesInt.get(indice_while).getMonInt() <= Integer.parseInt(cond[2]) || i_while != string_while.size()) {
                     tmp = executionWhile();
                 } else {
-                    finWhile();
+                   finWhile();
                 }
             }   
            else if (cond[1].equals(">=")) {
@@ -186,15 +166,12 @@ public class Utilitaire {
         }
 
         if (execution == true) {
-
-            //System.out.println(tmp + " " + execution + " " + is_while);
             // res recupere le type de regex de la ligne
             res = parser.correspondRegex(tmp);
             
             if(res==14 && tmp.contains("if"))
                 res = 15;
             
-            //System.out.println(tmp + " " + res);
             // -1 correspond à aucune regex
             if (res != -1) {
                 reg = true;
@@ -270,7 +247,6 @@ public class Utilitaire {
                         }
                         break;
                     case 8: // AFFECTATION_VARIABLE_DOUBLE
-                        //System.out.println("AFFECTATION_VARIABLE_DOUBLE");
                         vrb = parser.extraireVariable(tmp.substring(0, tmp.indexOf("=")));
                         if ((tmp2 = rechercheObjet(vrb)) != -1) {
                             operation = tmp.substring(tmp.indexOf("=") + 1).replace(";", "").replaceAll("\\s", "");
@@ -352,8 +328,6 @@ public class Utilitaire {
                                     {
                                         mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() % -mesInt.get(tmp4).getMonInt());
                                     }
-
-//mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt() % mesInt.get(tmp4).getMonInt());
                                 }
                             }
                         }
@@ -364,14 +338,11 @@ public class Utilitaire {
                     case 10:
                         break;
                     case 11:    //  INITIALISATION_TABLEAU_SIMPLE
-                        System.out.println("INITIALISATION_TABLEAU_SIMPLE : " + tmp);
-
                         ArrayList<String> rtr = parser.extraireTableauSimple(tmp);
 
                         int c = 0;
                         int c1 = 0;
                         for (int i = 1; i < rtr.size(); i++) {
-                            System.out.println(rtr.get(i));
                             c = (int) rtr.get(i).charAt(0);
 
                             if (c == 45) // Si negatif
@@ -379,37 +350,29 @@ public class Utilitaire {
                                 c1 = (int) rtr.get(i).charAt(1);
 
                                 if ((c1 >= 65 && c1 <= 90) || (c1 >= 97 && c1 <= 122)) {
-                                    //System.out.println("VB NETAGIVE : "+c1+" "+i);
                                     if ((tmp2 = rechercheObjet(rtr.get(i).replace("-", ""))) != -1) {
-                                        //mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
                                         mesInt.add(new MonInt(-mesInt.get(tmp2).getMonInt(), rtr.get(0) + '[' + (i - 1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                            
                                     }
                                 } else {
-                                    //mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                                     mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '[' + (i - 1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                                 }
                             } else if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) {
-                                //System.out.println("VB POSITIVE : "+c+" "+i);
                                 if ((tmp2 = rechercheObjet(rtr.get(i))) != -1) {
-                                    // mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                                     mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0) + '[' + (i - 1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                        
                                 }
                             } else {
-                                // mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0)+i, new Rectangle2D.Double(5, 15, 100, 20))); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                                 mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '[' + (i - 1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                             }
                         }
 
                         break;
                     case 12:    //  DECLARATION_TABLEAU_SIMPLE
-                        System.out.println("DECLARATION_TABLEAU_SIMPLE");
 
                         for (int i = 0; i < parser.extraireTailleDeclarationTableau(tmp); i++) {
                             mesInt.add(new MonInt(0, parser.extraireNomDeclarationTableau(tmp) + '[' + i + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                        
                         }
                         break;
                     case 13:    //  INITIALISATION_TABLEAU_CASE_SIMPLE
-                        System.out.println("INITIALISATION_TABLEAU_CASE_SIMPLE");
 
                         if ((tmp2 = rechercheTableau(parser.extraireNomInitialisationCase(tmp) + '[' + parser.extraireIndiceInitialisationCase(tmp) + ']')) != -1) {
                             mesInt.get(tmp2).setMonInt(parser.extraireValeurInitialisationCase(tmp));
@@ -417,12 +380,11 @@ public class Utilitaire {
 
                         break;
                     case 14:    // BOUCLE_WHILE
-                        System.out.println("BOUCLE_WHILE " + tmp);
-                            
+                        
+                        firstWhile = true;   
                         cond = parser.extraireCondition(tmp);
                         if ((tmp2 = rechercheObjet(parser.extraireVariableWhileIf(cond[0]))) != -1) {
-                            firstWhile = true;
-                            
+                                                   
                             indice_while = tmp2;
                            
                             if (cond[1].equals("==")) {
@@ -471,8 +433,6 @@ public class Utilitaire {
                         break;
                     case 15:    // CONDITION_IF
                         
-                        System.out.println("CONDITION_IF : "+tmp);
-                        
                         cond = parser.extraireCondition(tmp);
                         
                         if ((tmp2 = rechercheObjet(parser.extraireVariableWhileIf(cond[0]))) != -1) {
@@ -485,11 +445,9 @@ public class Utilitaire {
                                 }
                             }
                             else if (cond[1].equals("!=")) {
-                                System.out.println("DIFF");
                                 if (mesInt.get(tmp2).getMonInt() == Integer.parseInt(cond[2])) {
                                     ConditionPasRespecteeIf();
                                 } else {
-                                    System.out.println("TRUE");
                                     isIf = true;
                                 }
                             }
@@ -526,10 +484,8 @@ public class Utilitaire {
                         
                         break;
                     case 16:    // CONDITION_ELSE
-                            System.out.println("CONDITION_ELSE : "+tmp);
                             
                             if(isIf==true) {
-                                System.out.println("isIf à TRUE");;
                                 isIf = false;
                                 ConditionPasRespectee();
                             }
@@ -545,6 +501,7 @@ public class Utilitaire {
                     System.err.println("ERREUR _ Utilitaire.execution()\n\t" + ex.toString());                    
                 }
             }
+            
         }
         return reg;
     }
@@ -584,53 +541,31 @@ public class Utilitaire {
     }
 
     public void ConditionPasRespectee() throws IOException {
-        
-        System.out.println("Condition pas respectée");
-       /* BufferedReader brtmp = br;
-        String wh;
-        int cpt = 0;
-        wh = brtmp.readLine();
-        System.out.println(wh);
-        if (wh.replaceAll("\\s", "").equals("{")) {
-            System.out.println("Accolade ouvrante");
-            cpt++;
-        }
-        while (cpt != 0) {
-            wh = brtmp.readLine();
-            System.out.println(wh);
-            if (wh.replaceAll("\\s", "").equals("{")) {
-                cpt++;
-            } else if (wh.replaceAll("\\s", "").equals("}")) {
-                cpt--;
-            }
-        }
 
-        br = brtmp;*/
         String tmp;
-        tmp = br.readLine().replaceAll("\\s", "");
-        while(!tmp.equals("}") && tmp!=null) 
-        {
-//            System.out.println(tmp);
+        
+        do {
             tmp = br.readLine().replaceAll("\\s", "");
-        }
-//        System.out.println("SORT: "+tmp);
+            Gestionnaire.getInstance().getPanGraph().afficheLigne();
+        }  while(!tmp.equals("}") && tmp!=null) ;
         
     }
     
+   
     public void ConditionPasRespecteeIf() throws IOException
     {
         String tmp;
         tmp = br.readLine().replaceAll("\\s", "");
         while(tmp!=null)
         {
-            System.out.println(tmp);
+            Gestionnaire.getInstance().getPanGraph().afficheLigne();
             if(tmp.equals("}else{"))
                 return;
             else if(tmp.equals("}"))
                 return;
             
             tmp = br.readLine().replaceAll("\\s", "");
-        }        
+        }
     }
     
     
@@ -647,11 +582,16 @@ public class Utilitaire {
         return tmp;
     }
     
-    public void finWhile()
+    public void finWhile() throws IOException
     {
         is_while = false;
-        execution = false;        
+        execution = false;
+        string_while.clear();
+        Gestionnaire.getInstance().getFVisualisation().getPc().eraseLastLine();
     }
+   
+   
+    
     
     public void ajouterLigneWhile() throws IOException
     {
@@ -660,11 +600,9 @@ public class Utilitaire {
         is_while = true;
         tmp = br.readLine().replaceAll("\\s*", "");
         string_while.add(tmp);
-        //System.out.println(tmp);
         while (!"}".equals(tmp = br.readLine().replaceAll("\\s*", ""))) {
-            //System.out.println(tmp);
             string_while.add(tmp);
-        }        
+        } 
     }
     
     

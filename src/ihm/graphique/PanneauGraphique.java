@@ -215,12 +215,13 @@ public class PanneauGraphique extends JPanel {
             if (utilitaire.isWhileLine()) {
                 /* premier passage dans le while */
                 if (utilitaire.isFirstWhile()) {
-                    ligne_tmp = ligneCourante;
+                    ligne_tmp = ligneCourante -1;
                     utilitaire.CancelFirstWhile();
                 }
 
                 while_size = utilitaire.getWhileSize() + 2; //ajout accolade + ligne condition
-                affiche = (ligneCourante < ligne_tmp + while_size);
+                affiche = (ligneCourante < (ligne_tmp + while_size-1));
+
             }
 
             /* Affichage classique*/
@@ -229,16 +230,15 @@ public class PanneauGraphique extends JPanel {
                 zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
                 highLightLine(ligneCourante);
                 ligneCourante++;
+               
                 if ((affiche) && (ligneCourante == ligne_tmp + while_size - 1)) {
                     zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
-                    ligneCourante++;
-                    highLightLine(ligneCourante - 2);
+                    highLightLine(ligneCourante - 1);
                 }
-
+                
             } else { /* boucle : surbrillance des lignes */
                 int ind = utilitaire.getIndWhile();
                 int tmp = ligne_tmp + ind;
-                //System.out.println("affiche ligne beta at: " + tmp);
                 highLightLine(tmp);
             }
             /* Refresh forcé de l'affichage */
@@ -250,7 +250,6 @@ public class PanneauGraphique extends JPanel {
                 }
                 rm.isCompletelyDirty(this);
             }
-
         }
     }
 
@@ -269,5 +268,5 @@ public class PanneauGraphique extends JPanel {
             System.err.println("HighLight failed");
         }
         pc.repaint();
-    }
+    }   
 }

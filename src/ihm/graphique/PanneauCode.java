@@ -225,4 +225,14 @@ public class PanneauCode extends JPanel
         jsp.setSize(pcw, pch);
 
     }
+    
+    public void eraseLastLine(){
+        String [] contenu = zoneCode.getText().split("\n");
+        String s = "";
+        for (int i = 0; i < contenu.length-1; i++){
+            if (i != 0) s += "\n";
+            s += contenu[i];
+        }
+        zoneCode.setText(s);
+    }
 }
