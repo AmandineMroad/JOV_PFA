@@ -35,7 +35,8 @@ public class BarreOutil extends JToolBar{
         super(name);
         
         //ajout des boutons
-        next = createToolBarButton(new ImageIcon(".\\src\\doc\\next.png"),
+        next = createToolBarButton(new ImageIcon(".\\src\\doc\\next.png"),//IDE
+//        next = createToolBarButton(new ImageIcon("..\\src\\doc\\next.png"),//fichier.jar
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -49,7 +50,8 @@ public class BarreOutil extends JToolBar{
                 }, "Passer à l'instruction suivante");
         this.add(next);
         
-        stop = createToolBarButton(new ImageIcon(".\\src\\doc\\stop.png"),
+        stop = createToolBarButton(new ImageIcon(".\\src\\doc\\stop.png"),//IDE
+//        stop = createToolBarButton(new ImageIcon("..\\src\\doc\\stop.png"),//fichier.jar
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -64,7 +66,8 @@ public class BarreOutil extends JToolBar{
                 }, "Aller à la fin et arrêter");
         this.add(stop);
         
-        replay =createToolBarButton(new ImageIcon(".\\src\\doc\\replay.png"),
+        replay =createToolBarButton(new ImageIcon(".\\src\\doc\\replay.png"),//IDE
+//        replay =createToolBarButton(new ImageIcon("..\\src\\doc\\replay.png"),//fichier.jar
                 new Lis_Execute(), "Rejouer depuis le début");
         this.add(replay);
         
