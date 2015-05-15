@@ -32,11 +32,11 @@ public class Parser
     private final String AFFECTATION_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%]\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$"; // [ESP]variable1[ESP]=[ESP]variable[ESP]+-*/%[ESP]variable[ESP];
         private final String AFFECTATION_VARIABLE_ENTIER_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*[+-/\\*%]\\s*-?\\s*[0-9]*\\s*;$";
         private final String AFFECTATION_ENTIER_VARIABLE_DOUBLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*=\\s*-?\\s*[0-9]*\\s*[+-/\\*%]\\s*-?\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*;$";
-    private final String INITIALISATION_TABLEAU_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*\\{-?\\s*[a-zA-Z_0-9]*[,-?\\s*[a-zA-Z_0-9]*]*\\}\\s*;$"; // int t[] = {x, x, x}; "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*\\{-?\\s*[0-9]*[,-?\\s*[0-9]*]*\\}\\s*;$";
+    private final String INITIALISATION_TABLEAU_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*\\{-?\\s*[a-zA-Z_0-9]*\\s*[,-?\\s*[a-zA-Z_0-9]*]*\\s*\\}\\s*;$"; // int t[] = {x, x, x}; "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*\\{-?\\s*[0-9]*[,-?\\s*[0-9]*]*\\}\\s*;$";
     private final String DECLARATION_TABLEAU_SIMPLE = "^\\s*int\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*\\]\\s*=\\s*new\\s*int\\s*\\[\\s*[0-9]*\\s*\\]\\s*;$"; // int t[] = new int[6]; 
-    private final String INITIALISATION_TABLEAU_CASE_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*[0-9]*\\s*\\]\\s*=\\s*-?\\s*[0-9]*\\s*;$";   // t[0] = 4;  
-    private final String BOUCLE_WHILE = "^\\s*while\\([a-zA-Z]{1}[a-zA-Z_0-9]*==|!=|>|<|>=|<=[a-zA-Z_0-9]*\\)\\s*\\{\\s*$";
-    private final String CONDITION_IF = "^\\s*if\\([a-zA-Z]{1}[a-zA-Z_0-9]*(==)|(!=)|(>)|(<)|(>=)|(<=)[a-zA-Z_0-9]*\\)\\s*\\{\\s*$";
+    private final String INITIALISATION_TABLEAU_CASE_SIMPLE = "^\\s*[a-zA-Z]{1}[a-zA-Z_0-9]*\\s*\\[\\s*[a-zA-Z_0-9]*\\s*\\]\\s*=\\s*-?\\s*[a-zA-Z_0-9]*\\s*;$";   // t[0] = 4;  
+    private final String BOUCLE_WHILE = "^\\s*while\\s*\\([a-zA-Z]{1}[a-zA-Z_0-9]*\\s*==|!=|>|<|>=|<=\\s*[a-zA-Z_0-9]*\\)\\s*\\{\\s*$";
+    private final String CONDITION_IF = "^\\s*if\\s*\\([a-zA-Z]{1}[a-zA-Z_0-9]*\\s*(==)|(!=)|(>)|(<)|(>=)|(<=)\\s*[a-zA-Z_0-9]*\\)\\s*\\{\\s*$";
     private final String CONDITION_ELSE = "^\\s*\\}\\s*else\\s*\\{";
     
     /** AL<> qui va contenir les regex*/
@@ -303,22 +303,23 @@ public class Parser
     
     public String extraireNomInitialisationCase(String ligne)
     {
-        return ligne.substring(0, ligne.indexOf("=")).replaceAll("\\d", " ").replace("["," ").replace("]"," ").replaceAll("\\s", "");
+        return ligne.substring(0, ligne.indexOf("[")).replaceAll("\\d", " ").replace("["," ").replace("]"," ").replaceAll("\\s", "");
     }     
     
-    public int extraireIndiceInitialisationCase(String ligne)
+   
+    public String extraireIndiceInitialisationCase(String ligne)
     {
-        String taille = ligne.substring(0, ligne.indexOf("=")).replaceAll("[a-zA-Z_]", " ").replace("["," ").replace("]"," ").replace(";", " ").replaceAll("\\s", "");
+        String taille = ligne.substring(ligne.indexOf("[")+1, ligne.indexOf("=")).replace("]"," ").replace(";", " ").replaceAll("\\s", "");
         
-        return Integer.valueOf(taille);
-    }    
+        return taille;
+    }
     
-    public int extraireValeurInitialisationCase(String ligne)
+    public String extraireValeurInitialisationCase2(String ligne)
     {
         String valeur = ligne.substring(ligne.indexOf("=")+1).replace(";", " ").replaceAll("\\s", "");
-        
-        return Integer.valueOf(valeur);
-    }
+
+        return valeur;
+    }    
     
     public String[] extraireCondition(String ligne)
     {

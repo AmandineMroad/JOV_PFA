@@ -355,7 +355,7 @@ public class Utilitaire {
                                 } else {
                                     mesInt.add(new MonInt(Integer.parseInt(rtr.get(i)), rtr.get(0) + '[' + (i - 1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                    
                                 }
-                            } else if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) {
+                            } else if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) {     // Si lettre
                                 if ((tmp2 = rechercheObjet(rtr.get(i))) != -1) {
                                     mesInt.add(new MonInt(mesInt.get(tmp2).getMonInt(), rtr.get(0) + '[' + (i - 1) + ']', new Rectangle2D.Double(5, 15, 100, 20), true)); // Instancie un MonInt correspondant et l'ajoute à l'AL<>                                                                                        
                                 }
@@ -373,10 +373,48 @@ public class Utilitaire {
                         break;
                     case 13:    //  INITIALISATION_TABLEAU_CASE_SIMPLE
 
-                        if ((tmp2 = rechercheTableau(parser.extraireNomInitialisationCase(tmp) + '[' + parser.extraireIndiceInitialisationCase(tmp) + ']')) != -1) {
-                            mesInt.get(tmp2).setMonInt(parser.extraireValeurInitialisationCase(tmp));
-                        }
+                        String taille = parser.extraireIndiceInitialisationCase(tmp);
+                        String vlr = parser.extraireValeurInitialisationCase2(tmp);
+                        int c2;
+                        int c3;
+                        
+                        c2 = (int) taille.charAt(0);
 
+                        if ((c2 >= 65 && c2 <= 90) || (c2 >= 97 && c2 <= 122)) {    // Si la taille est une vb
+                            if((tmp2 = rechercheObjet(taille)) != -1)   // Si vb existe
+                            {
+                                if((tmp2 = rechercheTableau(parser.extraireNomInitialisationCase(tmp) + '[' + mesInt.get(tmp2).getMonInt() + ']')) != -1) { // Si la case du tableau existe
+                                   
+                                    c3 = (int) vlr.charAt(0);
+                                    
+                                    if ((c3 >= 65 && c3 <= 90) || (c3 >= 97 && c3 <= 122)) {    // Si assigne vb
+                                     if ((tmp3 = rechercheObjet(vlr)) != -1) {   // Si elle existe
+                                           mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt());    // Assigne la vlr de la vb
+                                        }  
+                                    }
+                                    else // Si assigne chiffre
+                                    {
+                                            mesInt.get(tmp2).setMonInt(Integer.valueOf(parser.extraireValeurInitialisationCase2(tmp)));
+                                    }
+                                }                                
+                            }
+                        } else {    // Si la taille est un chiffre
+                            if ((tmp2 = rechercheTableau(parser.extraireNomInitialisationCase(tmp) + '[' + Integer.valueOf(parser.extraireIndiceInitialisationCase(tmp)) + ']')) != -1) {
+                                
+                                    c3 = (int) vlr.charAt(0);
+                                    
+                                    if ((c3 >= 65 && c3 <= 90) || (c3 >= 97 && c3 <= 122)) {    // Si assigne vb
+                                     if ((tmp3 = rechercheObjet(vlr)) != -1) {   // Si elle existe
+                                           mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt());    // Assigne la vlr de la vb
+                                        }  
+                                    }
+                                    else // Si assigne chiffre
+                                    {
+                                            mesInt.get(tmp2).setMonInt(Integer.valueOf(parser.extraireValeurInitialisationCase2(tmp)));
+                                    }  
+                            }
+                        }
+                        
                         break;
                     case 14:    // BOUCLE_WHILE
                         
@@ -431,7 +469,7 @@ public class Utilitaire {
                         }
                         break;
                     case 15:    // CONDITION_IF
-                        
+
                         cond = parser.extraireCondition(tmp);
                         
                         if ((tmp2 = rechercheObjet(parser.extraireVariableWhileIf(cond[0]))) != -1) {
@@ -483,9 +521,10 @@ public class Utilitaire {
                         
                         break;
                     case 16:    // CONDITION_ELSE
-                            
-                            if(isIf==true) {
+
+                        if(isIf==true) {
                                 isIf = false;
+                                ConditionPasRespectee();
                             }
                         break;
 
@@ -584,6 +623,7 @@ public class Utilitaire {
         is_while = false;
         execution = false;
         string_while.clear();
+        i_while = 0;
         Gestionnaire.getInstance().getFVisualisation().getPc().eraseLastLine();
     }
    
