@@ -579,12 +579,26 @@ public class Utilitaire {
 
     public void ConditionPasRespectee() throws IOException {
 
-        String tmp;
+        /*String tmp;
         
         do {
             tmp = br.readLine().replaceAll("\\s", "");
             Gestionnaire.getInstance().getPanGraph().afficheLigne();
         }  while(!tmp.equals("}") && tmp!=null) ;
+        */
+        
+        String tmp;
+        tmp = br.readLine().replaceAll("\\s", "");
+        while(tmp!=null)
+        {
+            Gestionnaire.getInstance().getPanGraph().afficheLigne();
+            if(tmp.equals("}else{"))
+                return;
+            else if(tmp.equals("}"))
+                return;
+            
+            tmp = br.readLine().replaceAll("\\s", "");
+        }
     }
     
    
