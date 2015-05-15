@@ -106,8 +106,8 @@ public class PanneauGraphique extends JPanel {
                 }
                 i--;
 
-                //Dimensionnement et placement du panneau
-                int lignes = ((nb_val * PanneauVariable.DEFAULT_WIDTH) / this.getWidth()) + 1;
+                //Placement du panneau
+                int lignes = 1;
                 Point tmp_position = new Point();
 
                 if (position.x <= marge) {
@@ -117,35 +117,41 @@ public class PanneauGraphique extends JPanel {
                 }
                 marge = 15;
 
-                pan = new PanneauTab(position, this.getWidth(), (lignes * PanneauVariable.DEFAULT_HEIGHT) + ((lignes + 1) * marge), tabName[0]);
+                pan = new PanneauTab(position, this.getWidth(), 0, tabName[0]);
 
                 //Insertion des valeurs
                 PanneauVariable tmp_panVar;
                 int tmp_x = marge, tmp_y = marge + 10;
                 tmp_position.setLocation(tmp_x, tmp_y);
-
                 for (MonInt myInt : list) {
                     tmp_panVar = new PanneauVariable(myInt);
                     tmp_panVar.setLocation(tmp_position);
                     pan.add(tmp_panVar);
-                    
+
                     //Position du prochain panneau
                     tmp_x = tmp_position.x + tmp_panVar.getWidth();
-                    if (tmp_x + tmp_panVar.getWidth() > this.getWidth()) {
+                    if (tmp_x + tmp_panVar.getWidth() > pan.getWidth() - 10) {
+                        lignes++;
                         tmp_y = tmp_position.y + tmp_panVar.getHeight() + marge;
                         tmp_x = marge;
                     }
                     tmp_position.setLocation(tmp_x, tmp_y);
                 }
-
+                if (tmp_x <= marge) {
+                    lignes--;
+                }
+                //Dimensionnement du panneau
+                pan.setBounds(pan.getX(), pan.getY(), this.getWidth() - 10, (lignes * PanneauVariable.DEFAULT_HEIGHT) + ((lignes + 1) * marge));
+                
                 //Repositionnement pour prochain objet à afficher
                 newY = position.y + pan.getHeight() + marge;
                 position.setLocation(5, newY);
+                
             } /* Affichage variable */ else {
                 marge = 5;
                 pan = new PanneauVariable(mi);
                 pan.setLocation(position);
-                
+
                 newX = position.x + pan.getWidth();
                 newY = position.y;
 
@@ -158,6 +164,7 @@ public class PanneauGraphique extends JPanel {
             this.add(pan);
         }
     }
+
     /**
      * Traite et affiche l'ensemble des instructions restantes
      *
@@ -167,7 +174,7 @@ public class PanneauGraphique extends JPanel {
     public void affichageBoucle() throws IOException {
         while (ligneCourante < utilitaire.getNbLignes()) {
             affichage();
-            try {                
+            try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 System.err.println("ERREUR !!! Don't want to sleep");
@@ -206,7 +213,6 @@ public class PanneauGraphique extends JPanel {
     /**
      * Affiche et/ou met en surbrillance la ligne couramment exécutée
      */
-
     public void afficheLigne() {
         if (ligneCourante < utilitaire.getNbLignes()) {
             boolean affiche = false;
@@ -215,12 +221,12 @@ public class PanneauGraphique extends JPanel {
             if (utilitaire.isWhileLine()) {
                 /* premier passage dans le while */
                 if (utilitaire.isFirstWhile()) {
-                    ligne_tmp = ligneCourante -1;
+                    ligne_tmp = ligneCourante - 1;
                     utilitaire.CancelFirstWhile();
                 }
 
                 while_size = utilitaire.getWhileSize() + 2; //ajout accolade + ligne condition
-                affiche = (ligneCourante < (ligne_tmp + while_size-1));
+                affiche = (ligneCourante < (ligne_tmp + while_size - 1));
 
             }
 
@@ -230,13 +236,14 @@ public class PanneauGraphique extends JPanel {
                 zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
                 highLightLine(ligneCourante);
                 ligneCourante++;
-               
+
                 if ((affiche) && (ligneCourante == ligne_tmp + while_size - 1)) {
                     zoneCode.setText(zoneCode.getText() + "\n" + pc.getLignes().get(ligneCourante));
                     highLightLine(ligneCourante - 1);
                 }
-                
+
             } else { /* boucle : surbrillance des lignes */
+
                 int ind = utilitaire.getIndWhile();
                 int tmp = ligne_tmp + ind;
                 highLightLine(tmp);
@@ -268,5 +275,5 @@ public class PanneauGraphique extends JPanel {
             System.err.println("HighLight failed");
         }
         pc.repaint();
-    }   
+    }
 }

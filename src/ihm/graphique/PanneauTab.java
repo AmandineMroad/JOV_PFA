@@ -24,9 +24,8 @@ public class PanneauTab extends JPanel{
      * @param tabName nom du tableau
      */
     public PanneauTab(Point position, int width, int height, String tabName){
-        this.setBounds(position.x, position.y, width, height);
+        this.setBounds(position.x, position.y, width -10, height);
         this.setBorder(BorderFactory.createTitledBorder(tabName));
     }
 
-    
 }
