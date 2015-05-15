@@ -7,9 +7,10 @@ Legende :
 	variable : indique le nom d'une variable (simple ou tableau) respectant la norme JAVA
 	chiffre : indique un chiffre positif ou négatif (précédé d'un signe -)
 	OPERATEUR_OPERATION : indique l'un des 5 opérateurs à deux opérandes  (+ - * / %)
-	OPERATEUR_CONDITION : indique l'un des 6 opérateurs booleans (== != < > <= >=)
+	OPERATEUR_CONDITION : indique l'un des 6 opérateurs booléens (== != < > <= >=)
 	{}* : indique la repetition à l'infinis du motif qu'il contient (pour les tableaux)
 	INSTRUCTIONS : indique l'ensemble des instructions gérées par le programme
+	LIGNE_VIDE : indique la présence obligatoire d'une ligne vide
 	Les espaces ne sont pas indiqués dans les syntaxes pour ne pas les allourdir 
 
 ======
@@ -64,29 +65,30 @@ Syntaxe à respecter : variable1 = variable OPERATEUR_OPERATION variable;
 ======
 
 
-Type d'instruction : INITIALISATION_TABLEAU_SIMPLE
+Type d'instruction : INITIALISATION D'UN TABLEAU SIMPLE
 Syntaxe à respecter : variable [] = {variableOUchiffre,variableOUchiffre}*;
 
 
 ======
 
 
-Type d'instruction : DECLARATION_TABLEAU_SIMPLE
+Type d'instruction : DECLARATION D'UN TABLEAU SIMPLE
 Syntaxe à respecter : int variable[] = new int[chiffre];
 
 
 ======
 
 
-Type d'instruction : INITIALISATION_TABLEAU_CASE_SIMPLE
+Type d'instruction : INITIALISATION DE LA CASE D'UN TABLEAU SIMPLE
 Syntaxe à respecter : variable[chiffre] = chiffre;
 
 
 ======
 
 
-Type d'instruction : BOUCLE_WHILE
-Syntaxe à respecter : 
+Type d'instruction : BOUCLE WHILE
+Syntaxe à respecter :
+LIGNE_VIDE
 while(chiffre OPERATEUR_CONDITION chiffre) {
 	INSTRUCTIONS
 }
@@ -95,7 +97,7 @@ while(chiffre OPERATEUR_CONDITION chiffre) {
 ======
 
 
-Type d'instruction : CONDITION_IF
+Type d'instruction : CONDITION IF
 Syntaxe1 à respecter : 
 
 if(chiffre OPERATEUR_CONDITION chiffre) {
@@ -106,7 +108,7 @@ if(chiffre OPERATEUR_CONDITION chiffre) {
 ======
 
 
-Type d'instruction : CONDITION_IF_ELSE
+Type d'instruction : CONDITION IF-ELSE
 Syntaxe à respecter : 
 if(chiffre OPERATEUR_CONDITION chiffre) {
 	INSTRUCTIONS

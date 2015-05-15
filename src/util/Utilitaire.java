@@ -142,7 +142,6 @@ public class Utilitaire {
                     tmp = executionWhile();
                 } else {
                     finWhile();
-                    
                 }
             }            
            else if (cond[1].equals("!=")) {
@@ -531,7 +530,6 @@ public class Utilitaire {
                             if(isIf==true) {
                                 System.out.println("isIf à TRUE");;
                                 isIf = false;
-                                ConditionPasRespectee();
                             }
                         break;
 
@@ -613,7 +611,7 @@ public class Utilitaire {
 //            System.out.println(tmp);
             tmp = br.readLine().replaceAll("\\s", "");
         }
-//        System.out.println("SORT: "+tmp);
+        System.out.println("SORT: "+tmp);
         
     }
     
