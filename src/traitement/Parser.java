@@ -110,7 +110,6 @@ public class Parser
             replaceFirst("^\\s*int\\s*", " ").    // Enleve le 1er "int" au cas ou "int" soit contenus dans le nom de la variable
             replace("=", " ").   // Enleve le "="
             replace("+", " ").   // Enleve le "+"
-            //replace("-", " ").   // Enleve le "-"
             replace("*", " ").   // Enleve le "*"
             replace("/", " ").   // Enleve le "/"
             replace("%", " ").   // Enleve le "%"
@@ -145,17 +144,13 @@ public class Parser
         ligne = ligne.replaceAll(";", "");  // Vire les ";"
         ligne = ligne.replaceAll("\\s", "");  // Vire les espaces
         
-    //    System.out.println("extraireOperation:"+ligne);
-        
         if(Pattern.compile("^[a-zA-Z_0-9]*[+-/\\*%][a-zA-Z_0-9]*$").matcher(ligne).find())    // Si nb OP nb
         {
-      //      System.out.println("nb OP nb");
             ligne = ligne.replaceAll("\\w", " ").replaceAll("\\s", "");
             return ligne;
         }
         else if(Pattern.compile("^-[a-zA-Z_0-9]*[+-/\\*%][a-zA-Z_0-9]*$").matcher(ligne).find())   // Si - nb OP nb
         {
-        //    System.out.println("- nb OP nb");
             ligne = ligne.replaceFirst("-", " ").replaceAll("\\w", " ").replaceAll("\\s", "");
             System.out.println(ligne);
             if("-".equals(ligne))
@@ -165,7 +160,6 @@ public class Parser
         }
         else if(Pattern.compile("^[a-zA-Z_0-9]*[+-/\\*%]*-[a-zA-Z_0-9]*$").matcher(ligne).find())   // Si nb OP - nb
         {
-          //  System.out.println("nb OP - nb");
             ligne  = ligne.replaceAll("\\w", " ").replaceAll("\\s", "");
             ligne = String.valueOf(ligne.charAt(0));
             System.out.println(ligne);
@@ -176,7 +170,6 @@ public class Parser
         }
         else if((Pattern.compile("^-[a-zA-Z_0-9]*[+-/\\*%]*-[a-zA-Z_0-9]*$").matcher(ligne).find()))  // Si - nb OP - nb
         {
-          //  System.out.println("- nb OP - nb");
             ligne  = ligne.replaceAll("\\w", " ").replaceAll("\\s", ""); // -+-
             ligne = ligne.replaceFirst("-", " ").replaceAll("\\s", "");  // +-
             System.out.println("LIGNE : "+ligne);
@@ -189,13 +182,8 @@ public class Parser
         }        
         else
         {
-            //System.out.println("NULL");
             return null;
         }
-        /*return ligne.replace(";", " ").
-                replaceAll("\\w", " ").
-                replace("=", " ").
-                replaceAll("\\s", "");*/
     }
     
     /**
@@ -206,15 +194,12 @@ public class Parser
      */
     public int extraireOperationADeuxOp(String ligne, int type)
     {
-        //System.out.println("ligne1: "+ligne);
         
         ligne = ligne.substring(ligne.indexOf("=")+1);
         
-        //System.out.println(ligne);
         
         ligne = ligne.replace(";", "").replaceAll("\\s", "");
         
-        //System.out.println("ligne2: "+ligne);
         
         if(type == 0)   // ADDITION
         {
@@ -267,7 +252,12 @@ public class Parser
             return -1;
     }
     
-    
+    /**
+     * Permet d'extraire les valeurs (variables ou chiffres) assignées à un tableau
+     * 
+     * @param ligne
+     * @return 
+     */
     public ArrayList<String> extraireTableauSimple(String ligne)
     {
         ArrayList<String> retour = new ArrayList<>();
@@ -282,13 +272,18 @@ public class Parser
         String[] vlr = valeurs.split(",");
         for(int i=0; i<vlr.length; i++)
         {
-            //System.out.println(vlr[i]);
             retour.add(vlr[i]);
         }
         
         return retour;
     }
     
+    /**
+     * Permet d'extraire la taille lors de la declaration d'un tableau
+     * 
+     * @param ligne
+     * @return 
+     */
     public int extraireTailleDeclarationTableau(String ligne)
     {
         String taille = ligne.substring(ligne.indexOf("=")+1).replace("new", " ").replaceFirst("^\\s*int\\s*", " ").replace("["," ").replace("]"," ").replace(";", " ").replaceAll("\\s", "");
@@ -296,17 +291,35 @@ public class Parser
         return Integer.valueOf(taille);
     }
     
+    /**
+     * Permet d'extraire le nom du tableau lors de sa declaration
+     * 
+     * @param ligne
+     * @return 
+     */
     public String extraireNomDeclarationTableau(String ligne)
     {
         return ligne.substring(0, ligne.indexOf("=")).replaceFirst("^\\s*int\\s*", " ").replace("["," ").replace("]"," ").replace(";", " ").replaceAll("\\s", "");
     }  
     
+    /**
+     * Permet d'extraire le nom du tableau lors de l'initialisation d'une de ses cases
+     * 
+     * @param ligne
+     * @return 
+     */
     public String extraireNomInitialisationCase(String ligne)
     {
         return ligne.substring(0, ligne.indexOf("[")).replaceAll("\\d", " ").replace("["," ").replace("]"," ").replaceAll("\\s", "");
     }     
     
    
+    /**
+     * Permet d'extraire l'indice d'une case de tableau lors son l'initialisation
+     * 
+     * @param ligne
+     * @return 
+     */
     public String extraireIndiceInitialisationCase(String ligne)
     {
         String taille = ligne.substring(ligne.indexOf("[")+1, ligne.indexOf("=")).replace("]"," ").replace(";", " ").replaceAll("\\s", "");
@@ -314,34 +327,51 @@ public class Parser
         return taille;
     }
     
-    public String extraireValeurInitialisationCase2(String ligne)
+    /**
+     * Permet d'extraire la valeur (variable ou chiffre) assignée à la case d'un tableau
+     * 
+     * @param ligne
+     * @return 
+     */
+    public String extraireValeurInitialisationCase(String ligne)
     {
         String valeur = ligne.substring(ligne.indexOf("=")+1).replace(";", " ").replaceAll("\\s", "");
 
         return valeur;
     }    
     
+    /**
+     * Permet d'extraire d'une condition (while ou if) les deux operandes et l'operateur booleen en les separant chacun dans
+     * la case d'un tableau de String
+     * 
+     * @param ligne
+     * @return 
+     */
     public String[] extraireCondition(String ligne)
     {
         String cond[] = new String[3];
         
         // recupere uniquement la condition : [vb]OP[vbOUint]
         ligne = ligne.replace("while", " ").replace("if", " ").replace("(", " ").replace(")", " ").replace("{", " ").replaceAll("\\s", "");
-//System.out.println(ligne);
+
         // recupere la variable
         cond[0] = ligne.replaceAll("=", " ").replace(">", " ").replace("<", " ").replace("!", " ").replaceAll("[0-9]*", " ").replaceAll("\\s", "");
-        //System.out.println(cond[0]);
+       
         // recup le type de test binaire
         cond[1] = ligne.replaceAll("\\w", " ").replaceAll("\\s", "");
-        //System.out.println(cond[1]);
+        
         // recup la valeur/variable testée
         cond[2] = ligne.replaceAll("=", " ").replace(">", " ").replace("<", " ").replace("!", " ").replaceAll("[a-zA-Z_]*", " ").replaceAll("\\s", "");;
-        //System.out.println(cond[2]);
         
         return cond;
-     //   return ligne.replace("while", " ").replace("(", " ").replace(")", " ").replaceAll("\\s", "");
     }
     
+    /**
+     * Permet d'extraire la variable d'une condition if
+     * 
+     * @param condition
+     * @return 
+     */
     public String extraireVariableWhileIf(String condition)
     {
         return condition.replaceAll("==", " ").replaceAll("[0-9]*", " ").replaceAll("\\s", "");

@@ -44,32 +44,43 @@ public class Utilitaire {
     /** Le nombre de lignes du fichier source */
     private int nbLignes;
 
+    /** Permet d'indiquer que le programme est dans une boucle while */
     boolean is_while = false;
+    
+    /** Permet de contenir les instructions du while pour pouvoir les executer en boucle */
     ArrayList<String> string_while = new ArrayList<>();
+    
+    /** Permet de contenir les trois facteurs d'une condition while/if : variable, operateur, variable/chiffre */
     String[] cond = null;
+    
+    /** Compteur sur les instructions des boucles while */
     int i_while = 0;
+    
+    /** Permet d'enregistrer la variable contenus dans la condition du if */
     int indice_while = 0;
+    
+    /** Permet d'indiquer le premier passage dans une boucle while */
     boolean firstWhile =false;
+    
+    /** Permet d'autoriser l'execution du switch responsable des traitements */
     boolean execution = false;
+    
+    /** Permet de definir si on se trouve dans un if */
     boolean isIf = false;
-
-    private Dimension d;
 
     /**
      * Constructeur
      *
-     * @param d
      * @param f
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public Utilitaire(Dimension d, File f) throws FileNotFoundException, IOException {
+    public Utilitaire(File f) throws FileNotFoundException, IOException {
         parser = new Parser();
         mesInt = new ArrayList<>();
         fichier = f;
         fr = new FileReader(fichier);
         br = new BufferedReader(fr);
-        this.d = d;
         NombreLignes();
     }
 
@@ -374,9 +385,10 @@ public class Utilitaire {
                     case 13:    //  INITIALISATION_TABLEAU_CASE_SIMPLE
 
                         String taille = parser.extraireIndiceInitialisationCase(tmp);
-                        String vlr = parser.extraireValeurInitialisationCase2(tmp);
+                        String vlr = parser.extraireValeurInitialisationCase(tmp);
                         int c2;
                         int c3;
+                        int c4;
                         
                         c2 = (int) taille.charAt(0);
 
@@ -387,14 +399,26 @@ public class Utilitaire {
                                    
                                     c3 = (int) vlr.charAt(0);
                                     
-                                    if ((c3 >= 65 && c3 <= 90) || (c3 >= 97 && c3 <= 122)) {    // Si assigne vb
+                                    if (c3 == 45) // Si negatif
+                                    {
+                                        c4 = (int) vlr.charAt(1);
+
+                                        if ((c4 >= 65 && c4 <= 90) || (c4 >= 97 && c4 <= 122)) { // Si assigne vb
+                                            if ((tmp3 = rechercheObjet(vlr.replace("-", ""))) != -1) {
+                                               mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt()); 
+                                            }
+                                        } else {
+                                             mesInt.get(tmp2).setMonInt(Integer.valueOf(parser.extraireValeurInitialisationCase(tmp)));
+                                        }
+                                    }
+                                    else if ((c3 >= 65 && c3 <= 90) || (c3 >= 97 && c3 <= 122)) {    // Si assigne vb
                                      if ((tmp3 = rechercheObjet(vlr)) != -1) {   // Si elle existe
                                            mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt());    // Assigne la vlr de la vb
                                         }  
                                     }
                                     else // Si assigne chiffre
                                     {
-                                            mesInt.get(tmp2).setMonInt(Integer.valueOf(parser.extraireValeurInitialisationCase2(tmp)));
+                                            mesInt.get(tmp2).setMonInt(Integer.valueOf(parser.extraireValeurInitialisationCase(tmp)));
                                     }
                                 }                                
                             }
@@ -403,14 +427,26 @@ public class Utilitaire {
                                 
                                     c3 = (int) vlr.charAt(0);
                                     
-                                    if ((c3 >= 65 && c3 <= 90) || (c3 >= 97 && c3 <= 122)) {    // Si assigne vb
+                                    if (c3 == 45) // Si negatif
+                                    {
+                                        c4 = (int) vlr.charAt(1);
+
+                                        if ((c4 >= 65 && c4 <= 90) || (c4 >= 97 && c4 <= 122)) { // Si assigne vb
+                                            if ((tmp3 = rechercheObjet(vlr.replace("-", ""))) != -1) {
+                                               mesInt.get(tmp2).setMonInt(-mesInt.get(tmp3).getMonInt()); 
+                                            }
+                                        } else {
+                                             mesInt.get(tmp2).setMonInt(Integer.valueOf(parser.extraireValeurInitialisationCase(tmp)));
+                                        }
+                                    }                                    
+                                    else if ((c3 >= 65 && c3 <= 90) || (c3 >= 97 && c3 <= 122)) {    // Si assigne vb
                                      if ((tmp3 = rechercheObjet(vlr)) != -1) {   // Si elle existe
                                            mesInt.get(tmp2).setMonInt(mesInt.get(tmp3).getMonInt());    // Assigne la vlr de la vb
                                         }  
                                     }
                                     else // Si assigne chiffre
                                     {
-                                            mesInt.get(tmp2).setMonInt(Integer.valueOf(parser.extraireValeurInitialisationCase2(tmp)));
+                                            mesInt.get(tmp2).setMonInt(Integer.valueOf(parser.extraireValeurInitialisationCase(tmp)));
                                     }  
                             }
                         }
@@ -563,7 +599,8 @@ public class Utilitaire {
     }
 
     /**
-     *
+     * Permet de determiner si le string passé en parametre correspond à un tableau d'objet MonInt déjà crée
+     * 
      * @param tab
      * @return
      */
@@ -577,6 +614,11 @@ public class Utilitaire {
 
     }
 
+    /**
+     * Permet de deplacer le curseur de lecture jusqu'à l'accolade fermante du while
+     * 
+     * @throws IOException 
+     */
     public void ConditionPasRespectee() throws IOException {
 
         /*String tmp;
@@ -601,7 +643,11 @@ public class Utilitaire {
         }
     }
     
-   
+   /**
+    * Permet de passer à la condition else ou d'aller à l'accolade fermante du if
+    * 
+    * @throws IOException 
+    */
     public void ConditionPasRespecteeIf() throws IOException
     {
         String tmp;
@@ -618,7 +664,13 @@ public class Utilitaire {
         }
     }
     
-    
+    /**
+     * Permet de realiser les traitements executés systématiquement pour chaque instructions d'une boucle while
+     * Si on est à la derniere instruction on se repositionne sur la premiere, puis on recupere l'instruction courante, 
+     * on passe à la suivante et on renvoie la courante
+     * 
+     * @return 
+     */
     public String executionWhile()
     {
         String tmp;
@@ -632,6 +684,12 @@ public class Utilitaire {
         return tmp;
     }
     
+    
+    /**
+     * Permet de cloturer l'execution d'une boucle while avec la reinitialisation des différentes variables utilisées
+     * 
+     * @throws IOException 
+     */
     public void finWhile() throws IOException
     {
         is_while = false;
@@ -643,7 +701,12 @@ public class Utilitaire {
    
    
     
-    
+    /**
+     * Permet d'ajouter l'ensemble des instructions d'un while à une ArrayList<String> permettant de connaitre les 
+     * instructions à executer en boucle
+     * 
+     * @throws IOException 
+     */
     public void ajouterLigneWhile() throws IOException
     {
         String tmp;

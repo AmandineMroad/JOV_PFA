@@ -60,7 +60,7 @@ public class PanneauGraphique extends JPanel {
         this.pc = pc;
         ligneCourante = 0;
         rm = RepaintManager.currentManager(this);
-        utilitaire = new Utilitaire(pc.getD(), f);
+        utilitaire = new Utilitaire(f);
     }
 
     /**
