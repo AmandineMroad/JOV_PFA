@@ -13,6 +13,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.swing.JFrame;
 
 /**
@@ -39,7 +40,7 @@ public class FenVisualisation extends JFrame
      * @param f : le fichier à visualiser
      * @throws IOException 
      */
-    public FenVisualisation(File f) throws IOException
+    public FenVisualisation(File f) throws IOException, URISyntaxException
     {
         d = new Dimension(850, 400);
         this.setSize(d);

@@ -11,8 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.Gestionnaire;
 
 /**
  * Ouvrir le fichier JOV_ReadMe.txt
@@ -24,9 +27,17 @@ public class Lis_OpenReadMe implements ActionListener{
             try {
 //                Desktop.getDesktop().open(new File(".\\src\\doc\\JOV_ReadMe.txt")); //IDE
 
-                Desktop.getDesktop().open(new File("..\\src\\doc\\JOV_ReadMe.txt")); //fichier.jar
+//                Desktop.getDesktop().open(new File("..\\src\\doc\\JOV_ReadMe.txt")); //fichier.jar
+
+            String path = Gestionnaire.getInstance().getDocPath();
+            path += "JOV_ReadMe.txt";  
+                System.out.println("PATH = " + path);
+                Desktop.getDesktop().open(new File(path));
+                
             } catch (IOException ex) {
                 System.err.println("Erreur open ReadMe");
+                Logger.getLogger(Lis_OpenReadMe.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
                 Logger.getLogger(Lis_OpenReadMe.class.getName()).log(Level.SEVERE, null, ex);
             }
             

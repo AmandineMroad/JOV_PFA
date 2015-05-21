@@ -8,10 +8,16 @@ package util;
 
 import ihm.graphique.ChoixDiag;
 import ihm.graphique.FenVisualisation;
-import ihm.graphique.PanneauCode;
 import ihm.graphique.PanneauGraphique;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.security.CodeSource;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,7 +43,7 @@ public final class Gestionnaire {
      * @param ff : le fichier à visualiser
      * @throws IOException 
      */
-    public void setFileAndExecute(File ff) throws IOException {
+    public void setFileAndExecute(File ff) throws IOException, URISyntaxException {
         f = ff;
         ready = true;
         this.execute();
@@ -49,7 +55,7 @@ public final class Gestionnaire {
      *
      * @throws IOException
      */
-    public void execute() throws IOException {
+    public void execute() throws IOException, URISyntaxException {
         if (ready) {
             fchoix.dispose();
             
@@ -114,5 +120,13 @@ public final class Gestionnaire {
      */
     public ChoixDiag getChoixDiag() {
         return fchoix;
+    }
+    
+    public String getDocPath() throws URISyntaxException{
+        CodeSource codeSource = testvuejov.TestVueJOV.class.getProtectionDomain().getCodeSource();
+        File jarFile = new File(codeSource.getLocation().toURI().getPath());
+        String jarDir = jarFile.getParentFile().getPath();
+        jarDir += "\\doc\\";
+        return jarDir;
     }
 }

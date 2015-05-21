@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,12 +32,13 @@ public class BarreOutil extends JToolBar{
      * @param name le titre de la fenêtre créée lorsque la barre d'outils est détachée
      * @see JToolBar
      */
-    public BarreOutil(String name) {
+    public BarreOutil(String name) throws IOException, URISyntaxException {
         super(name);
         
         //ajout des boutons
-//        next = createToolBarButton(new ImageIcon(".\\src\\doc\\next.png"),//IDE
-        next = createToolBarButton(new ImageIcon("..\\src\\doc\\next.png"),//fichier.jar
+        String docPath = Gestionnaire.getInstance().getDocPath();
+        String image = docPath + "next.png";
+        next = createToolBarButton(new ImageIcon(image),
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -50,8 +52,8 @@ public class BarreOutil extends JToolBar{
                 }, "Passer à l'instruction suivante");
         this.add(next);
         
-//        stop = createToolBarButton(new ImageIcon(".\\src\\doc\\stop.png"),//IDE
-        stop = createToolBarButton(new ImageIcon("..\\src\\doc\\stop.png"),//fichier.jar
+        image = docPath + "stop.png";
+        stop = createToolBarButton(new ImageIcon(image),
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -66,8 +68,8 @@ public class BarreOutil extends JToolBar{
                 }, "Aller à la fin et arrêter");
         this.add(stop);
         
-//        replay =createToolBarButton(new ImageIcon(".\\src\\doc\\replay.png"),//IDE
-        replay =createToolBarButton(new ImageIcon("..\\src\\doc\\replay.png"),//fichier.jar
+        image = docPath + "replay.png";
+        replay =createToolBarButton(new ImageIcon(image),//fichier.jar
                 new Lis_Execute(), "Rejouer depuis le début");
         this.add(replay);
         

@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -56,7 +57,7 @@ public class Lis_Execute implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Le gestionnaire ne contient aucun fichier.", "Java Object Viewer - ERREUR", JOptionPane.WARNING_MESSAGE);
             }
             
-        } catch (IOException ex) {
+        } catch (IOException | URISyntaxException ex) {
             Logger.getLogger(Lis_Execute.class.getName()).log(Level.SEVERE, null, ex);
         }
 
